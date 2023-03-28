@@ -52,5 +52,6 @@
 
 > References _should_ include links to additional materials helpful for contributors or users.
 
-- [dcrd](https://github.com/decred/dcrd)
-- [nostr-protocol](https://github.com/nostr-protocol)
+- [@decred/dcrd](https://github.com/decred/dcrd)
+- [@nostr-protocol/nips](https://github.com/nostr-protocol/nips)
+- [@nhooyr/websocket](https://github.com/nhooyr/websocket)
