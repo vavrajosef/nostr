@@ -1,0 +1,43 @@
+name: Production
+on:
+  push:
+    branches:
+      - "main"
+jobs:
+  docker:
+    name: Docker
+    environment: dockerhub
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Docker
+        uses: "./.github/actions/docker"
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+  nextjs:
+    name: NextJS
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: NextJS
+        uses: "./.github/actions/nextjs"
+  terraform:
+    name: Terraform
+    needs: [nextjs]
+    environment: production
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Terraform
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_ACCESS_SECRET_KEY: ${{ secrets.AWS_ACCESS_SECRET_KEY }}
+          AWS_REGION: ${{ secrets.AWS_REGION }}
+        uses: "./.github/actions/terraform"
+        with:
+          tf-api-token: ${{ secrets.TF_API_TOKEN }}
+          working-directory: ".terraform/environments/production"

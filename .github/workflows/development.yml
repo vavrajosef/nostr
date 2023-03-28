@@ -1,0 +1,39 @@
+name: Development
+on:
+  push:
+      branches:
+      - '!main'
+      - '!release/*'
+jobs:
+  docker:
+    name: Docker
+    environment: dockerhub
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Docker
+        uses: './.github/actions/docker'
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+  nextjs:
+    name: NextJS
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: NextJS
+        uses: './.github/actions/nextjs'
+  terraform:
+    name: Terraform
+    environment: development
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Terraform
+        uses: './.github/actions/terraform'
+        with:
+          tf-api-token: ${{ secrets.TF_API_TOKEN }}
+          working-directory: '.terraform/environments/development'

@@ -1,0 +1,35 @@
+name: "NextJS"
+description: "The action lints, and builds the NextJS project."
+inputs:
+  working-directory:
+    description: TBD
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - name: Setup Node
+      id: setup-node
+      uses: actions/setup-node@v3
+      with:
+        node-version: 16
+    - name: Clean Install
+      id: install-clean
+      shell: bash
+      run: npm ci
+    - name: Lint
+      id: lint
+      shell: bash
+      run: npm run lint
+    - name: Build
+      id: build
+      shell: bash
+      run: npm run build --no-lint
+    - name: Export
+      id: export
+      shell: bash
+      run: npm run export
+    - name: Upload Artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: out
+        path: out/*
