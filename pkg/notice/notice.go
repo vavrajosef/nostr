@@ -5,4 +5,5 @@ func New(opt *NoticeOptions) *Notice {
 }
 
 type NoticeOptions struct{}
+
 type Notice struct{}

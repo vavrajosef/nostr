@@ -1,8 +1,8 @@
 package message
 
 import (
-	"github.com/go-nostr/go-nostr/event"
-	"github.com/go-nostr/go-nostr/filter"
+	"github.com/go-nostr/go-nostr/pkg/event"
+	"github.com/go-nostr/go-nostr/pkg/filter"
 )
 
 const (
