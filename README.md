@@ -42,6 +42,8 @@ See [CODE_OF_CONDUCT](./CODE_OF_CONDUCT.md).
 - [Docker](https://docker.com/)
 - [Go](https://go.dev/)
 - [Hugo](https://gohugo.io/)
+- [NPM](https://www.npmjs.com/)
+- [NodeJS](https://nodejs.org/en)
 
 ## Author(s)
 
@@ -64,5 +66,6 @@ See [CODE_OF_CONDUCT](./CODE_OF_CONDUCT.md).
 > References _should_ include links to additional materials helpful for contributors or users.
 
 - [@decred/dcrd](https://github.com/decred/dcrd)
+- [@golang-standards/project-layout](https://github.com/golang-standards/project-layout)
 - [@nostr-protocol/nips](https://github.com/nostr-protocol/nips)
 - [@nhooyr/websocket](https://github.com/nhooyr/websocket)
