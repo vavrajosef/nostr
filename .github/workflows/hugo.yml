@@ -28,11 +28,6 @@ jobs:
           hugo-version: 'latest'
       - name: Build Hugo site
         run: hugo -s ./docs/
-      # - name: Upload artifacts
-      #   uses: actions/upload-artifact@v3
-      #   with:
-      #     name: github-pages
-      #     path: ./docs/public
       - name: Upload GitHub Pages artifacts
         uses: actions/upload-pages-artifact@v1
         with:
