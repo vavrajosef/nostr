@@ -20,20 +20,15 @@ type Tag interface {
 }
 
 const (
-	// TypeEvent represents an event tag.
-	TypeEvent Type = "e"
-	// TypePubKey represents a public key tag.
-	TypePubKey Type = "p"
-	// TBD
-	TypeNonce Type = "nonce"
-	// TypeSubject represents a public key tag.
-	TypeSubject Type = "subject"
-	// TBD
+	TypeA              Type = "a"
+	TypeD              Type = "d"
+	TypeEvent          Type = "e"
+	TypePubKey         Type = "p"
+	TypeNonce          Type = "nonce"
+	TypeSubject        Type = "subject"
 	TypeContentWarning Type = "content-warning"
-	// TBD
-	TypeIdentity Type = "i"
-	// TBD
-	TypeExpiration Type = "expiration"
+	TypeIdentity       Type = "i"
+	TypeExpiration     Type = "expiration"
 )
 
 // NewEventTag TBD
