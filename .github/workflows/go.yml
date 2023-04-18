@@ -1,0 +1,10 @@
+name: Go
+on:
+  push:
+jobs:
+  go:
+    name: Go
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
