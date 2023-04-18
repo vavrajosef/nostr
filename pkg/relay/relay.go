@@ -1,9 +1,9 @@
 package relay
 
-func New(opt *RelayOptions) *Relay {
+func New(opt *Options) *Relay {
 	return &Relay{}
 }
 
-type RelayOptions struct{}
+type Options struct{}
 
 type Relay struct{}

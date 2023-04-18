@@ -29,13 +29,13 @@ type Options struct {
 
 // Event represents a single event object.
 type Event struct {
-	ID        []byte    `json:"id"`         // The unique identifier for the event
-	PublicKey []byte    `json:"pk"`         // The creator's public key
-	CreatedAt int64     `json:"created_at"` // The timestamp of event creation
-	Kind      Kind      `json:"kind"`       // The type of event
-	Tags      []tag.Tag `json:"tags"`       // Tags associated with the event
-	Content   []byte    `json:"content"`    // The content of the event
-	Signature []byte    `json:"sig"`        // The signature of the event
+	ID        []byte    `json:"id,omitempty"`         // The unique identifier for the event
+	PublicKey []byte    `json:"pk,omitempty"`         // The creator's public key
+	CreatedAt int64     `json:"created_at,omitempty"` // The timestamp of event creation
+	Kind      Kind      `json:"kind,omitempty"`       // The type of event
+	Tags      []tag.Tag `json:"tags,omitempty"`       // Tags associated with the event
+	Content   []byte    `json:"content,omitempty"`    // The content of the event
+	Signature []byte    `json:"sig,omitempty"`        // The signature of the event
 }
 
 // New creates a new event with the provided options.

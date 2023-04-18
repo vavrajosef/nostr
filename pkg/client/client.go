@@ -1,9 +1,9 @@
 package client
 
-type ClientOptions struct{}
+type Options struct{}
 
 type Client struct{}
 
-func New(opt *ClientOptions) *Client {
+func New(opt *Options) *Client {
 	return &Client{}
 }
