@@ -11,17 +11,59 @@ import (
 type Type string
 
 const (
-	// TypeEvent represents an Event message type.
-	TypeEvent Type = "EVENT"
-	// TypeEndOfStoredEvents represents an End of Stored Events message type.
-	TypeEndOfStoredEvents Type = "EOSE"
+	// TypeAuth TBD
+	TypeAuth Type = "AUTH"
 	// TypeClose represents a Close message type.
 	TypeClose Type = "CLOSE"
-	// TypeNotice represents a Notice message type.
+	// TypeCount TBD
+	TypeCount Type = "COUNT"
+	// TypeEndOfStoredEvents represents an End of Stored Events message type
+	TypeEndOfStoredEvents Type = "EOSE"
+	// TypeEvent represents an Event message type
+	TypeEvent Type = "EVENT"
+	// TypeNotice represents a Notice message type
 	TypeNotice Type = "NOTICE"
-	// TypeRequest represents a Request message type.
+	// TypeOK TBD
+	TypeOk Type = "OK"
+	// TypeRequest represents a Request message type
 	TypeRequest Type = "REQ"
 )
+
+// NewAuthMessage creates a new AuthMessage.
+func NewAuthMessage(subID []byte) *AuthMessage {
+	return &AuthMessage{subID}
+}
+
+// AuthMessage represents a Auth message, used to close a subscription.
+type AuthMessage struct {
+	SubscriptionID []byte `json:"subscription_id,omitempty"` // The ID of the subscription to be closed
+}
+
+// Encode encodes the AuthMessage into a slice of byte slices.
+func (m *AuthMessage) Encode() ([][]byte, error) {
+	return [][]byte{
+		[]byte(TypeAuth),
+		m.SubscriptionID,
+	}, nil
+}
+
+// NewCountMessage creates a new CountMessage.
+func NewCountMessage(subID []byte) *CountMessage {
+	return &CountMessage{subID}
+}
+
+// CountMessage represents a Count message, used to close a subscription.
+type CountMessage struct {
+	SubscriptionID []byte `json:"subscription_id,omitempty"` // The ID of the subscription to be closed
+}
+
+// Encode encodes the CountMessage into a slice of byte slices.
+func (m *CountMessage) Encode() ([][]byte, error) {
+	return [][]byte{
+		[]byte(TypeCount),
+		m.SubscriptionID,
+	}, nil
+}
 
 // NewCloseMessage creates a new CloseMessage.
 func NewCloseMessage(subID []byte) *CloseMessage {

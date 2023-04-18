@@ -11,6 +11,7 @@ func New(opt *Options) *Filter {
 		Since:      opt.Since,
 		Until:      opt.Until,
 		Limit:      opt.Limit,
+		Search:     opt.Search,
 	}
 }
 
@@ -24,6 +25,7 @@ type Options struct {
 	Since      string   `json:"since,omitempty"`   // The starting timestamp for filtering events
 	Until      string   `json:"until,omitempty"`   // The ending timestamp for filtering events
 	Limit      uint     `json:"limit,omitempty"`   // The maximum number of events to return
+	Search     []byte   `json:"search,omitempty"`  // TBD
 }
 
 // Filter is a struct that defines a set of criteria for filtering events.
@@ -36,4 +38,5 @@ type Filter struct {
 	Since      string   `json:"since,omitempty"`   // The starting timestamp for filtering events
 	Until      string   `json:"until,omitempty"`   // The ending timestamp for filtering events
 	Limit      uint     `json:"limit,omitempty"`   // The maximum number of events to return
+	Search     []byte   `json:"search,omitempty"`  // TBD
 }
