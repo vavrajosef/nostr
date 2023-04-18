@@ -8,3 +8,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+      # TODO: add Angular build step
+      # TODO: add Angular test step
+      # TODO: add Angular lint step
