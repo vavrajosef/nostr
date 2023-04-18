@@ -27,9 +27,7 @@ jobs:
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
         with:
+          name: github-pages
           path: ./docs/public
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./docs/public
+      - name: Deploy GitHub Pages
+        uses: actions/deploy-pages@v2@v2
