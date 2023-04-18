@@ -52,6 +52,10 @@ This project is built with the following core technologies:
 - [NPM](https://www.npmjs.com/)
 - [NodeJS](https://nodejs.org/en)
 
+## Acknowledgements
+
+- [@peaceiris](https://github.com/peaceiris)
+
 ## Author(s)
 
 - [@chantzlarge](https://github.com/chantzlarge)
