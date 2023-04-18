@@ -56,7 +56,7 @@ This project is built with the following core technologies:
 
 - [@peaceiris](https://github.com/peaceiris)
 
-## Author(s)
+## Authors
 
 - [@chantzlarge](https://github.com/chantzlarge)
 
