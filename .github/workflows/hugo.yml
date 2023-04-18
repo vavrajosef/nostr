@@ -1,6 +1,8 @@
 name: Hugo
 on:
   push:
+    branches:
+      - main
 jobs:
   hugo:
     name: Hugo
@@ -21,7 +23,11 @@ jobs:
         with:
           hugo-version: 'latest'
       - name: Build Hugo site
-        run: hugo -s docs/
+        run: hugo -s ./docs/
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          path: ./docs/public
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
