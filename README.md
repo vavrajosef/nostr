@@ -1,8 +1,6 @@
-[//]: # (https://gist.github.com/chantzlarge/0241e2a11a4cc49b628332b3520c08af)
+# go-nostr
 
-# [@go-nostr](https://github.com/go-nostr/)/[go-nostr](https://github.com/go-nostr/go-nostr/)
-
-## TL;DR
+## Overview
 
 > TL;DR _should_ include an unordered-list of featured aspects of the README
 
