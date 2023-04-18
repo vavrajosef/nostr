@@ -37,6 +37,11 @@ See [CONTRIBUTING](./CONTRIBUTING.md).
 
 > Built-with _should_ include a list of core technologies used to implement the project.
 
+- [Angular](https://angular.io/)
+- [Docker](https://docker.com/)
+- [Go](https://go.dev/)
+- [Hugo](https://gohugo.io/)
+
 ## Author(s)
 
 > Author(s) _should_ include a list of core contributors and their contact information.
