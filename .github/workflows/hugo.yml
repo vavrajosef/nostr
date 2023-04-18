@@ -6,8 +6,10 @@ on:
 jobs:
   docs:
     name: Docs
+    environment: github-pages
     permissions:
-      contents: write
+      id-token: write
+      pages: write
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
