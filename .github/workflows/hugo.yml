@@ -13,7 +13,7 @@ jobs:
         with:
           node-version: 14
       - name: Install dependencies
-        run: npm run ci -ws
+        run: npm ci -ws
       - name: Build with NPM
         run: npm run build
       - name: Setup Hugo
