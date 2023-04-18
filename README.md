@@ -10,10 +10,11 @@
 
 > Prerequisites _should_ include a list of dependencies necessary for the contributor to have installed before development can begin.
 
-- [Install NPM and NodeJS](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
 - [Install Angular](https://angular.io/guide/setup-local)
+- [Install Docker](https://docs.docker.com/engine/install/)
 - [Install Go](https://go.dev/doc/install)
 - [Install Hugo](https://gohugo.io/installation/)
+- [Install NPM and NodeJS](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
 
 ### Installation
 
