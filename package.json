@@ -5,13 +5,10 @@
   "directories": {
     "doc": "docs"
   },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "author": "",
   "license": "ISC",
   "workspaces": [
-    "web",
-    "docs"
+    "docs",
+    "web"
   ]
 }
