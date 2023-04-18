@@ -2,13 +2,18 @@
 
 ## Overview
 
-> TL;DR _should_ include an unordered-list of featured aspects of the README
+This monorepo contains various subprojects related to the nostr protocol, including:
+
+- `docs`: Documentation pages built using GitHub Pages and Hugo
+- `cmd`: Executable used for running a nostr relay
+- `pkg`: Various nostr/Go packages for use by external applications
+- `web`: Angular web client for administering the nostr relay (maintained in `cmd/`)
 
 ## Getting Started
 
 ### Prerequisites
 
-> Prerequisites _should_ include a list of dependencies necessary for the contributor to have installed before development can begin.
+Before starting development, make sure to install the following dependencies:
 
 - [Install Angular](https://angular.io/guide/setup-local)
 - [Install Docker](https://docs.docker.com/engine/install/)
@@ -20,23 +25,25 @@
 
 > Installation _should_ include a list of step-by-step instructions for installing the application.
 
+TBD
+
 ## Usage
 
 > Usage _should_ include sections related to running and testing the application.
 
+TBD
+
 ## Contributing
 
-> Contributing _should_ include sections related to contributor guidelines, standards, development methodologies, and style guides.
-
-See [CODE_OF_CONDUCT](./CODE_OF_CONDUCT.md).
+For information on contributing to this project, please see the [CODE_OF_CONDUCT](./CODE_OF_CONDUCT.md).
 
 ## Deployment
 
-> Deployment _should_ include sections related to deploying the application to various runtime contexts (i.e. production, stage, …).
+Deployment information will be added as the project matures.
 
 ## Built-with
 
-> Built-with _should_ include a list of core technologies used to implement the project.
+This project is built with the following core technologies:
 
 - [Angular](https://angular.io/)
 - [Docker](https://docker.com/)
@@ -47,23 +54,19 @@ See [CODE_OF_CONDUCT](./CODE_OF_CONDUCT.md).
 
 ## Author(s)
 
-> Author(s) _should_ include a list of core contributors and their contact information.
-
 - [@chantzlarge](https://github.com/chantzlarge)
 
 ## Versioning
 
-> Versioning _should_ include a table of major, minor and patch (optional) releases, the release date, and a brief description.
+Versioning information will be added as the project matures.
 
 ## License
 
-> License _should_ include a link to the license which applies to the project.
-
-[LICENSE](./LICENSE)
+This project is licensed under the terms of the [LICENSE](./LICENSE).
 
 ## References
 
-> References _should_ include links to additional materials helpful for contributors or users.
+For additional materials helpful for contributors or users, please see:
 
 - [@decred/dcrd](https://github.com/decred/dcrd)
 - [@golang-standards/project-layout](https://github.com/golang-standards/project-layout)
