@@ -7,125 +7,130 @@ import (
 	"github.com/go-nostr/go-nostr/pkg/filter"
 )
 
+// Type represents the type of a message.
+type Type string
+
 const (
-	// MessageTypeEvent represents an Event message type
-	MessageTypeEvent = "EVENT"
-	// MessageTypeEndOfStoredEvents represents an End of Stored Events message type
-	MessageTypeEndOfStoredEvents = "EOSE"
-	// MessageTypeClose represents a Close message type
-	MessageTypeClose = "CLOSE"
-	// MessageTypeNotice represents a Notice message type
-	MessageTypeNotice = "NOTICE"
-	// MessageTypeRequest represents a Request message type
-	MessageTypeRequest = "REQ"
+	// TypeEvent represents an Event message type.
+	TypeEvent Type = "EVENT"
+	// TypeEndOfStoredEvents represents an End of Stored Events message type.
+	TypeEndOfStoredEvents Type = "EOSE"
+	// TypeClose represents a Close message type.
+	TypeClose Type = "CLOSE"
+	// TypeNotice represents a Notice message type.
+	TypeNotice Type = "NOTICE"
+	// TypeRequest represents a Request message type.
+	TypeRequest Type = "REQ"
 )
 
-// NewCloseMessage creates a new CloseMessage
-func NewCloseMessage(sid []byte) *CloseMessage {
-	return &CloseMessage{sid}
+// NewCloseMessage creates a new CloseMessage.
+func NewCloseMessage(subID []byte) *CloseMessage {
+	return &CloseMessage{subID}
 }
 
-// CloseMessage represents a Close message
+// CloseMessage represents a Close message, used to close a subscription.
 type CloseMessage struct {
-	SubscriptionID []byte
+	SubscriptionID []byte `json:"subscription_id,omitempty"` // The ID of the subscription to be closed
 }
 
-// Encode encodes the CloseMessage into a slice of byte slices
-func (m *CloseMessage) Encode() [][]byte {
+// Encode encodes the CloseMessage into a slice of byte slices.
+func (m *CloseMessage) Encode() ([][]byte, error) {
 	return [][]byte{
-		[]byte(MessageTypeClose),
+		[]byte(TypeClose),
 		m.SubscriptionID,
-	}
+	}, nil
 }
 
-// NewEndOfStoredEventsMessage creates a new EndOfStoredEventsMessage
-func NewEndOfStoredEventsMessage(sid []byte) *EndOfStoredEventsMessage {
-	return &EndOfStoredEventsMessage{sid}
+// NewEndOfStoredEventsMessage creates a new EndOfStoredEventsMessage.
+func NewEndOfStoredEventsMessage(subID []byte) *EndOfStoredEventsMessage {
+	return &EndOfStoredEventsMessage{subID}
 }
 
-// EndOfStoredEventsMessage represents an End of Stored Events message
+// EndOfStoredEventsMessage represents an End of Stored Events message,
+// signaling that there are no more events for a given subscription.
 type EndOfStoredEventsMessage struct {
-	SubscriptionID []byte
+	SubscriptionID []byte `json:"subscription_id,omitempty"` // The ID of the subscription with no more events
 }
 
-// Encode encodes the EndOfStoredEventsMessage into a slice of byte slices
-func (m *EndOfStoredEventsMessage) Encode() [][]byte {
+// Encode encodes the EndOfStoredEventsMessage into a slice of byte slices.
+func (m *EndOfStoredEventsMessage) Encode() ([][]byte, error) {
 	return [][]byte{
-		[]byte(MessageTypeEndOfStoredEvents),
+		[]byte(TypeEndOfStoredEvents),
 		m.SubscriptionID,
-	}
+	}, nil
 }
 
-// NewEventMessage creates a new EventMessage
-func NewEventMessage(sid []byte, e *event.Event) *EventMessage {
+// NewEventMessage creates a new EventMessage.
+func NewEventMessage(subID []byte, e *event.Event) *EventMessage {
 	return &EventMessage{
-		SubscriptionID: sid,
+		SubscriptionID: subID,
 		Event:          e,
 	}
 }
 
-// EventMessage represents an Event message
+// EventMessage represents an Event message, containing a single event.
 type EventMessage struct {
-	SubscriptionID []byte
-	Event          *event.Event
+	SubscriptionID []byte       `json:"subscription_id,omitempty"` // The ID of the subscription for the event
+	Event          *event.Event `json:"event,omitempty"`           // The event object
 }
 
-// Encode encodes the EventMessage into a slice of byte slices
-func (m *EventMessage) Encode() [][]byte {
+// Encode encodes the EventMessage into a slice of byte slices.
+func (m *EventMessage) Encode() ([][]byte, error) {
 	e, err := json.Marshal(m.Event)
 	if err != nil {
-		panic(err)
+		return nil, err
 	}
 
 	return [][]byte{
-		[]byte(MessageTypeEvent),
+		[]byte(TypeEvent),
 		m.SubscriptionID,
 		e,
-	}
+	}, nil
 }
 
-// NewNoticeMessage creates a new NoticeMessage
+// NewNoticeMessage creates a new NoticeMessage.
 func NewNoticeMessage(m []byte) *NoticeMessage {
 	return &NoticeMessage{m}
 }
 
-// NoticeMessage represents a Notice message
+// NoticeMessage represents a Notice message, which provides additional information.
 type NoticeMessage struct {
-	Message []byte
+	Message []byte `json:"message,omitempty"` // The content of the notice message
 }
 
-// Encode encodes the NoticeMessage into a slice of byte slices
-func (m *NoticeMessage) Encode() [][]byte {
+// Encode encodes the NoticeMessage into a slice of byte slices.
+func (m *NoticeMessage) Encode() ([][]byte, error) {
 	return [][]byte{
-		[]byte(MessageTypeNotice),
+		[]byte(TypeNotice),
 		m.Message,
-	}
+	}, nil
 }
 
-// NewRequestMessage creates a new RequestMessage
-func NewRequestMessage(sid []byte, f *filter.Filter) *RequestMessage {
+// NewRequestMessage creates a new RequestMessage.
+func NewRequestMessage(subID []byte, f *filter.Filter) *RequestMessage {
 	return &RequestMessage{
-		SubscriptionID: sid,
+		SubscriptionID: subID,
 		Filter:         f,
 	}
 }
 
-// RequestMessage represents a Request message
+// RequestMessage represents a Request message, which is used to request events
+// that match a specified filter.
 type RequestMessage struct {
-	SubscriptionID []byte
-	Filter         *filter.Filter
+	SubscriptionID []byte         `json:"subscription_id,omitempty"` // The ID of the subscription for the request
+	Filter         *filter.Filter `json:"filter,omitempty"`          // The filter used to request events
 }
 
-// Encode encodes the RequestMessage into a slice of byte slices
-func (m *RequestMessage) Encode() [][]byte {
+// Encode encodes the RequestMessage into a slice of byte slices.
+func (m *RequestMessage) Encode() ([][]byte, error) {
 	f, err := json.Marshal(m.Filter)
 	if err != nil {
-		panic(err)
+		return nil, err
 	}
 
 	return [][]byte{
-		[]byte(MessageTypeRequest),
+		[]byte(TypeRequest),
 		m.SubscriptionID,
 		f,
-	}
+	}, nil
 }

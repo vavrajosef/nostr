@@ -29,13 +29,14 @@ func Test_New(t *testing.T) {
 			}{
 				opt: &event.Options{
 					Content:    []byte("This is a test message."),
-					Kind:       event.TextNote,
+					Kind:       event.KindTextNote,
 					PrivateKey: privateKey,
 
 					Tags: []tag.Tag{},
 				},
 			},
-			expected: nil, // We will compare the values inside the test, so we keep this as nil.
+			// TODO: replace
+			expected: nil,
 		},
 	}
 
@@ -46,6 +47,7 @@ func Test_New(t *testing.T) {
 				t.Errorf("event.New() error = %v", err)
 			}
 
+			// TODO: replace
 			// if !reflect.DeepEqual(evt.Content, tt.expected) {
 			// 	t.Errorf("event.New() = %v, expected = %v", evt.Content, tt.expected)
 			// }

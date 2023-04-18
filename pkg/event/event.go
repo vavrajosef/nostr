@@ -14,17 +14,17 @@ import (
 type Kind uint32
 
 const (
-	SetMetadata     Kind = 0 // Event for setting metadata
-	TextNote        Kind = 1 // Event for storing a text note
-	RecommendServer Kind = 2 // Event for recommending a server
+	KindSetMetadata     Kind = 0 // Event for setting metadata
+	KindTextNote        Kind = 1 // Event for storing a text note
+	KindRecommendServer Kind = 2 // Event for recommending a server
 )
 
 // Options contains the necessary information for creating a new event.
 type Options struct {
-	Content    []byte                // Content to be included in the event
-	Kind       Kind                  // The type of event
-	PrivateKey *secp256k1.PrivateKey // The creator's private key
-	Tags       []tag.Tag             // Tags associated with the event
+	Content    []byte                `json:"content,omitempty"`     // Content to be included in the event
+	Kind       Kind                  `json:"kind,omitempty"`        // The type of event
+	PrivateKey *secp256k1.PrivateKey `json:"private_key,omitempty"` // The creator's private key
+	Tags       []tag.Tag             `json:"tags,omitempty"`        // Tags associated with the event
 }
 
 // Event represents a single event object.
@@ -40,21 +40,21 @@ type Event struct {
 
 // New creates a new event with the provided options.
 func New(opts *Options) (*Event, error) {
-	// Encode the public key to a hex-encoded string
+	// NOTE: Encode the public key to a hex-encoded string
 	pubKeyHex := make([]byte, hex.EncodedLen(len(opts.PrivateKey.PubKey().SerializeUncompressed())))
 	hex.Encode(pubKeyHex, opts.PrivateKey.PubKey().SerializeCompressed())
 	pubKey := bytes.ToLower(pubKeyHex)[:32]
 
 	createdAt := time.Now().Unix()
 
-	// Encode the tags
+	// NOTE: Encode the tags
 	encodedTags := make([][]byte, 0)
 	for _, t := range opts.Tags {
 		encodedTags = append(encodedTags, t.Encode())
 	}
 	tagsJSON, _ := json.Marshal(encodedTags)
 
-	// Serialize the event data
+	// NOTE: Serialize the event data
 	eventData := make([]byte, 0)
 	eventData = append(eventData, 0)
 	eventData = append(eventData, pubKey...)
@@ -62,7 +62,7 @@ func New(opts *Options) (*Event, error) {
 	eventData = append(eventData, tagsJSON...)
 	eventData = append(eventData, opts.Content...)
 
-	// Encode the event data to a hex-encoded string
+	// NOTE: Encode the event data to a hex-encoded string
 	eventDataJSON, err := json.Marshal(eventData)
 	if err != nil {
 		return nil, err
@@ -70,16 +70,16 @@ func New(opts *Options) (*Event, error) {
 	eventDataHex := make([]byte, hex.EncodedLen(len(eventDataJSON)))
 	hex.Encode(eventDataHex, eventDataJSON)
 
-	// Get the unique identifier for the event
+	// NOTE: Get the unique identifier for the event
 	id := bytes.ToLower(eventDataHex)[:32]
 
-	// Encrypt the content
+	// NOTE: Encrypt the content
 	encryptedContent, err := secp256k1.Encrypt(opts.PrivateKey.PubKey(), opts.Content)
 	if err != nil {
 		return nil, err
 	}
 
-	// Create and return the new event
+	// NOTE: Create and return the new event
 	return &Event{
 		Content:   encryptedContent,
 		CreatedAt: createdAt,
