@@ -1,0 +1,16 @@
+{
+  "name": "@go-nostr/go-nostr",
+  "version": "1.0.0",
+  "description": "## Overview",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "workspaces": [
+    "web"
+  ]
+}
