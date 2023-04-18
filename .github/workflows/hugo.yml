@@ -4,6 +4,8 @@ on:
 jobs:
   hugo:
     name: Hugo
+    permissions:
+      contents: write
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
