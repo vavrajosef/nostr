@@ -10,6 +10,11 @@
 
 > Prerequisites _should_ include a list of dependencies necessary for the contributor to have installed before development can begin.
 
+- [Install NPM and NodeJS](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
+- [Install Angular](https://angular.io/guide/setup-local)
+- [Install Go](https://go.dev/doc/install)
+- [Install Hugo](https://gohugo.io/installation/)
+
 ### Installation
 
 > Installation _should_ include a list of step-by-step instructions for installing the application.
@@ -21,6 +26,8 @@
 ## Contributing
 
 > Contributing _should_ include sections related to contributor guidelines, standards, development methodologies, and style guides.
+
+See [CONTRIBUTING](./CONTRIBUTING.md).
 
 ## Deployment
 
