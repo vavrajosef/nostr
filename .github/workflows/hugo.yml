@@ -32,4 +32,6 @@ jobs:
           name: github-pages
           path: ./docs/public
       - name: Deploy GitHub Pages
-        uses: actions/deploy-pages@v2
+        uses: actions/upload-pages-artifact@v2
+        with:
+          path: ./docs/public
