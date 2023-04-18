@@ -27,7 +27,7 @@
 
 > Contributing _should_ include sections related to contributor guidelines, standards, development methodologies, and style guides.
 
-See [CONTRIBUTING](./CONTRIBUTING.md).
+See [CODE_OF_CONDUCT](./CODE_OF_CONDUCT.md).
 
 ## Deployment
 
