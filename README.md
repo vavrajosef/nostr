@@ -1,5 +1,13 @@
 # @go-nostr/go-nostr
 
+[![Angular](https://github.com/go-nostr/go-nostr/actions/workflows/angular.yml/badge.svg)](https://github.com/go-nostr/go-nostr/actions/workflows/angular.yml)
+
+[![Docker](https://github.com/go-nostr/go-nostr/actions/workflows/docker.yml/badge.svg)](https://github.com/go-nostr/go-nostr/actions/workflows/docker.yml)
+
+[![Go](https://github.com/go-nostr/go-nostr/actions/workflows/go.yml/badge.svg)](https://github.com/go-nostr/go-nostr/actions/workflows/go.yml)
+
+[![Hugo](https://github.com/go-nostr/go-nostr/actions/workflows/hugo.yml/badge.svg)](https://github.com/go-nostr/go-nostr/actions/workflows/hugo.yml)
+
 An all-in-one Go/Hugo/Angular monorepo for the nostr protocol, featuring comprehensive documentation, a nostr relay executable, reusable Go packages, and an Angular web client for relay administration.
 
 ## Overview
