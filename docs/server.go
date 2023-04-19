@@ -10,8 +10,8 @@ import (
 )
 
 const (
-	defaultHostname = "localhost"
-	defaultPort     = 5656
+	defaultHostname = "0.0.0.0"
+	defaultPort     = 9110
 )
 
 //go:embed public

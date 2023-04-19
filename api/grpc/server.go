@@ -8,8 +8,8 @@ import (
 )
 
 const (
-	defaultHostname = "localhost"
-	defaultPort     = 1313
+	defaultHostname = "0.0.0.0"
+	defaultPort     = 4317
 )
 
 type Server struct {

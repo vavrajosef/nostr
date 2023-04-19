@@ -9,8 +9,8 @@ COPY . .
 
 RUN go get -d -v ./...
 RUN go install -v ./...
-RUN go build -v -o /go/bin ${PWD}/cmd
+RUN go build -v -o /go/bin/nostr ${PWD}/cmd
 
-CMD ["/go/bin"]
+CMD ["/go/bin/nostr"]
 
 # TODO: add run step
