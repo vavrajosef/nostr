@@ -1,5 +1,9 @@
 package nostr
 
+func NewInformationDocument() *InformationDocument {
+	return &InformationDocument{}
+}
+
 type InformationDocument struct {
 	Name           []byte       `json:"name,omitempty"`
 	Description    []byte       `json:"description,omitempty"`

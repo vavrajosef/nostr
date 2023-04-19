@@ -1,5 +1,9 @@
 package nostr
 
+func NewLimitations() *Limitations {
+	return &Limitations{}
+}
+
 type Limitations struct {
 	MaxMessageLength uint `json:"max_message_length,omitempty"`
 	MaxSubscriptions uint `json:"max_subscriptions,omitempty"`
