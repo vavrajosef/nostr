@@ -19,6 +19,7 @@ type Tag interface {
 	Marshal() []byte
 }
 
+// TODO: add/change types
 const (
 	TypeA              Type = "a"
 	TypeD              Type = "d"

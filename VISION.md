@@ -32,7 +32,7 @@ The go-nostr software is designed as a part of the Nostr network, which is a dec
 
 ### Product Functions
 
-go-nostr serves as an essential component of the Nostr network by facilitating event creation, management, and communication between clients and relays. It provides core functionalities and supports selected NIPs to streamline the development of Nostr-compatible applications and contribute to the network's growth.
+go-nostr serves as a component of the Nostr network by facilitating event creation, management, and communication between clients and relays. It provides core functionalities and supports selected NIPs to streamline the development of Nostr-compatible applications and contribute to the network's growth.
 
 ### User Characteristics
 
