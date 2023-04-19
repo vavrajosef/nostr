@@ -5,6 +5,8 @@ import (
 	"net"
 	"net/http"
 	"time"
+
+	"github.com/go-nostr/go-nostr/internal/core"
 )
 
 const (
@@ -19,6 +21,12 @@ type Server struct {
 func NewServer() *Server {
 	// NOTE: TBD
 	serveMux := &http.ServeMux{}
+
+	s := core.NewService()
+
+	getHealthHandler := NewGetHealthHandler(s)
+
+	serveMux.Handle("/health", getHealthHandler)
 
 	// NOTE: TBD
 	server := &http.Server{

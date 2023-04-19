@@ -64,6 +64,10 @@ TBD
 
 TBD
 
+##### GET /health
+
+Returns the current health status of the service.
+
 ##### Websocket
 
 TBD
@@ -73,6 +77,10 @@ TBD
 TBD
 
 ### Functions
+
+#### Admin Get Health
+
+TBD
 
 #### Publish Metadata Event
 
