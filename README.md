@@ -50,6 +50,11 @@ For information on contributing to this project, please see the [CODE_OF_CONDUCT
 
 ### Snippets
 
+#### Build NPM dependencies
+
+```shell
+npm run build -ws
+```
 
 #### Format Go files
 
@@ -61,6 +66,12 @@ go fmt ./...
 
 ```shell
 go generate ./...
+```
+
+#### Install NPM dependencies
+
+```shell
+npm i -ws
 ```
 
 #### Run Go tests
