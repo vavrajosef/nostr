@@ -50,13 +50,19 @@ For information on contributing to this project, please see the [CODE_OF_CONDUCT
 
 ### Snippets
 
-#### Build Docker
+#### Build Docker image
+
+```shell
+docker build -t nostr .
+```
+
+#### Build Docker services
 
 ```shell
 docker-compose build
 ```
 
-#### Build NPM dependencies
+#### Build NPM packages
 
 ```shell
 npm run build -ws
@@ -80,7 +86,7 @@ go generate ./...
 npm i -ws
 ```
 
-#### Run Docker
+#### Run Docker services
 
 ```shell
 docker-compose up
