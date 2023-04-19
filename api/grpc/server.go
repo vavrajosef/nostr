@@ -1,9 +1,7 @@
-package web
+package grpc
 
 import (
-	"embed"
 	"fmt"
-	"io/fs"
 	"net"
 	"net/http"
 	"time"
@@ -11,27 +9,16 @@ import (
 
 const (
 	defaultHostname = "localhost"
-	defaultPort     = 8080
+	defaultPort     = 1313
 )
 
-//go:embed dist
-var FS embed.FS
-
-// Server TBD
 type Server struct {
 	server *http.Server
 }
 
-// New TBD
 func NewServer() *Server {
 	// NOTE: TBD
-	fs, _ := fs.Sub(FS, "dist")
-
-	// NOTE: TBD
 	serveMux := &http.ServeMux{}
-
-	// NOTE: TBD
-	serveMux.Handle("/", http.FileServer(http.FS(fs)))
 
 	// NOTE: TBD
 	server := &http.Server{

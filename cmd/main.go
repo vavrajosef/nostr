@@ -3,24 +3,41 @@ package main
 import (
 	"context"
 
+	"github.com/go-nostr/go-nostr/api/grpc"
+	"github.com/go-nostr/go-nostr/api/http"
+	"github.com/go-nostr/go-nostr/docs"
 	"github.com/go-nostr/go-nostr/web"
 	"golang.org/x/sync/errgroup"
 )
 
 func main() {
+	// NOTE: TBD
 	ctx := context.Background()
-	sc := struct {
-		ws *web.Server
+
+	// NOTE: TBD
+	serviceCollection := struct {
+		docsServer *docs.Server
+		grpcServer *grpc.Server
+		httpServer *http.Server
+		webServer  *web.Server
 	}{
-		ws: buildWebServer(),
+		docsServer: buildDocsServer(),
+		grpcServer: buildGRPCServer(),
+		httpServer: buildHTTPServer(),
+		webServer:  buildWebServer(),
 	}
 
 	// TODO: improve error handling
-	g, _ := errgroup.WithContext(ctx)
+	group, _ := errgroup.WithContext(ctx)
 
-	g.Go(sc.ws.Serve)
+	// TODO: add #Serve()
+	group.Go(serviceCollection.docsServer.Serve)
+	group.Go(serviceCollection.grpcServer.Serve)
+	group.Go(serviceCollection.httpServer.Serve)
+	group.Go(serviceCollection.webServer.Serve)
 
-	if err := g.Wait(); err != nil {
+	// NOTE: TBD
+	if err := group.Wait(); err != nil {
 		panic(err)
 	}
 }

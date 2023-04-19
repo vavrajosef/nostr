@@ -1,3 +1,0 @@
-# @go-nostr/docs
-
-TBD

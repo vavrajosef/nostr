@@ -7,10 +7,28 @@
 package main
 
 import (
+	"github.com/go-nostr/go-nostr/api/grpc"
+	"github.com/go-nostr/go-nostr/api/http"
+	"github.com/go-nostr/go-nostr/docs"
 	"github.com/go-nostr/go-nostr/web"
 )
 
 // Injectors from wire.go:
+
+func buildDocsServer() *docs.Server {
+	server := docs.NewServer()
+	return server
+}
+
+func buildGRPCServer() *grpc.Server {
+	server := grpc.NewServer()
+	return server
+}
+
+func buildHTTPServer() *http.Server {
+	server := http.NewServer()
+	return server
+}
 
 func buildWebServer() *web.Server {
 	server := web.NewServer()

@@ -1,4 +1,4 @@
-package web
+package docs
 
 import (
 	"embed"
@@ -11,10 +11,10 @@ import (
 
 const (
 	defaultHostname = "localhost"
-	defaultPort     = 8080
+	defaultPort     = 5656
 )
 
-//go:embed dist
+//go:embed public
 var FS embed.FS
 
 // Server TBD
@@ -25,7 +25,7 @@ type Server struct {
 // New TBD
 func NewServer() *Server {
 	// NOTE: TBD
-	fs, _ := fs.Sub(FS, "dist")
+	fs, _ := fs.Sub(FS, "public")
 
 	// NOTE: TBD
 	serveMux := &http.ServeMux{}
