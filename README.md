@@ -50,6 +50,12 @@ For information on contributing to this project, please see the [CODE_OF_CONDUCT
 
 ### Snippets
 
+#### Build Docker
+
+```shell
+docker-compose build
+```
+
 #### Build NPM dependencies
 
 ```shell
@@ -72,6 +78,12 @@ go generate ./...
 
 ```shell
 npm i -ws
+```
+
+#### Run Docker
+
+```shell
+docker-compose up
 ```
 
 #### Run Go tests
