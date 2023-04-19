@@ -1,4 +1,4 @@
-package wss
+package nostrwss
 
 import (
 	"fmt"

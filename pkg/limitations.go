@@ -1,4 +1,4 @@
-package relay
+package nostr
 
 type Limitations struct {
 	MaxMessageLength uint `json:"max_message_length,omitempty"`

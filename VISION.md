@@ -10,7 +10,7 @@ By providing clear and comprehensive requirements, we aim to facilitate effectiv
 
 ### Scope
 
-This requirements document focuses on the development of the go-nostr software, a Nostr-compatible implementation that includes both relay and client functionalities. The software will provide the necessary features and tools for developers and users to interact with the Nostr protocol, allowing for the creation and management of events, as well as communication between clients and relays. The go-nostr software aims to streamline the development of Nostr-compatible applications, promote the adoption of the Nostr network, and support the growth of the decentralized social platform. While not covering the implementation of every single NIP, it will focus on core functionalities and selected NIPs that are essential for a functional and robust Nostr system. 
+This requirements document focuses on the development of the go-nostr software, a Nostr-compatible implementation that includes both relay and client functionalities. The software will provide the necessary features and tools for developers and users to interact with the Nostr protocol, allowing for the creation and management of events, as well as communication between clients and relays. The go-nostr software aims to streamline the development of Nostr-compatible applications, promote the adoption of the Nostr network, and support the growth of the decentralized social platform. While not covering the implementation of every single NIP, it will focus on core functionalities and selected NIPs that are essential for a functional and robust Nostr system.
 
 ### Definitions, Acronyms, and Abbreviations
 
@@ -41,6 +41,48 @@ The primary users of go-nostr include contributors, developers, and end-users. C
 ### Constraints
 
 go-nostr must adhere to the specifications outlined in the Nostr protocol and maintain compatibility with other Nostr implementations. Furthermore, it must be efficient, secure, and robust while providing a scalable and user-friendly solution.
+
+| Status | NIP                                                                        |
+|--------|----------------------------------------------------------------------------|
+|        | NIP-01: Basic protocol flow description                                    |
+|        | NIP-02: Contact List and Petnames                                          |
+|        | NIP-03: OpenTimestamps Attestations for Events                             |
+|        | NIP-04: Encrypted Direct Message                                           |
+|        | NIP-05: Mapping Nostr keys to DNS-based internet identifiers               |
+|        | NIP-06: Basic key derivation from mnemonic seed phrase                     |
+|        | NIP-07: window.nostr capability for web browsers                           |
+|        | NIP-08: Handling Mentions --- unrecommended: deprecated in favor of NIP-27 |
+|        | NIP-09: Event Deletion                                                     |
+|        | NIP-10: Conventions for clients' use of e and p tags in text events        |
+|        | NIP-11: Relay Information Document                                         |
+|        | NIP-12: Generic Tag Queries                                                |
+|        | NIP-13: Proof of Work                                                      |
+|        | NIP-14: Subject tag in text events.                                        |
+|        | NIP-16: Event Treatment                                                    |
+|        | NIP-18: Reposts                                                            |
+|        | NIP-19: bech32-encoded entities                                            |
+|        | NIP-20: Command Results                                                    |
+|        | NIP-21: nostr: URL scheme                                                  |
+|        | NIP-22: Event created_at Limits                                            |
+|        | NIP-23: Long-form Content                                                  |
+|        | NIP-25: Reactions                                                          |
+|        | NIP-26: Delegated Event Signing                                            |
+|        | NIP-27: Text Note References                                               |
+|        | NIP-28: Public Chat                                                        |
+|        | NIP-33: Parameterized Replaceable Events                                   |
+|        | NIP-36: Sensitive Content                                                  |
+|        | NIP-39: External Identities in Profiles                                    |
+|        | NIP-40: Expiration Timestamp                                               |
+|        | NIP-42: Authentication of clients to relays                                |
+|        | NIP-45: Counting results                                                   |
+|        | NIP-46: Nostr Connect                                                      |
+|        | NIP-50: Keywords filter                                                    |
+|        | NIP-51: Lists                                                              |
+|        | NIP-56: Reporting                                                          |
+|        | NIP-57: Lightning Zaps                                                     |
+|        | NIP-58: Badges                                                             |
+|        | NIP-65: Relay List Metadata                                                |
+|        | NIP-78: Application-specific data                                          |
 
 ### Assumptions and Dependencies
 
@@ -88,13 +130,13 @@ TBD
 
 TBD
 
-#### Publish Short Text Note Event 
+#### Publish Short Text Note Event
 
 (Kind 1, NIP 1)
 
 TBD
 
-#### Publish Recommend Relay Event 
+#### Publish Recommend Relay Event
 
 (Kind 2, NIP 1)
 
@@ -277,4 +319,3 @@ TBD
 ### Other Requirements
 
 TBD
-

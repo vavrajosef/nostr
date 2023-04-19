@@ -1,4 +1,4 @@
-package relay
+package nostr
 
 type Admission struct {
 	Kinds  []uint `json:"kinds,omitempty"`

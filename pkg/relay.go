@@ -1,4 +1,4 @@
-package relay
+package nostr
 
 import (
 	"net/http"

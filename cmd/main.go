@@ -5,7 +5,7 @@ import (
 
 	"github.com/go-nostr/go-nostr/api/grpc/nostrgrpc"
 	"github.com/go-nostr/go-nostr/api/http/nostrhttp"
-	"github.com/go-nostr/go-nostr/api/wss"
+	"github.com/go-nostr/go-nostr/api/wss/nostrwss"
 	"github.com/go-nostr/go-nostr/docs"
 	"github.com/go-nostr/go-nostr/web"
 	"golang.org/x/sync/errgroup"
@@ -21,7 +21,7 @@ func main() {
 		nostrGRPCServer *nostrgrpc.Server
 		nostrHTTPServer *nostrhttp.Server
 		webServer       *web.Server
-		wssServer       *wss.Server
+		wssServer       *nostrwss.Server
 	}{
 		docsServer:      buildDocsServer(),
 		nostrGRPCServer: buildGRPCServer(),

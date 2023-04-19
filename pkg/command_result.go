@@ -1,4 +1,4 @@
-package relay
+package nostr
 
 type CommandResult struct {
 	Status  []byte `json:"status,omitempty"`

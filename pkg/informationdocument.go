@@ -1,4 +1,4 @@
-package relay
+package nostr
 
 type InformationDocument struct {
 	Name           []byte       `json:"name,omitempty"`

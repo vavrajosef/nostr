@@ -9,7 +9,7 @@ package main
 import (
 	"github.com/go-nostr/go-nostr/api/grpc/nostrgrpc"
 	"github.com/go-nostr/go-nostr/api/http/nostrhttp"
-	"github.com/go-nostr/go-nostr/api/wss"
+	"github.com/go-nostr/go-nostr/api/wss/nostrwss"
 	"github.com/go-nostr/go-nostr/docs"
 	"github.com/go-nostr/go-nostr/web"
 )
@@ -36,7 +36,7 @@ func buildWebServer() *web.Server {
 	return server
 }
 
-func buildWSSServer() *wss.Server {
-	server := wss.NewServer()
+func buildWSSServer() *nostrwss.Server {
+	server := nostrwss.NewServer()
 	return server
 }

@@ -1,15 +1,14 @@
-package event_test
+package nostr_test
 
 import (
 	"reflect"
 	"testing"
 
 	"github.com/decred/dcrd/dcrec/secp256k1"
-	"github.com/go-nostr/go-nostr/pkg/event"
-	"github.com/go-nostr/go-nostr/pkg/tag"
+	nostr "github.com/go-nostr/go-nostr/pkg"
 )
 
-func Test_New(t *testing.T) {
+func Test_NewEvent(t *testing.T) {
 	privateKey, err := secp256k1.GeneratePrivateKey()
 	if err != nil {
 		t.Fatalf("Failed to generate private key: %v", err)
@@ -18,21 +17,21 @@ func Test_New(t *testing.T) {
 	tests := []struct {
 		name string
 		args struct {
-			opt *event.Options
+			opt *nostr.EventOptions
 		}
-		expected *event.Event
+		expected *nostr.Event
 	}{
 		{
 			name: "New Event",
 			args: struct {
-				opt *event.Options
+				opt *nostr.EventOptions
 			}{
-				opt: &event.Options{
+				opt: &nostr.EventOptions{
 					Content:    []byte("This is a test message."),
-					Kind:       event.KindShortTextNote,
+					Kind:       nostr.KindShortTextNote,
 					PrivateKey: privateKey,
 
-					Tags: []tag.Tag{},
+					Tags: []nostr.Tag{},
 				},
 			},
 			// TODO: replace
@@ -42,7 +41,7 @@ func Test_New(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			evt, err := event.New(tt.args.opt)
+			evt, err := nostr.NewEvent(tt.args.opt)
 			if err != nil {
 				t.Errorf("event.New() error = %v", err)
 			}
@@ -53,11 +52,11 @@ func Test_New(t *testing.T) {
 			// }
 
 			if evt.Kind != tt.args.opt.Kind {
-				t.Errorf("event.New() Kind = %v, expected = %v", evt.Kind, tt.args.opt.Kind)
+				t.Errorf("event.NewEvent() Kind = %v, expected = %v", evt.Kind, tt.args.opt.Kind)
 			}
 
 			if !reflect.DeepEqual(evt.Tags, tt.args.opt.Tags) {
-				t.Errorf("event.New() Tags = %v, expected = %v", evt.Tags, tt.args.opt.Tags)
+				t.Errorf("event.NewEvent() Tags = %v, expected = %v", evt.Tags, tt.args.opt.Tags)
 			}
 
 			t.Logf("%v", evt)
