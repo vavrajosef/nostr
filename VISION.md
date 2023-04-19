@@ -74,123 +74,183 @@ TBD
 
 ### Functions
 
-#### Metadata (Kind 0, NIP 1)
+#### Publish Metadata Event
+
+(Kind 0, NIP 1)
 
 TBD
 
-#### Short Text Note (Kind 1, NIP 1)
+#### Publish Short Text Note Event 
+
+(Kind 1, NIP 1)
 
 TBD
 
-#### Recommend Relay (Kind 2, NIP 1)
+#### Publish Recommend Relay Event 
+
+(Kind 2, NIP 1)
 
 TBD
 
-#### Contacts (Kind 3, NIP 2)
+#### Publish Contacts Event
+
+(Kind 3, NIP 2)
 
 TBD
 
-#### Encrypted Direct Messages (Kind 4, NIP 4)
+#### Publish Encrypted Direct Messages Event
+
+(Kind 4, NIP 4)
 
 TBD
 
-#### Event Deletion (Kind 5, NIP 9)
+#### Publish Event Deletion Event
+
+(Kind 5, NIP 9)
 
 TBD
 
-#### Reposts (Kind 6, NIP 18)
+#### Publish Reposts Event
+
+(Kind 6, NIP 18)
 
 TBD
 
-#### Reaction (Kind 7, NIP 25)
+#### Publish Reaction Event
+
+(Kind 7, NIP 25)
 
 TBD
 
-#### Badge Award (Kind 8, NIP 58)
+#### Publish Badge Award Event
+
+(Kind 8, NIP 58)
 
 TBD
 
-#### Channel Creation (Kind 40, NIP 28)
+#### Publish Channel Creation Event
+
+(Kind 40, NIP 28)
 
 TBD
 
-#### Channel Metadata (Kind 41, NIP 28)
+#### Publish Channel Metadata Event
+
+(Kind 41, NIP 28)
 
 TBD
 
-#### Channel Message (Kind 42, NIP 28)
+#### Publish Channel Message Event
+
+(Kind 42, NIP 28)
 
 TBD
 
-#### Channel Hide Message (Kind 43, NIP 28)
+#### Publish Channel Hide Message Event
+
+(Kind 43, NIP 28)
 
 TBD
 
-#### Channel Mute User (Kind 44, NIP 28)
+#### Publish Channel Mute User Event
+
+(Kind 44, NIP 28)
 
 TBD
 
-#### Reporting (Kind 1984, NIP 56)
+#### Publish Reporting Event
+
+(Kind 1984, NIP 56)
 
 TBD
 
-#### Zap Request (Kind 9734, NIP 57)
+#### Publish Zap Request Event
+
+(Kind 9734, NIP 57)
 
 TBD
 
-#### Zap (Kind 9735, NIP 57)
+#### Publish Zap Event
+
+(Kind 9735, NIP 57)
 
 TBD
 
-#### Mute List (Kind 10000, NIP 51)
+#### Publish Mute List Event
+
+(Kind 10000, NIP 51)
 
 TBD
 
-#### Pin List (Kind 10001, NIP 51)
+#### Publish Pin List Event
+
+(Kind 10001, NIP 51)
 
 TBD
 
-#### Relay List Metadata (Kind 10002, NIP 65)
+#### Publish Relay List Metadata Event
+
+(Kind 10002, NIP 65)
 
 TBD
 
-#### Client Authentication (Kind 22242, NIP 42)
+#### Publish Client Authentication Event
+
+(Kind 22242, NIP 42)
 
 TBD
 
-#### Nostr Connect (Kind 24133, NIP 46)
+#### Publish Nostr Connect Event
+
+(Kind 24133, NIP 46)
 
 TBD
 
-#### Categorized People List (Kind 30000, NIP 51)
+#### Publish Categorized People List Event
+
+(Kind 30000, NIP 51)
 
 TBD
 
-#### Categorized Bookmark List (Kind 30001, NIP 51)
+#### Publish Categorized Bookmark List Event
+
+(Kind 30001, NIP 51)
 
 TBD
 
-#### Profile Badges (Kind 30008, NIP 58)
+#### Publish Profile Badges Event
+
+(Kind 30008, NIP 58)
 
 TBD
 
-#### Badge Definition (Kind 30009, NIP 58)
+#### Publish Badge Definition Event
+
+(Kind 30009, NIP 58)
 
 TBD
 
-#### Create or update a stall (Kind 30017, NIP 15)
+#### Publish Create or update a stall Event
+
+(Kind 30017, NIP 15)
 
 TBD
 
-#### Create or update a product (Kind 30018, NIP 15)
+#### Publish Create or update a product Event
+
+(Kind 30018, NIP 15)
 
 TBD
 
-#### Long-form Content (Kind 30023, NIP 23)
+#### Publish Long-form Content Event
+
+(Kind 30023, NIP 23)
 
 TBD
 
-#### Application-specific Data (Kind 30078, NIP 78)
+#### Publish Application-specific Data Event
+
+(Kind 30078, NIP 78)
 
 TBD
 
