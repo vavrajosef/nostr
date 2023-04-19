@@ -4,7 +4,7 @@ import (
 	"context"
 
 	"github.com/go-nostr/go-nostr/api/grpc"
-	"github.com/go-nostr/go-nostr/api/http"
+	"github.com/go-nostr/go-nostr/api/http/nostrhttp"
 	"github.com/go-nostr/go-nostr/api/wss"
 	"github.com/go-nostr/go-nostr/docs"
 	"github.com/go-nostr/go-nostr/web"
@@ -17,17 +17,17 @@ func main() {
 
 	// NOTE: TBD
 	serviceCollection := struct {
-		docsServer *docs.Server
-		grpcServer *grpc.Server
-		httpServer *http.Server
-		webServer  *web.Server
-		wssServer  *wss.Server
+		docsServer      *docs.Server
+		grpcServer      *grpc.Server
+		nostrHTTPServer *nostrhttp.Server
+		webServer       *web.Server
+		wssServer       *wss.Server
 	}{
-		docsServer: buildDocsServer(),
-		grpcServer: buildGRPCServer(),
-		httpServer: buildHTTPServer(),
-		webServer:  buildWebServer(),
-		wssServer:  buildWSSServer(),
+		docsServer:      buildDocsServer(),
+		grpcServer:      buildGRPCServer(),
+		nostrHTTPServer: buildHTTPServer(),
+		webServer:       buildWebServer(),
+		wssServer:       buildWSSServer(),
 	}
 
 	// TODO: improve error handling
@@ -36,7 +36,7 @@ func main() {
 	// TODO: add #Serve()
 	group.Go(serviceCollection.docsServer.Serve)
 	group.Go(serviceCollection.grpcServer.Serve)
-	group.Go(serviceCollection.httpServer.Serve)
+	group.Go(serviceCollection.nostrHTTPServer.Serve)
 	group.Go(serviceCollection.webServer.Serve)
 	group.Go(serviceCollection.wssServer.Serve)
 

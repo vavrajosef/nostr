@@ -1,6 +1,7 @@
-package http
+package nostrhttp
 
 import (
+	"encoding/json"
 	"fmt"
 	"net"
 	"net/http"
@@ -14,6 +15,26 @@ const (
 	defaultPort     = 4318
 )
 
+func newGetHealthHandler(s *core.Service) *getHealthHandler {
+	return &getHealthHandler{s}
+}
+
+type getHealthHandler struct {
+	svc *core.Service
+}
+
+func (h *getHealthHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	req := &core.GetHealthRequest{}
+	res, _ := h.svc.GetHealth(req)
+	byt, _ := json.Marshal(res)
+
+	// NOTE: TBD
+	w.Header().Add("Content-Type", "application/json")
+
+	// NOTE: TBD
+	w.Write(byt)
+}
+
 type Server struct {
 	server *http.Server
 }
@@ -24,7 +45,7 @@ func NewServer() *Server {
 
 	s := core.NewService()
 
-	getHealthHandler := NewGetHealthHandler(s)
+	getHealthHandler := newGetHealthHandler(s)
 
 	serveMux.Handle("/health", getHealthHandler)
 

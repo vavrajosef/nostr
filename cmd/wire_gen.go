@@ -8,7 +8,7 @@ package main
 
 import (
 	"github.com/go-nostr/go-nostr/api/grpc"
-	"github.com/go-nostr/go-nostr/api/http"
+	"github.com/go-nostr/go-nostr/api/http/nostrhttp"
 	"github.com/go-nostr/go-nostr/api/wss"
 	"github.com/go-nostr/go-nostr/docs"
 	"github.com/go-nostr/go-nostr/web"
@@ -26,8 +26,8 @@ func buildGRPCServer() *grpc.Server {
 	return server
 }
 
-func buildHTTPServer() *http.Server {
-	server := http.NewServer()
+func buildHTTPServer() *nostrhttp.Server {
+	server := nostrhttp.NewServer()
 	return server
 }
 
