@@ -80,6 +80,12 @@ npm i -ws
 go test ./...
 ```
 
+#### Run NPM tests
+
+```shell
+npm test -ws
+```
+
 ## Deployment
 
 Deployment information will be added as the project matures.
