@@ -15,8 +15,8 @@ const (
 	defaultPort     = 4318
 )
 
-func newGetHealthHandler(s *core.Service) *getHealthHandler {
-	return &getHealthHandler{s}
+func newGetHealthHandler(svc *core.Service) *getHealthHandler {
+	return &getHealthHandler{svc}
 }
 
 type getHealthHandler struct {
@@ -43,9 +43,9 @@ func NewServer() *Server {
 	// NOTE: TBD
 	serveMux := &http.ServeMux{}
 
-	s := core.NewService()
+	svc := core.NewService()
 
-	getHealthHandler := newGetHealthHandler(s)
+	getHealthHandler := newGetHealthHandler(svc)
 
 	serveMux.Handle("/health", getHealthHandler)
 
@@ -63,10 +63,10 @@ func NewServer() *Server {
 
 // Serve TBD
 func (s *Server) Serve() error {
-	listener, err := net.Listen("tcp", fmt.Sprintf("%v:%v", defaultHostname, defaultPort))
+	lis, err := net.Listen("tcp", fmt.Sprintf("%v:%v", defaultHostname, defaultPort))
 	if err != nil {
 		panic(err)
 	}
 
-	return s.server.Serve(listener)
+	return s.server.Serve(lis)
 }

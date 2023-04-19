@@ -3,7 +3,7 @@ package main
 import (
 	"context"
 
-	"github.com/go-nostr/go-nostr/api/grpc"
+	"github.com/go-nostr/go-nostr/api/grpc/nostrgrpc"
 	"github.com/go-nostr/go-nostr/api/http/nostrhttp"
 	"github.com/go-nostr/go-nostr/api/wss"
 	"github.com/go-nostr/go-nostr/docs"
@@ -18,13 +18,13 @@ func main() {
 	// NOTE: TBD
 	serviceCollection := struct {
 		docsServer      *docs.Server
-		grpcServer      *grpc.Server
+		nostrGRPCServer *nostrgrpc.Server
 		nostrHTTPServer *nostrhttp.Server
 		webServer       *web.Server
 		wssServer       *wss.Server
 	}{
 		docsServer:      buildDocsServer(),
-		grpcServer:      buildGRPCServer(),
+		nostrGRPCServer: buildGRPCServer(),
 		nostrHTTPServer: buildHTTPServer(),
 		webServer:       buildWebServer(),
 		wssServer:       buildWSSServer(),
@@ -35,7 +35,7 @@ func main() {
 
 	// TODO: add #Serve()
 	group.Go(serviceCollection.docsServer.Serve)
-	group.Go(serviceCollection.grpcServer.Serve)
+	group.Go(serviceCollection.nostrGRPCServer.Serve)
 	group.Go(serviceCollection.nostrHTTPServer.Serve)
 	group.Go(serviceCollection.webServer.Serve)
 	group.Go(serviceCollection.wssServer.Serve)

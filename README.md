@@ -48,6 +48,27 @@ TBD
 
 For information on contributing to this project, please see the [CODE_OF_CONDUCT](./CODE_OF_CONDUCT.md).
 
+### Snippets
+
+
+#### Format Go files
+
+```shell
+go fmt ./...
+```
+
+#### Generate Go dependencies
+
+```shell
+go generate ./...
+```
+
+#### Run Go tests
+
+```shell
+go test ./...
+```
+
 ## Deployment
 
 Deployment information will be added as the project matures.
