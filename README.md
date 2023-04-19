@@ -1,4 +1,4 @@
-# go-nostr
+# @go-nostr/go-nostr
 
 An all-in-one Go/Hugo/Angular monorepo for the nostr protocol, featuring comprehensive documentation, a nostr relay executable, reusable Go packages, and an Angular web client for relay administration.
 
