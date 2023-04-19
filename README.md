@@ -8,16 +8,9 @@
 
 [![Hugo](https://github.com/go-nostr/go-nostr/actions/workflows/hugo.yml/badge.svg)](https://github.com/go-nostr/go-nostr/actions/workflows/hugo.yml)
 
-An all-in-one Go/Hugo/Angular monorepo for the nostr protocol, featuring comprehensive documentation, a nostr relay executable, reusable Go packages, and an Angular web client for relay administration.
-
 ## Overview
 
-This monorepo contains various subprojects related to the nostr protocol, including:
-
-- `docs`: Documentation pages built using GitHub Pages and Hugo
-- `cmd`: Executable used for running a nostr relay
-- `pkg`: Various nostr/Go packages for use by external applications
-- `web`: Angular web client for administering the nostr relay (maintained in `cmd/`)
+An all-in-one Go/Hugo/Angular monorepo for the nostr protocol, featuring comprehensive documentation, a nostr relay executable, reusable Go packages, and an Angular web client for relay administration.
 
 ## Getting Started
 
@@ -41,6 +34,24 @@ TBD
 ## Usage
 
 > Usage _should_ include sections related to running and testing the application.
+
+### gRPC API
+
+TBD
+
+### HTTP API
+
+TBD
+
+### Websocket API
+
+TBD
+
+### Docs
+
+TBD
+
+### Web
 
 TBD
 
