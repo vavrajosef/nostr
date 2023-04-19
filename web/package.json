@@ -37,6 +37,6 @@
   },
   "description": "This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.2.6.",
   "main": "index.js",
-  "author": "",
-  "license": "ISC"
+  "author": "C. Large <contact@chantzlarge.com> (http://chantzlarge.com/)",
+  "license": "AGPL-3.0"
 }

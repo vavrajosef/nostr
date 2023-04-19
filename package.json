@@ -1,12 +1,9 @@
 {
   "name": "@go-nostr/go-nostr",
   "version": "1.0.0",
-  "description": "## Overview",
-  "directories": {
-    "doc": "docs"
-  },
-  "author": "",
-  "license": "ISC",
+  "description": "TBD",
+  "author": "C. Large <contact@chantzlarge.com> (http://chantzlarge.com/)",
+  "license": "AGPL-3.0",
   "workspaces": [
     "docs",
     "web"

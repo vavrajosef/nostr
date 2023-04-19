@@ -8,6 +8,6 @@
     "build": "echo \"Warning: no build script specified\" && exit 0",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
-  "license": "ISC"
+  "author": "C. Large <contact@chantzlarge.com> (http://chantzlarge.com/)",
+  "license": "AGPL-3.0"
 }
