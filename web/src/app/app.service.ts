@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-const defaultHostname = 'localhost'
+const defaultHostname = '0.0.0.0'
 const defaultPort = '4318'
 
 export interface GetHealthResponse {

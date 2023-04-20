@@ -29,6 +29,7 @@ func (h *getHealthHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	byt, _ := json.Marshal(res)
 
 	// NOTE: TBD
+	w.Header().Add("Access-Control-Allow-Origin", "*")
 	w.Header().Add("Content-Type", "application/json")
 
 	// NOTE: TBD
