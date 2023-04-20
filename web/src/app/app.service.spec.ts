@@ -36,7 +36,7 @@ describe('AppService', () => {
         expect(response).toEqual(mockResponse);
       });
 
-      const req = httpTestingController.expectOne('http://localhost:4318/health');
+      const req = httpTestingController.expectOne('http://0.0.0.0:4318/health');
       expect(req.request.method).toEqual('GET');
       req.flush(mockResponse);
     });
