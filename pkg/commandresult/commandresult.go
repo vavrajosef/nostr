@@ -1,6 +1,6 @@
-package nostr
+package commandresult
 
-func NewCommandResult() *CommandResult {
+func New() *CommandResult {
 	return &CommandResult{}
 }
 

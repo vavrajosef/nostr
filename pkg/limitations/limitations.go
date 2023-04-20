@@ -1,6 +1,6 @@
-package nostr
+package limitations
 
-func NewLimitations() *Limitations {
+func New() *Limitations {
 	return &Limitations{}
 }
 

@@ -1,4 +1,4 @@
-package nostr
+package tag
 
 import "encoding/json"
 

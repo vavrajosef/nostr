@@ -1,29 +1,32 @@
-package nostr
+package message
 
 import (
 	"encoding/json"
+
+	"github.com/go-nostr/go-nostr/pkg/event"
+	"github.com/go-nostr/go-nostr/pkg/filter"
 )
 
 // Type represents the type of a message.
-type MessageType string
+type Type string
 
 const (
-	// MessageTypeAuth TBD
-	MessageTypeAuth MessageType = "AUTH"
-	// MessageTypeClose represents a Close message type.
-	MessageTypeClose MessageType = "CLOSE"
-	// MessageTypeCount TBD
-	MessageTypeCount MessageType = "COUNT"
-	// MessageTypeEndOfStoredEvents represents an End of Stored Events message type
-	MessageTypeEndOfStoredEvents MessageType = "EOSE"
-	// MessageTypeEvent represents an Event message type
-	MessageTypeEvent MessageType = "EVENT"
-	// MessageTypeNotice represents a Notice message type
-	MessageTypeNotice MessageType = "NOTICE"
-	// MessageTypeOK TBD
-	MessageTypeOk MessageType = "OK"
-	// MessageTypeRequest represents a Request message type
-	MessageTypeRequest MessageType = "REQ"
+	// TypeAuth TBD
+	TypeAuth Type = "AUTH"
+	// TypeClose represents a Close message type.
+	TypeClose Type = "CLOSE"
+	// TypeCount TBD
+	TypeCount Type = "COUNT"
+	// TypeEndOfStoredEvents represents an End of Stored Events message type
+	TypeEndOfStoredEvents Type = "EOSE"
+	// TypeEvent represents an Event message type
+	TypeEvent Type = "EVENT"
+	// TypeNotice represents a Notice message type
+	TypeNotice Type = "NOTICE"
+	// TypeOK TBD
+	TypeOk Type = "OK"
+	// TypeRequest represents a Request message type
+	TypeRequest Type = "REQ"
 )
 
 // Message TBD
@@ -44,7 +47,7 @@ type AuthMessage struct {
 // Encode encodes the AuthMessage into a slice of byte slices.
 func (m *AuthMessage) Encode() ([][]byte, error) {
 	return [][]byte{
-		[]byte(MessageTypeAuth),
+		[]byte(TypeAuth),
 		m.SubscriptionID,
 	}, nil
 }
@@ -62,7 +65,7 @@ type CountMessage struct {
 // Encode encodes the CountMessage into a slice of byte slices.
 func (m *CountMessage) Encode() ([][]byte, error) {
 	return [][]byte{
-		[]byte(MessageTypeCount),
+		[]byte(TypeCount),
 		m.SubscriptionID,
 	}, nil
 }
@@ -80,7 +83,7 @@ type CloseMessage struct {
 // Encode encodes the CloseMessage into a slice of byte slices.
 func (m *CloseMessage) Encode() ([][]byte, error) {
 	return [][]byte{
-		[]byte(MessageTypeClose),
+		[]byte(TypeClose),
 		m.SubscriptionID,
 	}, nil
 }
@@ -99,13 +102,13 @@ type EndOfStoredEventsMessage struct {
 // Encode encodes the EndOfStoredEventsMessage into a slice of byte slices.
 func (m *EndOfStoredEventsMessage) Encode() ([][]byte, error) {
 	return [][]byte{
-		[]byte(MessageTypeEndOfStoredEvents),
+		[]byte(TypeEndOfStoredEvents),
 		m.SubscriptionID,
 	}, nil
 }
 
 // NewEventMessage creates a new EventMessage.
-func NewEventMessage(subID []byte, e *Event) *EventMessage {
+func NewEventMessage(subID []byte, e *event.Event) *EventMessage {
 	return &EventMessage{
 		SubscriptionID: subID,
 		Event:          e,
@@ -114,8 +117,8 @@ func NewEventMessage(subID []byte, e *Event) *EventMessage {
 
 // EventMessage represents an Event message, containing a single event.
 type EventMessage struct {
-	SubscriptionID []byte `json:"subscription_id,omitempty"` // The ID of the subscription for the event
-	Event          *Event `json:"event,omitempty"`           // The event object
+	SubscriptionID []byte       `json:"subscription_id,omitempty"` // The ID of the subscription for the event
+	Event          *event.Event `json:"event,omitempty"`           // The event object
 }
 
 // Encode encodes the EventMessage into a slice of byte slices.
@@ -126,7 +129,7 @@ func (m *EventMessage) Encode() ([][]byte, error) {
 	}
 
 	return [][]byte{
-		[]byte(MessageTypeEvent),
+		[]byte(TypeEvent),
 		m.SubscriptionID,
 		e,
 	}, nil
@@ -145,13 +148,13 @@ type NoticeMessage struct {
 // Encode encodes the NoticeMessage into a slice of byte slices.
 func (m *NoticeMessage) Encode() ([][]byte, error) {
 	return [][]byte{
-		[]byte(MessageTypeNotice),
+		[]byte(TypeNotice),
 		m.Message,
 	}, nil
 }
 
 // NewRequestMessage creates a new RequestMessage.
-func NewRequestMessage(subID []byte, f *Filter) *RequestMessage {
+func NewRequestMessage(subID []byte, f *filter.Filter) *RequestMessage {
 	return &RequestMessage{
 		SubscriptionID: subID,
 		Filter:         f,
@@ -161,8 +164,8 @@ func NewRequestMessage(subID []byte, f *Filter) *RequestMessage {
 // RequestMessage represents a Request message, which is used to request events
 // that match a specified filter.
 type RequestMessage struct {
-	SubscriptionID []byte  `json:"subscription_id,omitempty"` // The ID of the subscription for the request
-	Filter         *Filter `json:"filter,omitempty"`          // The filter used to request events
+	SubscriptionID []byte         `json:"subscription_id,omitempty"` // The ID of the subscription for the request
+	Filter         *filter.Filter `json:"filter,omitempty"`          // The filter used to request events
 }
 
 // Encode encodes the RequestMessage into a slice of byte slices.
@@ -173,7 +176,7 @@ func (m *RequestMessage) Encode() ([][]byte, error) {
 	}
 
 	return [][]byte{
-		[]byte(MessageTypeRequest),
+		[]byte(TypeRequest),
 		m.SubscriptionID,
 		f,
 	}, nil

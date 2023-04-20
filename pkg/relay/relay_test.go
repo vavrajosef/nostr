@@ -1,25 +1,25 @@
-package nostr_test
+package relay_test
 
 import (
 	"testing"
 
-	nostr "github.com/go-nostr/go-nostr/pkg"
+	"github.com/go-nostr/go-nostr/pkg/relay"
 )
 
 func Test_NewRelay(t *testing.T) {
 	tests := []struct {
 		name string
 		args struct {
-			opt *nostr.RelayOptions
+			opt *relay.Options
 		}
-		expected *nostr.Relay
+		expected *relay.Relay
 	}{
 		{
 			name: "New Relay",
 			args: struct {
-				opt *nostr.RelayOptions
+				opt *relay.Options
 			}{
-				opt: &nostr.RelayOptions{},
+				opt: &relay.Options{},
 			},
 			expected: nil,
 		},
@@ -27,7 +27,7 @@ func Test_NewRelay(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			relay, err := nostr.NewRelay(tt.args.opt)
+			relay, err := relay.NewRelay(tt.args.opt)
 			if err != nil {
 				t.Errorf("event.New() error = %v", err)
 			}
@@ -41,9 +41,9 @@ func TestRelay_Dial(t *testing.T) {
 	tests := []struct {
 		name string
 		args struct {
-			opt *nostr.RelayOptions
+			opt *relay.Options
 		}
-		expected *nostr.Relay
+		expected *relay.Relay
 	}{
 		// TODO: temporarily disabled
 		// {
@@ -53,7 +53,7 @@ func TestRelay_Dial(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			relay, err := nostr.NewRelay(tt.args.opt)
+			relay, err := relay.NewRelay(tt.args.opt)
 			if err != nil {
 				t.Errorf("event.New() error = %v", err)
 			}

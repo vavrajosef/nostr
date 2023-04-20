@@ -1,31 +1,32 @@
-package nostr
+package relay
 
 import (
 	"context"
 	"log"
 	"time"
 
+	"github.com/go-nostr/go-nostr/pkg/limitations"
 	"nhooyr.io/websocket"
 	"nhooyr.io/websocket/wsjson"
 )
 
-func NewRelay(opt *RelayOptions) (*Relay, error) {
+func NewRelay(opt *Options) (*Relay, error) {
 	return &Relay{opt}, nil
 }
 
-type RelayOptions struct {
-	Name          []byte       `json:"name,omitempty"`
-	Description   []byte       `json:"description,omitempty"`
-	PubKey        []byte       `json:"pub_key,omitempty"`
-	Contact       []byte       `json:"contact,omitempty"`
-	SupportedNIPs []byte       `json:"supported_nips,omitempty"`
-	Software      []byte       `json:"software,omitempty"`
-	Version       []byte       `json:"version,omitempty"`
-	Limitations   *Limitations `json:"limitations,omitempty"`
+type Options struct {
+	Name          []byte                   `json:"name,omitempty"`
+	Description   []byte                   `json:"description,omitempty"`
+	PubKey        []byte                   `json:"pub_key,omitempty"`
+	Contact       []byte                   `json:"contact,omitempty"`
+	SupportedNIPs []byte                   `json:"supported_nips,omitempty"`
+	Software      []byte                   `json:"software,omitempty"`
+	Version       []byte                   `json:"version,omitempty"`
+	Limitations   *limitations.Limitations `json:"limitations,omitempty"`
 }
 
 type Relay struct {
-	*RelayOptions
+	*Options
 }
 
 func (r *Relay) Dial() {

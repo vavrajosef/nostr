@@ -1,7 +1,7 @@
-package nostr
+package filter
 
 // New creates a new Filter instance using the provided Options.
-func NewFilter(opt *FilterOptions) *Filter {
+func New(opt *Options) *Filter {
 	return &Filter{
 		IDs:        opt.IDs,
 		Authors:    opt.Authors,
@@ -16,7 +16,7 @@ func NewFilter(opt *FilterOptions) *Filter {
 }
 
 // Options is a struct containing options for creating a new Filter.
-type FilterOptions struct {
+type Options struct {
 	IDs        [][]byte `json:"ids,omitempty"`     // The IDs of the events to filter
 	Authors    [][]byte `json:"authors,omitempty"` // The authors of the events to filter
 	Kinds      [][]byte `json:"kinds,omitempty"`   // The kinds of the events to filter

@@ -1,6 +1,6 @@
-package nostr
+package admission
 
-func NewAdmission() *Admission {
+func New() *Admission {
 	return &Admission{}
 }
 
