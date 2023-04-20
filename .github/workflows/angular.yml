@@ -20,7 +20,8 @@ jobs:
         run: npm run build
       - name: Run Angular tests
         working-directory: web/
-        run: npm run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI
+        run: npm run test -- --watch=false --browsers=ChromeHeadless
       - name: Run Angular linter
         working-directory: web/
         run: npm run lint
+      # TODO: add upload of dist/ to GitHub
