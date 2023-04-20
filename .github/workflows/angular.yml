@@ -8,6 +8,19 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      # TODO: add Angular build step
-      # TODO: add Angular test step
-      # TODO: add Angular lint step
+      - name: Setup NodeJS
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - name: Install NPM dependencies
+        working-directory: web/
+        run: npm ci
+      - name: Build Angular application
+        working-directory: web/
+        run: npm run build
+      - name: Run Angular tests
+        working-directory: web/
+        run: npm run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI
+      - name: Run Angular linter
+        working-directory: web/
+        run: npm run lint
