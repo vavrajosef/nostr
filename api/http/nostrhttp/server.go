@@ -8,6 +8,7 @@ import (
 	"time"
 
 	"github.com/go-nostr/go-nostr/internal/core"
+	nostr "github.com/go-nostr/go-nostr/pkg"
 )
 
 const (
@@ -36,6 +37,30 @@ func (h *getHealthHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	w.Write(byt)
 }
 
+func newGetInternetIdentifier(svc *core.Service) *getInternetIdentifier {
+	return &getInternetIdentifier{svc}
+}
+
+type getInternetIdentifier struct {
+	svc *core.Service
+}
+
+func (h *getInternetIdentifier) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	ii := &nostr.InternetIdentifier{
+		Names: map[string]string{
+			"bob": "b0635d6a9851d3aed0cd6c495b282167acf761729078d975fc341b22650b07b9",
+		},
+	}
+	byt, _ := json.Marshal(ii)
+
+	// NOTE: TBD
+	w.Header().Add("Access-Control-Allow-Origin", "*")
+	w.Header().Add("Content-Type", "application/json")
+
+	// NOTE: TBD
+	w.Write(byt)
+}
+
 type Server struct {
 	server *http.Server
 }
@@ -47,8 +72,10 @@ func NewServer() *Server {
 	svc := core.NewService()
 
 	getHealthHandler := newGetHealthHandler(svc)
+	getInternetIdentifier := newGetInternetIdentifier(svc)
 
 	serveMux.Handle("/health", getHealthHandler)
+	serveMux.Handle("/.well-known/nostr.json", getInternetIdentifier)
 
 	// NOTE: TBD
 	server := &http.Server{
