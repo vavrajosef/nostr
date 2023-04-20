@@ -2,6 +2,7 @@ package nostr
 
 import (
 	"context"
+	"encoding/json"
 	"log"
 	"time"
 
@@ -42,6 +43,16 @@ func (r *Relay) Dial() {
 	}
 	defer c.Close(websocket.StatusInternalError, "the sky is falling")
 
+	byt, _ := json.Marshal()
+
+	log.Printf("%v", string(byt))
+
+	err = wsjson.Write(ctx, c, byt)
+	if err != nil {
+		panic(err)
+	}
+
+	// TODO: replace with appropriate interface
 	v := []any{}
 	err = wsjson.Read(ctx, c, &v)
 	if err != nil {
