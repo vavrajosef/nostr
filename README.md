@@ -39,15 +39,19 @@ TBD
 
 > Usage _should_ include sections related to running and testing the application.
 
-### gRPC API
+### API
+
+Multiple protocols are used to support communication between clients and relays.
+
+#### gRPC
 
 TBD
 
-### HTTP API
+#### HTTP
 
 TBD
 
-### Websocket API
+#### Websocket
 
 TBD
 
