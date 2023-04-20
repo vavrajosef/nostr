@@ -12,10 +12,10 @@ import (
 )
 
 func main() {
-	// NOTE: TBD
+	// NOTE: Create a new context for managing the lifetime of the main function
 	ctx := context.Background()
 
-	// NOTE: TBD
+	// NOTE: Initialize a struct containing all the service servers
 	serviceCollection := struct {
 		docsServer      *docs.Server
 		nostrGRPCServer *nostrgrpc.Server
@@ -30,17 +30,17 @@ func main() {
 		wssServer:       buildWSSServer(),
 	}
 
-	// TODO: improve error handling
+	// NOTE: Create an error group to manage the concurrent execution of service servers
 	group, _ := errgroup.WithContext(ctx)
 
-	// TODO: add #Serve()
+	// NOTE: Add service server Serve functions to the error group
 	group.Go(serviceCollection.docsServer.Serve)
 	group.Go(serviceCollection.nostrGRPCServer.Serve)
 	group.Go(serviceCollection.nostrHTTPServer.Serve)
 	group.Go(serviceCollection.webServer.Serve)
 	group.Go(serviceCollection.wssServer.Serve)
 
-	// NOTE: TBD
+	// NOTE: Wait for all service servers to complete or return an error
 	if err := group.Wait(); err != nil {
 		panic(err)
 	}
