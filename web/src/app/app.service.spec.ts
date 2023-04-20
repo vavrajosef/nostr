@@ -31,7 +31,7 @@ describe('AppService', () => {
         timestamp: Date.now()
       };
 
-      service.GetHealth({}).subscribe(response => {
+      service.GetHealth().subscribe(response => {
         expect(response).toBeTruthy();
         expect(response).toEqual(mockResponse);
       });
