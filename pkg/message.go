@@ -26,6 +26,11 @@ const (
 	MessageTypeRequest MessageType = "REQ"
 )
 
+// Message TBD
+type Message interface {
+	Encode() ([][]byte, error)
+}
+
 // NewAuthMessage creates a new AuthMessage.
 func NewAuthMessage(subID []byte) *AuthMessage {
 	return &AuthMessage{subID}

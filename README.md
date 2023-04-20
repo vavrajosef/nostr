@@ -1,5 +1,9 @@
 # @go-nostr/go-nostr
 
+⚠️ **WARNING: This project is actively under development and no stable releases have been made yet.** ⚠️
+
+Please be aware that the code and documentation may contain unfinished features or inconsistencies. We appreciate your interest in the project and encourage you to check back for updates on progress towards a stable release.
+
 [![Angular](https://github.com/go-nostr/go-nostr/actions/workflows/angular.yml/badge.svg)](https://github.com/go-nostr/go-nostr/actions/workflows/angular.yml)
 
 [![Docker](https://github.com/go-nostr/go-nostr/actions/workflows/docker.yml/badge.svg)](https://github.com/go-nostr/go-nostr/actions/workflows/docker.yml)

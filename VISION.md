@@ -18,7 +18,7 @@ TBD
 
 ### References
 
-TBD
+- [RFC 8615: Well-Known Uniform Resource Identifiers (URIs)](https://www.rfc-editor.org/rfc/rfc8615)
 
 ### Overvierw
 
@@ -103,6 +103,10 @@ This document focuses on the essential requirements for go-nostr. However, as th
 TBD
 
 ##### HTTP
+
+TBD
+
+##### GET /.well-known
 
 TBD
 

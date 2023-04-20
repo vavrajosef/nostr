@@ -28,7 +28,7 @@ func Test_NewEvent(t *testing.T) {
 			}{
 				opt: &nostr.EventOptions{
 					Content:    []byte("This is a test message."),
-					Kind:       nostr.KindShortTextNote,
+					Kind:       nostr.EventKindShortTextNote,
 					PrivateKey: privateKey,
 
 					Tags: []nostr.Tag{},
