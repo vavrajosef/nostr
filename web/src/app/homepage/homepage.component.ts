@@ -7,8 +7,8 @@ import { AppService } from '../app.service';
   styleUrls: ['./homepage.component.scss']
 })
 export class HomepageComponent implements OnInit {
-  status: string = ''
-  timestamp: number = -1
+  status = ''
+  timestamp = -1
 
   constructor(
     private readonly appService: AppService,
