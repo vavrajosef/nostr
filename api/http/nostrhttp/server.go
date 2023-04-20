@@ -8,7 +8,6 @@ import (
 	"time"
 
 	"github.com/go-nostr/go-nostr/internal/core"
-	nostr "github.com/go-nostr/go-nostr/pkg"
 )
 
 const (
@@ -46,12 +45,8 @@ type getInternetIdentifier struct {
 }
 
 func (h *getInternetIdentifier) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	ii := &nostr.InternetIdentifier{
-		Names: map[string]string{
-			"bob": "b0635d6a9851d3aed0cd6c495b282167acf761729078d975fc341b22650b07b9",
-		},
-	}
-	byt, _ := json.Marshal(ii)
+	res, _ := h.svc.GetInternetIdentifier(&core.GetInternetIdentifierRequest{})
+	byt, _ := json.Marshal(res)
 
 	// NOTE: TBD
 	w.Header().Add("Access-Control-Allow-Origin", "*")

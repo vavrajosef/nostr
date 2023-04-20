@@ -1,6 +1,10 @@
 package core
 
-import "time"
+import (
+	"time"
+
+	nostr "github.com/go-nostr/go-nostr/pkg"
+)
 
 func NewService() *Service {
 	return &Service{}
@@ -20,5 +24,22 @@ func (s *Service) GetHealth(req *GetHealthRequest) (*GetHealthResponse, error) {
 	return &GetHealthResponse{
 		Status:    []byte("OK"),
 		Timestamp: time.Now().Unix(),
+	}, nil
+}
+
+type GetInternetIdentifierRequest struct {
+}
+
+type GetInternetIdentifierResponse struct {
+	*nostr.InternetIdentifier
+}
+
+func (s *Service) GetInternetIdentifier(req *GetInternetIdentifierRequest) (*GetInternetIdentifierResponse, error) {
+	return &GetInternetIdentifierResponse{
+		&nostr.InternetIdentifier{
+			Names: map[string]string{
+				"bob": "b0635d6a9851d3aed0cd6c495b282167acf761729078d975fc341b22650b07b9",
+			},
+		},
 	}, nil
 }
