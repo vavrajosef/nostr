@@ -98,23 +98,23 @@ This document focuses on the essential requirements for go-nostr. However, as th
 
 #### Software Interfaces
 
-##### gRPC
+##### gRPC API
 
 TBD
 
-##### HTTP
+##### HTTP API
 
 TBD
 
-##### GET /.well-known
+###### GET /.well-known/nostr.json?name=local-part
 
-TBD
+Returns the internet identifier for the given name query parameter.
 
-##### GET /health
+###### GET /health
 
 Returns the current health status of the service.
 
-##### Websocket
+##### Websocket API
 
 TBD
 
@@ -122,11 +122,27 @@ TBD
 
 TBD
 
-### Functions
-
-#### Admin Get Health
+##### Docs
 
 TBD
+
+##### Web
+
+TBD
+
+###### HomepageComponent
+
+TBD
+
+### Functions
+
+#### Get Health
+
+Returns the current health [status] of the service implementing the healthcheck endpoint monitoring pattern.
+
+#### Get Internet Identifier
+
+Returns the internet identifier for given name and optionally relays, if enabled. Supports [NIP-05](https://github.com/nostr-protocol/nips/blob/master/05.md).
 
 #### Publish Metadata Event
 
