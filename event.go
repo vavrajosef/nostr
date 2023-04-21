@@ -47,22 +47,22 @@ const (
 
 // EventOptions contains the necessary information for creating a new event.
 type EventOptions struct {
-	Content    []byte                `json:"content,omitempty"`     // Content to be included in the event
+	Content    string                `json:"content,omitempty"`     // Content to be included in the event
 	Kind       EventKind             `json:"kind,omitempty"`        // The type of event
-	OTS        []byte                `json:"ots,omitempty"`         // TBD
+	OTS        string                `json:"ots,omitempty"`         // TBD
 	PrivateKey *secp256k1.PrivateKey `json:"private_key,omitempty"` // The creator's private key
 	Tags       []Tag                 `json:"tags,omitempty"`        // Tags associated with the event
 }
 
 // Event represents a single event object.
 type Event struct {
-	Content   []byte    `json:"content,omitempty"`    // The content of the event
+	Content   string    `json:"content,omitempty"`    // The content of the event
 	CreatedAt int64     `json:"created_at,omitempty"` // The timestamp of event creation
-	ID        []byte    `json:"id,omitempty"`         // The unique identifier for the event
+	ID        string    `json:"id,omitempty"`         // The unique identifier for the event
 	Kind      EventKind `json:"kind,omitempty"`       // The type of event
-	OTS       []byte    `json:"ots,omitempty"`        // TBD
-	PublicKey []byte    `json:"pk,omitempty"`         // The creator's public key
-	Signature []byte    `json:"sig,omitempty"`        // The signature of the event
+	OTS       string    `json:"ots,omitempty"`        // TBD
+	PublicKey string    `json:"pk,omitempty"`         // The creator's public key
+	Signature string    `json:"sig,omitempty"`        // The signature of the event
 	Tags      []Tag     `json:"tags,omitempty"`       // Tags associated with the event
 }
 
@@ -118,19 +118,19 @@ func New(opts *EventOptions) (*Event, error) {
 	id := bytes.ToLower(eventDataHex)[:32]
 
 	// NOTE: TBD
-	encryptedContent, err := secp256k1.Encrypt(opts.PrivateKey.PubKey(), opts.Content)
+	encryptedContent, err := secp256k1.Encrypt(opts.PrivateKey.PubKey(), []byte(opts.Content))
 	if err != nil {
 		return nil, err
 	}
 
 	// NOTE: TBD
 	evt := &Event{
-		Content:   encryptedContent,
+		Content:   string(encryptedContent),
 		CreatedAt: createdAt,
-		ID:        id,
+		ID:        string(id),
 		Kind:      opts.Kind,
-		PublicKey: pubKey,
-		// Tags:      opts.Tags,
+		PublicKey: string(pubKey),
+		Tags:      opts.Tags,
 	}
 
 	// NOTE: TBD

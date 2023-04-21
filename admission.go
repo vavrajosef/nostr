@@ -1,7 +1,7 @@
 package nostr
 
 type Admission struct {
-	Kinds  []uint `json:"kinds,omitempty"`
-	Amount uint   `json:"amount,omitempty"`
-	Unit   []byte `json:"unit,omitempty"`
+	Kinds  EventKind `json:"kinds,omitempty"`
+	Amount uint      `json:"amount,omitempty"`
+	Unit   string    `json:"unit,omitempty"`
 }
