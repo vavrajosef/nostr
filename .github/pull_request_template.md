@@ -1,18 +1,34 @@
-## What's Changed
+## Summary of Changes
 
-> What has been added, changed, deprecated, fixed, removed, or secured?
-
-TBD
-
-## Benefits and Solutions
-
-> Relate the changes mentioned before to potential benefits or solutions
+> Briefly describe the main changes in this pull request (e.g., new features, bug fixes, improvements, or updates).
 
 TBD
 
-## Additional Context
+## Benefits and Impact
 
-> Screen captures, API calls, or whatever else you believe demonstrate
-> the behaviors are performing as expected.
+> Explain the benefits and impact of these changes on the project or its users. If applicable, link to relevant issues or discussions.
 
 TBD
+
+## Testing and Validation
+
+> Describe any testing or validation performed to ensure the changes are working as intended. Include any relevant test cases or scenarios.
+
+TBD
+
+## Screenshots or Examples
+
+> If applicable, add screenshots, code examples, or other visual aids to help explain the changes.
+
+TBD
+
+## Checklist
+
+- [ ] I have updated the relevant documentation, if necessary.
+- [ ] I have added tests to cover my changes, if applicable.
+- [ ] All new and existing tests passed.
+- [ ] My changes do not generate new warnings or errors.
+
+## Additional Information
+
+> Provide any additional context, notes, or links that may be helpful for reviewers.
