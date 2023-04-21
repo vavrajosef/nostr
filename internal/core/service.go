@@ -3,7 +3,7 @@ package core
 import (
 	"time"
 
-	"github.com/go-nostr/go-nostr/pkg/internetidentifier"
+	"github.com/go-nostr/go-nostr/internetidentifier"
 )
 
 func NewService() *Service {

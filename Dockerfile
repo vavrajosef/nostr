@@ -17,12 +17,12 @@ RUN hugo
 # Golang builder step
 FROM golang as go_builder
 WORKDIR /go/src
-COPY --from=node_builder /web/dist /web/dist
+COPY --from=node_builder /client/dist /client/dist
 COPY --from=hugo_builder /docs/public /docs/public
 COPY . .
 RUN go get -d -v ./...
 RUN go install -v ./...
-RUN go build -v -o /go/bin/nostr ${PWD}/cmd
+RUN go build -v -o /go/bin/nostr ${PWD}/internal/cmd
 
 # Minimalist, secure Go run step
 FROM gcr.io/distroless/base

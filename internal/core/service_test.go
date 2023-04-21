@@ -4,7 +4,7 @@ import (
 	"testing"
 
 	"github.com/go-nostr/go-nostr/internal/core"
-	"github.com/go-nostr/go-nostr/pkg/internetidentifier"
+	"github.com/go-nostr/go-nostr/internetidentifier"
 	"github.com/stretchr/testify/assert"
 )
 

@@ -1,0 +1,35 @@
+package main
+
+import (
+	"context"
+
+	"github.com/go-nostr/go-nostr/internal/client"
+	"github.com/go-nostr/go-nostr/internal/docs"
+	"golang.org/x/sync/errgroup"
+)
+
+func main() {
+	// NOTE: Create a new context for managing the lifetime of the main function
+	ctx := context.Background()
+
+	// NOTE: Initialize a struct containing all the service servers
+	serviceCollection := struct {
+		clientServer *client.Server
+		docsServer   *docs.Server
+	}{
+		clientServer: buildWebServer(),
+		docsServer:   buildDocsServer(),
+	}
+
+	// NOTE: Create an error group to manage the concurrent execution of service servers
+	group, _ := errgroup.WithContext(ctx)
+
+	// NOTE: Add service server Serve functions to the error group
+	group.Go(serviceCollection.clientServer.Serve)
+	group.Go(serviceCollection.docsServer.Serve)
+
+	// NOTE: Wait for all service servers to complete or return an error
+	if err := group.Wait(); err != nil {
+		panic(err)
+	}
+}
