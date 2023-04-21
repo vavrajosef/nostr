@@ -1,4 +1,4 @@
-package petnametag
+package preimagetag
 
 import (
 	"encoding/json"
@@ -7,24 +7,24 @@ import (
 )
 
 // New TBD
-func New(eventID []byte, relayURL []byte) *PetnameTag {
-	return &PetnameTag{
+func New(eventID []byte, relayURL []byte) *PreimageTag {
+	return &PreimageTag{
 		Type:     tag.TypeEvent,
 		EventID:  eventID,
 		RelayURL: relayURL,
 	}
 }
 
-// PetnameTag is a tag for an event, including the event ID and relay URL.
-type PetnameTag struct {
+// PreimageTag is a tag for an event, including the event ID and relay URL.
+type PreimageTag struct {
 	Type     tag.Type `json:"type,omitempty"`      // The type of the tag, which is "e" for event tags
 	EventID  []byte   `json:"event_id,omitempty"`  // The unique identifier for the associated event
 	RelayURL []byte   `json:"relay_url,omitempty"` // The URL of the relay server for the event
 	Marker   []byte   `json:"marker,omitempty"`    // The URL of the relay server for the event
 }
 
-// Encode encodes the PetnameTag into a byte slice.
-func (t *PetnameTag) Encode() [][]byte {
+// Encode encodes the PreimageTag into a byte slice.
+func (t *PreimageTag) Encode() [][]byte {
 	b := make([][]byte, 0)
 	b = append(b, []byte(tag.TypeEvent))
 	b = append(b, t.EventID)
@@ -33,7 +33,7 @@ func (t *PetnameTag) Encode() [][]byte {
 	return b
 }
 
-func (t *PetnameTag) Marshal() []byte {
+func (t *PreimageTag) Marshal() []byte {
 	b, _ := json.Marshal(t.Encode())
 
 	return b

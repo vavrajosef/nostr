@@ -1,7 +1,5 @@
 package tag
 
-import "encoding/json"
-
 type Marker string
 
 const (
@@ -13,278 +11,39 @@ const (
 // Type represents the type of a tag.
 type Type string
 
-// Tag is an interface for different types of tags.
-type Tag interface {
-	Encode() [][]byte
-	Marshal() []byte
-}
-
-// TODO: add/change types
 const (
-	TypeA              Type = "a"
-	TypeD              Type = "d"
-	TypeEvent          Type = "e"
-	TypePetName        Type = "petname"
-	TypePubKey         Type = "p"
-	TypeNonce          Type = "nonce"
-	TypeSubject        Type = "subject"
-	TypeContentWarning Type = "content-warning"
-	TypeIdentity       Type = "i"
-	TypeExpiration     Type = "expiration"
+	TypeAmount      Type = "amount"          // TypeAmount represents millisats.
+	TypeBadgeDesc   Type = "description"     // TypeBadgeDesc represents a badge description.
+	TypeBadgeName   Type = "name"            // TypeBadgeName represents a badge name.
+	TypeBolt11      Type = "bolt11"          // TypeBolt11 represents a Bolt11 invoice.
+	TypeChallenge   Type = "challenge"       // TypeChallenge represents a challenge string.
+	TypeContentWarn Type = "content-warning" // TypeContentWarn represents a content warning reason.
+	TypeDelegation  Type = "delegation"      // TypeDelegation represents a delegation with pubkey, conditions, and delegation token.
+	TypeEvent       Type = "a"               // TypeEvent represents coordinates to an event relay URL.
+	TypeEventID     Type = "e"               // TypeEventID represents an event ID (hex) used in relay URLs and markers.
+	TypeExpiration  Type = "expiration"      // TypeExpiration represents a Unix timestamp (string) for expiration.
+	TypeGeohash     Type = "g"               // TypeGeohash represents a geohash.
+	TypeHashtag     Type = "t"               // TypeHashtag represents a hashtag.
+	TypeIdentifier  Type = "d"               // TypeIdentifier represents an identifier.
+	TypeIdentity    Type = "i"               // TypeIdentity represents an identity used in proofs.
+	TypeImage       Type = "image"           // TypeImage represents an image URL with dimensions in pixels.
+	TypeInvDesc     Type = "description"     // TypeInvDesc represents an invoice description.
+	TypeLNURL       Type = "lnurl"           // TypeLNURL represents a Bech32 encoded LNURL.
+	TypeNonce       Type = "nonce"           // TypeNonce represents a random nonce.
+	TypePreimage    Type = "preimage"        // TypePreimage represents a hash of a Bolt11 invoice.
+	TypePubkey      Type = "p"               // TypePubkey represents a public key (hex) used in relay URLs.
+	TypePublishedAt Type = "published_at"    // TypePublishedAt represents a Unix timestamp (string) for when an item was published.
+	TypeReference   Type = "r"               // TypeReference represents a reference (URL, etc).
+	TypeRelay       Type = "relay"           // TypeRelay represents a relay URL.
+	TypeRelays      Type = "relays"          // TypeRelays represents a list of relays.
+	TypeSubject     Type = "subject"         // TypeSubject represents a subject.
+	TypeSummary     Type = "summary"         // TypeSummary represents an article summary.
+	TypeThumb       Type = "thumb"           // TypeThumb represents a badge thumbnail with dimensions in pixels.
+	TypeTitle       Type = "title"           // TypeTitle represents an article title.
+	TypeZap         Type = "zap"             // TypeZap represents a profile name with a type of value.
 )
 
-// NewPubKeyTag TBD
-func NewPubKeyTag(pubKey []byte, relayURL []byte) *PubKeyTag {
-	return &PubKeyTag{
-		Type:     TypeEvent,
-		PubKey:   pubKey,
-		RelayURL: relayURL,
-	}
-}
-
-// PubKeyTag is a tag for a public key, including the public key and relay URL.
-type PubKeyTag struct {
-	Type     Type   `json:"type,omitempty"`      // The type of the tag, which is "p" for public key tags
-	PubKey   []byte `json:"pub_key,omitempty"`   // The public key associated with the tag
-	RelayURL []byte `json:"relay_url,omitempty"` // The URL of the relay server for the public key
-}
-
-// Encode encodes the PubKeyTag into a byte slice.
-func (t *PubKeyTag) Encode() [][]byte {
-	b := make([][]byte, 0)
-	b = append(b, []byte(TypePubKey))
-	b = append(b, t.PubKey)
-	b = append(b, t.RelayURL)
-
-	return b
-}
-
-func (t *PubKeyTag) Marshal() []byte {
-	b, _ := json.Marshal(t.Encode())
-
-	return b
-}
-
-// NewQueryTag TBD
-func NewQueryTag(queryType []byte, pubKey []byte, relayURL []byte) *QueryTag {
-	return &QueryTag{
-		Type:     Type(queryType),
-		PubKey:   pubKey,
-		RelayURL: relayURL,
-	}
-}
-
-// QueryTag is a tag for a public key, including the public key and relay URL.
-type QueryTag struct {
-	Type     Type   `json:"type,omitempty"`      // The type of the tag, which is "p" for public key tags
-	PubKey   []byte `json:"pub_key,omitempty"`   // The public key associated with the tag
-	RelayURL []byte `json:"relay_url,omitempty"` // The URL of the relay server for the public key
-}
-
-// Encode encodes the QueryTag into a byte slice.
-func (t *QueryTag) Encode() [][]byte {
-	b := make([][]byte, 0)
-	b = append(b, []byte(TypePubKey))
-	b = append(b, t.PubKey)
-	b = append(b, t.RelayURL)
-
-	return b
-}
-
-func (t *QueryTag) Marshal() []byte {
-	b, _ := json.Marshal(t.Encode())
-
-	return b
-}
-
-// NewNonceTag TBD
-func NewNonceTag(pubKey []byte, relayURL []byte) *NonceTag {
-	return &NonceTag{
-		Type:     TypeEvent,
-		PubKey:   pubKey,
-		RelayURL: relayURL,
-	}
-}
-
-// NonceTag is a tag for a public key, including the public key and relay URL.
-type NonceTag struct {
-	Type     Type   `json:"type,omitempty"`      // The type of the tag, which is "p" for public key tags
-	PubKey   []byte `json:"pub_key,omitempty"`   // The public key associated with the tag
-	RelayURL []byte `json:"relay_url,omitempty"` // The URL of the relay server for the public key
-}
-
-// Encode encodes the NonceTag into a byte slice.
-func (t *NonceTag) Encode() [][]byte {
-	b := make([][]byte, 0)
-	b = append(b, []byte(TypePubKey))
-	b = append(b, t.PubKey)
-	b = append(b, t.RelayURL)
-
-	return b
-}
-
-func (t *NonceTag) Marshal() []byte {
-	b, _ := json.Marshal(t.Encode())
-
-	return b
-}
-
-// NewSubjectTag TBD
-func NewSubjectTag(pubKey []byte, relayURL []byte) *SubjectTag {
-	return &SubjectTag{
-		Type:     TypeNonce,
-		PubKey:   pubKey,
-		RelayURL: relayURL,
-	}
-}
-
-// SubjectTag is a tag for a public key, including the public key and relay URL.
-type SubjectTag struct {
-	Type     Type   `json:"type,omitempty"`      // The type of the tag, which is "p" for public key tags
-	PubKey   []byte `json:"pub_key,omitempty"`   // The public key associated with the tag
-	RelayURL []byte `json:"relay_url,omitempty"` // The URL of the relay server for the public key
-}
-
-// Encode encodes the SubjectTag into a byte slice.
-func (t *SubjectTag) Encode() [][]byte {
-	b := make([][]byte, 0)
-	b = append(b, []byte(TypeSubject))
-	b = append(b, t.PubKey)
-	b = append(b, t.RelayURL)
-
-	return b
-}
-
-func (t *SubjectTag) Marshal() []byte {
-	b, _ := json.Marshal(t.Encode())
-
-	return b
-}
-
-// NewDelegationTag TBD
-func NewDelegationTag(pubKey []byte, relayURL []byte) *DelegationTag {
-	return &DelegationTag{
-		Type:     TypeNonce,
-		PubKey:   pubKey,
-		RelayURL: relayURL,
-	}
-}
-
-// DelegationTag is a tag for a public key, including the public key and relay URL.
-type DelegationTag struct {
-	Type     Type   `json:"type,omitempty"`      // The type of the tag, which is "p" for public key tags
-	PubKey   []byte `json:"pub_key,omitempty"`   // The public key associated with the tag
-	RelayURL []byte `json:"relay_url,omitempty"` // The URL of the relay server for the public key
-}
-
-// Encode encodes the DelegationTag into a byte slice.
-func (t *DelegationTag) Encode() [][]byte {
-	b := make([][]byte, 0)
-	b = append(b, []byte(TypeSubject))
-	b = append(b, t.PubKey)
-	b = append(b, t.RelayURL)
-
-	return b
-}
-
-func (t *DelegationTag) Marshal() []byte {
-	b, _ := json.Marshal(t.Encode())
-
-	return b
-}
-
-// NewContentWarningTag TBD
-func NewContentWarningTag(pubKey []byte, relayURL []byte) *ContentWarningTag {
-	return &ContentWarningTag{
-		Type:     TypeNonce,
-		PubKey:   pubKey,
-		RelayURL: relayURL,
-	}
-}
-
-// ContentWarningTag is a tag for a public key, including the public key and relay URL.
-type ContentWarningTag struct {
-	Type     Type   `json:"type,omitempty"`      // The type of the tag, which is "p" for public key tags
-	PubKey   []byte `json:"pub_key,omitempty"`   // The public key associated with the tag
-	RelayURL []byte `json:"relay_url,omitempty"` // The URL of the relay server for the public key
-}
-
-// Encode encodes the ContentWarningTag into a byte slice.
-func (t *ContentWarningTag) Encode() [][]byte {
-	b := make([][]byte, 0)
-	b = append(b, []byte(TypeSubject))
-	b = append(b, t.PubKey)
-	b = append(b, t.RelayURL)
-
-	return b
-}
-
-func (t *ContentWarningTag) Marshal() []byte {
-	b, _ := json.Marshal(t.Encode())
-
-	return b
-}
-
-// NewIdentityTag TBD
-func NewIdentityTag(pubKey []byte, relayURL []byte) *IdentityTag {
-	return &IdentityTag{
-		Type:     TypeNonce,
-		PubKey:   pubKey,
-		RelayURL: relayURL,
-	}
-}
-
-// IdentityTag is a tag for a public key, including the public key and relay URL.
-type IdentityTag struct {
-	Type     Type   `json:"type,omitempty"`      // The type of the tag, which is "p" for public key tags
-	PubKey   []byte `json:"pub_key,omitempty"`   // The public key associated with the tag
-	RelayURL []byte `json:"relay_url,omitempty"` // The URL of the relay server for the public key
-}
-
-// Encode encodes the IdentityTag into a byte slice.
-func (t *IdentityTag) Encode() [][]byte {
-	b := make([][]byte, 0)
-	b = append(b, []byte(TypeSubject))
-	b = append(b, t.PubKey)
-	b = append(b, t.RelayURL)
-
-	return b
-}
-
-func (t *IdentityTag) Marshal() []byte {
-	b, _ := json.Marshal(t.Encode())
-
-	return b
-}
-
-// NewExpirationTag TBD
-func NewExpirationTag(pubKey []byte, relayURL []byte) *ExpirationTag {
-	return &ExpirationTag{
-		Type:     TypeNonce,
-		PubKey:   pubKey,
-		RelayURL: relayURL,
-	}
-}
-
-// ExpirationTag is a tag for a public key, including the public key and relay URL.
-type ExpirationTag struct {
-	Type     Type   `json:"type,omitempty"`      // The type of the tag, which is "p" for public key tags
-	PubKey   []byte `json:"pub_key,omitempty"`   // The public key associated with the tag
-	RelayURL []byte `json:"relay_url,omitempty"` // The URL of the relay server for the public key
-}
-
-// Encode encodes the ExpirationTag into a byte slice.
-func (t *ExpirationTag) Encode() [][]byte {
-	b := make([][]byte, 0)
-	b = append(b, []byte(TypeSubject))
-	b = append(b, t.PubKey)
-	b = append(b, t.RelayURL)
-
-	return b
-}
-
-func (t *ExpirationTag) Marshal() []byte {
-	b, _ := json.Marshal(t.Encode())
-
-	return b
+// Tag is an interface for different types of tags.
+type Tag interface {
+	Marshal() []byte
 }
