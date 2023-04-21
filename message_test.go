@@ -17,13 +17,12 @@ func TestMessageEvent_Marshal(t *testing.T) {
 		{
 			name: "TestMessageEvent_Marshal_Valid",
 			message: &nostr.EventMessage{
-				Type:           nostr.MessageTypeEvent,
-				SubscriptionID: "test-subscription-id",
+				Type: nostr.MessageTypeEvent,
 				Event: &nostr.MetadataEvent{
 					Kind: nostr.EventKindMetadata,
 				},
 			},
-			expected: `["EVENT","test-subscription-id",{"kind":0}]`,
+			expected: `["EVENT",{"kind":0}]`,
 		},
 	}
 
@@ -51,8 +50,7 @@ func TestMessageEvent_UnmarshalJSON(t *testing.T) {
 			name:  "TestMessageEvent_UnmarshalJSON_Valid",
 			input: `["EVENT","test-subscription-id",{"kind": 0}]`,
 			expectedEvent: &nostr.EventMessage{
-				Type:           nostr.MessageTypeEvent,
-				SubscriptionID: "test-subscription-id",
+				Type: nostr.MessageTypeEvent,
 				Event: &nostr.MetadataEvent{
 					Kind: nostr.EventKindMetadata,
 				},

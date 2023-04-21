@@ -35,18 +35,16 @@ type Message interface {
 
 // EventMessage represents a message containing an event.
 type EventMessage struct {
-	Type           MessageType `json:"type,omitempty"`
-	SubscriptionID string      `json:"subscription_id,omitempty"`
-	Event          Event       `json:"event,omitempty"`
+	Type  MessageType `json:"type,omitempty"`
+	Event Event       `json:"event,omitempty"`
 }
 
 // Marshal marshals the EventMessage into a JSON byte array.
 func (m *EventMessage) Marshal() ([]byte, error) {
-	arr := make([]interface{}, 3)
+	arr := make([]interface{}, 2)
 
 	arr[0] = string(m.Type)
-	arr[1] = m.SubscriptionID
-	arr[2] = m.Event
+	arr[1] = m.Event
 
 	return json.Marshal(arr)
 }
@@ -60,10 +58,6 @@ func (m *EventMessage) UnmarshalJSON(data []byte) error {
 	}
 
 	if err := json.Unmarshal(arr[0], &m.Type); err != nil {
-		return err
-	}
-
-	if err := json.Unmarshal(arr[1], &m.SubscriptionID); err != nil {
 		return err
 	}
 
