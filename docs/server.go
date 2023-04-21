@@ -1,5 +1,6 @@
 package docs
 
+//go:generate hugo
 import (
 	"embed"
 	"fmt"

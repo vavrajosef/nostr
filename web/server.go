@@ -1,5 +1,6 @@
 package web
 
+//go:generate npm run build
 import (
 	"embed"
 	"fmt"
