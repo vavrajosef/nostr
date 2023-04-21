@@ -3,7 +3,7 @@ package core
 import (
 	"time"
 
-	"github.com/go-nostr/go-nostr/internetidentifier"
+	"github.com/go-nostr/go-nostr"
 )
 
 func NewService() *Service {
@@ -31,12 +31,12 @@ type GetInternetIdentifierRequest struct {
 }
 
 type GetInternetIdentifierResponse struct {
-	*internetidentifier.InternetIdentifier
+	*nostr.InternetIdentifier
 }
 
 func (s *Service) GetInternetIdentifier(req *GetInternetIdentifierRequest) (*GetInternetIdentifierResponse, error) {
 	return &GetInternetIdentifierResponse{
-		&internetidentifier.InternetIdentifier{
+		&nostr.InternetIdentifier{
 			Names: map[string]string{
 				"bob": "b0635d6a9851d3aed0cd6c495b282167acf761729078d975fc341b22650b07b9",
 			},

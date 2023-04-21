@@ -6,8 +6,16 @@ package main
 import (
 	"github.com/go-nostr/go-nostr/internal/client"
 	"github.com/go-nostr/go-nostr/internal/docs"
+	"github.com/go-nostr/go-nostr/internal/relay"
 	"github.com/google/wire"
 )
+
+func buildClientServer() *client.Server {
+	wire.Build(
+		client.NewServer,
+	)
+	return &client.Server{}
+}
 
 func buildDocsServer() *docs.Server {
 	wire.Build(
@@ -16,9 +24,9 @@ func buildDocsServer() *docs.Server {
 	return &docs.Server{}
 }
 
-func buildWebServer() *client.Server {
+func buildRelayServer() *relay.Server {
 	wire.Build(
-		client.NewServer,
+		relay.NewServer,
 	)
-	return &client.Server{}
+	return &relay.Server{}
 }

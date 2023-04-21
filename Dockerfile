@@ -10,15 +10,15 @@ RUN npm run build -ws
 
 # Hugo builder step for docs/
 FROM klakegg/hugo:latest as hugo_builder
-WORKDIR /docs
-COPY docs/ .
+WORKDIR /internal/docs
+COPY internal/docs/ .
 RUN hugo
 
 # Golang builder step
 FROM golang as go_builder
 WORKDIR /go/src
-COPY --from=node_builder /client/dist /client/dist
-COPY --from=hugo_builder /docs/public /docs/public
+COPY --from=node_builder /internal/client/dist /internal/client/dist
+COPY --from=hugo_builder /internal/docs/public /internal/docs/public
 COPY . .
 RUN go get -d -v ./...
 RUN go install -v ./...

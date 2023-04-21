@@ -9,16 +9,22 @@ package main
 import (
 	"github.com/go-nostr/go-nostr/internal/client"
 	"github.com/go-nostr/go-nostr/internal/docs"
+	"github.com/go-nostr/go-nostr/internal/relay"
 )
 
 // Injectors from wire.go:
+
+func buildClientServer() *client.Server {
+	server := client.NewServer()
+	return server
+}
 
 func buildDocsServer() *docs.Server {
 	server := docs.NewServer()
 	return server
 }
 
-func buildWebServer() *client.Server {
-	server := client.NewServer()
+func buildRelayServer() *relay.Server {
+	server := relay.NewServer()
 	return server
 }

@@ -3,8 +3,8 @@ package core_test
 import (
 	"testing"
 
+	"github.com/go-nostr/go-nostr"
 	"github.com/go-nostr/go-nostr/internal/core"
-	"github.com/go-nostr/go-nostr/internetidentifier"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -58,7 +58,7 @@ func TestService_GetInternetIdentifier(t *testing.T) {
 				req: &core.GetInternetIdentifierRequest{},
 			},
 			expect: &core.GetInternetIdentifierResponse{
-				&internetidentifier.InternetIdentifier{
+				&nostr.InternetIdentifier{
 					Names: map[string]string{
 						"bob": "b0635d6a9851d3aed0cd6c495b282167acf761729078d975fc341b22650b07b9",
 					},

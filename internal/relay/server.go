@@ -3,6 +3,7 @@ package relay
 import (
 	"context"
 	"log"
+	"net/http"
 	"time"
 
 	"github.com/go-nostr/go-nostr"
@@ -10,11 +11,25 @@ import (
 	"nhooyr.io/websocket/wsjson"
 )
 
-func NewRelay(opt *Options) (*Relay, error) {
-	return &Relay{opt}, nil
+func NewServer() *Server {
+	opt := &ServerOptions{}
+	serveMux := &http.ServeMux{}
+
+	if opt.server != nil {
+		opt.server.Handler = serveMux
+	} else {
+		opt.server = &http.Server{
+			Handler: serveMux,
+		}
+	}
+
+	return &Server{
+		opt,
+		opt.server,
+	}
 }
 
-type Options struct {
+type ServerOptions struct {
 	Name          []byte             `json:"name,omitempty"`
 	Description   []byte             `json:"description,omitempty"`
 	PubKey        []byte             `json:"pub_key,omitempty"`
@@ -23,13 +38,17 @@ type Options struct {
 	Software      []byte             `json:"software,omitempty"`
 	Version       []byte             `json:"version,omitempty"`
 	Limitations   *nostr.Limitations `json:"limitations,omitempty"`
+
+	server *http.Server
 }
 
-type Relay struct {
-	*Options
+type Server struct {
+	*ServerOptions
+
+	server *http.Server
 }
 
-func (r *Relay) Dial() {
+func (r *Server) Dial() {
 	ctx, cancel := context.WithTimeout(context.Background(), time.Minute)
 	defer cancel()
 
@@ -62,4 +81,8 @@ func (r *Relay) Dial() {
 	log.Printf("%v", v)
 
 	c.Close(websocket.StatusNormalClosure, "")
+}
+
+func (r *Server) Serve() error {
+	return r.server.ListenAndServe()
 }
