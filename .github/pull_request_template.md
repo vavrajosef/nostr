@@ -1,3 +1,12 @@
+---
+name: Pull Request Template
+about: Use this template to request integrating changes for the Nostr project
+title: ''
+labels: ''
+assignees: ''
+
+---
+
 ## Summary of Changes
 
 > Briefly describe the main changes in this pull request (e.g., new features, bug fixes, improvements, or updates).
