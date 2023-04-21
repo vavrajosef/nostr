@@ -24,6 +24,7 @@ const (
 	TypeA              Type = "a"
 	TypeD              Type = "d"
 	TypeEvent          Type = "e"
+	TypePetName        Type = "petname"
 	TypePubKey         Type = "p"
 	TypeNonce          Type = "nonce"
 	TypeSubject        Type = "subject"
@@ -31,73 +32,6 @@ const (
 	TypeIdentity       Type = "i"
 	TypeExpiration     Type = "expiration"
 )
-
-// NewEventTag TBD
-func NewEventTag(eventID []byte, relayURL []byte) *EventTag {
-	return &EventTag{
-		Type:     TypeEvent,
-		EventID:  eventID,
-		RelayURL: relayURL,
-	}
-}
-
-// EventTag is a tag for an event, including the event ID and relay URL.
-type EventTag struct {
-	Type     Type   `json:"type,omitempty"`      // The type of the tag, which is "e" for event tags
-	EventID  []byte `json:"event_id,omitempty"`  // The unique identifier for the associated event
-	RelayURL []byte `json:"relay_url,omitempty"` // The URL of the relay server for the event
-	Marker   []byte `json:"marker,omitempty"`    // The URL of the relay server for the event
-}
-
-// Encode encodes the EventTag into a byte slice.
-func (t *EventTag) Encode() [][]byte {
-	b := make([][]byte, 0)
-	b = append(b, []byte(TypeEvent))
-	b = append(b, t.EventID)
-	b = append(b, t.RelayURL)
-
-	return b
-}
-
-func (t *EventTag) Marshal() []byte {
-	b, _ := json.Marshal(t.Encode())
-
-	return b
-}
-
-// NewPetnameTag TBD
-func NewPetnameTag(pubKey []byte, relayURL []byte) *PetnameTag {
-	return &PetnameTag{
-		Type:     TypeEvent,
-		Petname:  pubKey,
-		RelayURL: relayURL,
-	}
-}
-
-// PetnameTag is a tag for a public key, including the public key and relay URL.
-type PetnameTag struct {
-	Type     Type   `json:"type,omitempty"`      // The type of the tag, which is "p" for public key tags
-	PubKey   []byte `json:"pub_key,omitempty"`   // The public key associated with the tag
-	RelayURL []byte `json:"relay_url,omitempty"` // The URL of the relay server for the public key
-	Petname  []byte `json:"petname,omitempty"`   // TBD
-}
-
-// Encode encodes the PetnameTag into a byte slice.
-func (t *PetnameTag) Encode() [][]byte {
-	b := make([][]byte, 0)
-	b = append(b, []byte(TypePubKey))
-	b = append(b, t.PubKey)
-	b = append(b, t.RelayURL)
-	b = append(b, t.Petname)
-
-	return b
-}
-
-func (t *PetnameTag) Marshal() []byte {
-	b, _ := json.Marshal(t.Encode())
-
-	return b
-}
 
 // NewPubKeyTag TBD
 func NewPubKeyTag(pubKey []byte, relayURL []byte) *PubKeyTag {
