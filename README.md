@@ -1,4 +1,4 @@
-# @go-nostr/go-nostr
+# @go-nostr/nostr
 
 ⚠️ **WARNING: This project is actively under development and no stable releases have been made yet.** ⚠️
 
