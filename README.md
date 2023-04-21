@@ -4,14 +4,6 @@
 
 Please be aware that the code and documentation may contain unfinished features or inconsistencies. We appreciate your interest in the project and encourage you to check back for updates on progress towards a stable release.
 
-[![Angular](https://github.com/go-nostr/go-nostr/actions/workflows/angular.yml/badge.svg)](https://github.com/go-nostr/go-nostr/actions/workflows/angular.yml)
-
-[![Docker](https://github.com/go-nostr/go-nostr/actions/workflows/docker.yml/badge.svg)](https://github.com/go-nostr/go-nostr/actions/workflows/docker.yml)
-
-[![Go](https://github.com/go-nostr/go-nostr/actions/workflows/go.yml/badge.svg)](https://github.com/go-nostr/go-nostr/actions/workflows/go.yml)
-
-[![Hugo](https://github.com/go-nostr/go-nostr/actions/workflows/hugo.yml/badge.svg)](https://github.com/go-nostr/go-nostr/actions/workflows/hugo.yml)
-
 ## Overview
 
 An all-in-one Go/Hugo/Angular monorepo for the nostr protocol, featuring comprehensive documentation, a nostr relay executable, reusable Go packages, and an Angular web client for relay administration.
