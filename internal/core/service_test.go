@@ -3,8 +3,8 @@ package core_test
 import (
 	"testing"
 
-	"github.com/go-nostr/go-nostr"
-	"github.com/go-nostr/go-nostr/internal/core"
+	"github.com/go-nostr/nostr"
+	"github.com/go-nostr/nostr/internal/core"
 	"github.com/stretchr/testify/assert"
 )
 

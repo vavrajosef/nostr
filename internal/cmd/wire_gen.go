@@ -7,9 +7,9 @@
 package main
 
 import (
-	"github.com/go-nostr/go-nostr/internal/client"
-	"github.com/go-nostr/go-nostr/internal/docs"
-	"github.com/go-nostr/go-nostr/internal/relay"
+	"github.com/go-nostr/nostr/internal/client"
+	"github.com/go-nostr/nostr/internal/docs"
+	"github.com/go-nostr/nostr/internal/relay"
 )
 
 // Injectors from wire.go:

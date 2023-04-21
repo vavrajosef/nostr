@@ -1,6 +1,9 @@
 package nostr
 
-import "encoding/json"
+import (
+	"encoding/json"
+	"errors"
+)
 
 // MessageType represents the type of a message.
 type MessageType string
@@ -30,14 +33,65 @@ type Message interface {
 	UnmarshalJSON(data []byte) error
 }
 
-type AuthMessage struct{}
-
-func (m *AuthMessage) Marshal() ([]byte, error) {
-	return json.Marshal(m)
+// EventMessage represents a message containing an event.
+type EventMessage struct {
+	Type           MessageType `json:"type,omitempty"`
+	SubscriptionID string      `json:"subscription_id,omitempty"`
+	Event          Event       `json:"event,omitempty"`
 }
 
-func (m *AuthMessage) UnmarshalJSON(data []byte) error {
-	json.Unmarshal(data, m)
+// Marshal marshals the EventMessage into a JSON byte array.
+func (m *EventMessage) Marshal() ([]byte, error) {
+	arr := make([]interface{}, 3)
+
+	arr[0] = string(m.Type)
+	arr[1] = m.SubscriptionID
+	arr[2] = m.Event
+
+	return json.Marshal(arr)
+}
+
+// UnmarshalJSON unmarshals a JSON byte array into an EventMessage.
+func (m *EventMessage) UnmarshalJSON(data []byte) error {
+	arr := make([]json.RawMessage, 3)
+
+	if err := json.Unmarshal(data, &arr); err != nil {
+		return err
+	}
+
+	if err := json.Unmarshal(arr[0], &m.Type); err != nil {
+		return err
+	}
+
+	if err := json.Unmarshal(arr[1], &m.SubscriptionID); err != nil {
+		return err
+	}
+
+	var eventMap map[string]interface{}
+	if err := json.Unmarshal(arr[2], &eventMap); err != nil {
+		return err
+	}
+
+	// Determine the event type based on the eventMap and unmarshal it accordingly
+	if eventType, ok := eventMap["kind"].(float64); ok {
+		eventKind := EventKind(uint32(eventType))
+		var eventInstance Event
+
+		switch eventKind {
+		case EventKindMetadata:
+			eventInstance = &MetadataEvent{}
+		default:
+			return errors.New("unsupported event kind")
+		}
+
+		if err := json.Unmarshal(arr[2], eventInstance); err != nil {
+			return err
+		}
+
+		m.Event = eventInstance
+	} else {
+		return errors.New("event kind is not a number")
+	}
 
 	return nil
 }

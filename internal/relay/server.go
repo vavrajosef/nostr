@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/go-nostr/go-nostr"
+	"github.com/go-nostr/nostr"
 	"nhooyr.io/websocket"
 	"nhooyr.io/websocket/wsjson"
 )
