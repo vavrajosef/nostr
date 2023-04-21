@@ -1,5 +1,7 @@
 package nostr
 
+import "encoding/json"
+
 // MessageType represents the type of a message.
 type MessageType string
 
@@ -25,4 +27,17 @@ const (
 // Message is an interface for encoding and marshaling messages.
 type Message interface {
 	Marshal() ([]byte, error)
+	UnmarshalJSON(data []byte) error
+}
+
+type AuthMessage struct{}
+
+func (m *AuthMessage) Marshal() ([]byte, error) {
+	return json.Marshal(m)
+}
+
+func (m *AuthMessage) UnmarshalJSON(data []byte) error {
+	json.Unmarshal(data, m)
+
+	return nil
 }

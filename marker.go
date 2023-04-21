@@ -1,9 +1,9 @@
 package nostr
 
-type Marker string
+type MarkerType string
 
 const (
-	MarkerReply   Marker = "reply"
-	MarkerRoot    Marker = "root"
-	MarkerMention Marker = "mention"
+	MarkerTypeReply   MarkerType = "reply"
+	MarkerTypeRoot    MarkerType = "root"
+	MarkerTypeMention MarkerType = "mention"
 )

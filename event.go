@@ -1,13 +1,6 @@
 package nostr
 
-import (
-	"bytes"
-	"encoding/hex"
-	"encoding/json"
-	"time"
-
-	"github.com/decred/dcrd/dcrec/secp256k1"
-)
+import "encoding/json"
 
 // EventKind represents the different types of events available.
 type EventKind uint32
@@ -45,94 +38,21 @@ const (
 	EventKindApplicationSpecificData EventKind = 30078 // Event for managing application-specific data
 )
 
-// EventOptions contains the necessary information for creating a new event.
-type EventOptions struct {
-	Content    string                `json:"content,omitempty"`     // Content to be included in the event
-	Kind       EventKind             `json:"kind,omitempty"`        // The type of event
-	OTS        string                `json:"ots,omitempty"`         // TBD
-	PrivateKey *secp256k1.PrivateKey `json:"private_key,omitempty"` // The creator's private key
-	Tags       []Tag                 `json:"tags,omitempty"`        // Tags associated with the event
+type Event interface {
+	Marshal() ([]byte, error)
+	UnmarshalJSON(data []byte) error
 }
 
-// Event represents a single event object.
-type Event struct {
-	Content   string    `json:"content,omitempty"`    // The content of the event
-	CreatedAt int64     `json:"created_at,omitempty"` // The timestamp of event creation
-	ID        string    `json:"id,omitempty"`         // The unique identifier for the event
-	Kind      EventKind `json:"kind,omitempty"`       // The type of event
-	OTS       string    `json:"ots,omitempty"`        // TBD
-	PublicKey string    `json:"pk,omitempty"`         // The creator's public key
-	Signature string    `json:"sig,omitempty"`        // The signature of the event
-	Tags      []Tag     `json:"tags,omitempty"`       // Tags associated with the event
+type MetadataEvent struct {
+	Kind EventKind `json:"kind,omitempty"`
 }
 
-func (e *Event) Marshal() ([]byte, error) {
+func (e *MetadataEvent) Marshal() ([]byte, error) {
 	return json.Marshal(e)
 }
 
-// New creates a new event with the provided options.
-func New(opts *EventOptions) (*Event, error) {
-	// NOTE: TBD
-	pubKeyHex := make([]byte, hex.EncodedLen(len(opts.PrivateKey.PubKey().SerializeUncompressed())))
+func (e *MetadataEvent) UnmarshalJSON(data []byte) error {
+	json.Unmarshal(data, e)
 
-	// NOTE: TBD
-	hex.Encode(pubKeyHex, opts.PrivateKey.PubKey().SerializeCompressed())
-
-	// NOTE: TBD
-	pubKey := bytes.ToLower(pubKeyHex)[:32]
-
-	createdAt := time.Now().Unix()
-
-	// NOTE: TBD
-	encodedTags := make([][]byte, 0)
-
-	// NOTE: TBD
-	for _, t := range opts.Tags {
-		encodedTags = append(encodedTags, t.Marshal())
-	}
-
-	// NOTE: TBD
-	tagsJSON, _ := json.Marshal(encodedTags)
-
-	// NOTE: TBD
-	eventData := make([]byte, 0)
-	eventData = append(eventData, 0)
-	eventData = append(eventData, pubKey...)
-	eventData = append(eventData, byte(opts.Kind))
-	eventData = append(eventData, tagsJSON...)
-	eventData = append(eventData, opts.Content...)
-
-	// NOTE: TBD
-	eventDataJSON, err := json.Marshal(eventData)
-	if err != nil {
-		return nil, err
-	}
-
-	// NOTE: TBD
-	eventDataHex := make([]byte, hex.EncodedLen(len(eventDataJSON)))
-
-	// NOTE: TBD
-	hex.Encode(eventDataHex, eventDataJSON)
-
-	// NOTE: TBD
-	id := bytes.ToLower(eventDataHex)[:32]
-
-	// NOTE: TBD
-	encryptedContent, err := secp256k1.Encrypt(opts.PrivateKey.PubKey(), []byte(opts.Content))
-	if err != nil {
-		return nil, err
-	}
-
-	// NOTE: TBD
-	evt := &Event{
-		Content:   string(encryptedContent),
-		CreatedAt: createdAt,
-		ID:        string(id),
-		Kind:      opts.Kind,
-		PublicKey: string(pubKey),
-		Tags:      opts.Tags,
-	}
-
-	// NOTE: TBD
-	return evt, nil
+	return nil
 }

@@ -7,8 +7,8 @@ type Filter struct {
 	Kinds      []string `json:"kinds,omitempty"`   // The kinds of the events to filter
 	EventIDs   []string `json:"#e,omitempty"`      // The event IDs to filter by
 	PublicKeys []string `json:"#p,omitempty"`      // The public keys to filter by
-	Since      string   `json:"since,omitempty"`   // The starting timestamp for filtering events
-	Until      string   `json:"until,omitempty"`   // The ending timestamp for filtering events
+	Since      uint     `json:"since,omitempty"`   // The starting timestamp for filtering events
+	Until      uint     `json:"until,omitempty"`   // The ending timestamp for filtering events
 	Limit      uint     `json:"limit,omitempty"`   // The maximum number of events to return
 	Search     string   `json:"search,omitempty"`  // TBD
 }
