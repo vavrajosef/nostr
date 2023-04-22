@@ -60,7 +60,7 @@ func (m *AuthMessage) Marshal() ([]byte, error) {
 
 // Unmarshal TBD
 func (m *AuthMessage) Unmarshal(data []byte) error {
-	args := []json.RawMessage{}
+	var args []json.RawMessage
 	if err := json.Unmarshal(data, &args); err != nil {
 		return err
 	}
@@ -103,7 +103,7 @@ func (m *CloseMessage) Marshal() ([]byte, error) {
 
 // Unmarshal TBD
 func (m *CloseMessage) Unmarshal(data []byte) error {
-	args := []json.RawMessage{}
+	var args []json.RawMessage
 	if err := json.Unmarshal(data, &args); err != nil {
 		return err
 	}
@@ -152,7 +152,7 @@ func (m *CountMessage) Marshal() ([]byte, error) {
 
 // Unmarshal TBD
 func (m *CountMessage) Unmarshal(data []byte) error {
-	args := []json.RawMessage{}
+	var args []json.RawMessage
 	if err := json.Unmarshal(data, &args); err != nil {
 		return err
 	}
@@ -199,7 +199,7 @@ func (m *EOSEMessage) Marshal() ([]byte, error) {
 
 // Unmarshal TBD
 func (m *EOSEMessage) Unmarshal(data []byte) error {
-	args := []json.RawMessage{}
+	var args []json.RawMessage
 	if err := json.Unmarshal(data, &args); err != nil {
 		return err
 	}
@@ -244,7 +244,7 @@ func (m *EventMessage) Marshal() ([]byte, error) {
 
 // Unmarshal unmarshals a JSON byte array into an EventMessage.
 func (m *EventMessage) Unmarshal(data []byte) error {
-	args := []json.RawMessage{}
+	var args []json.RawMessage
 	if err := json.Unmarshal(data, &args); err != nil {
 		return err
 	}
@@ -290,7 +290,7 @@ func (m *NoticeMessage) Marshal() ([]byte, error) {
 
 // Unmarshal TBD
 func (m *NoticeMessage) Unmarshal(data []byte) error {
-	args := []json.RawMessage{}
+	var args []json.RawMessage
 	if err := json.Unmarshal(data, &args); err != nil {
 		return err
 	}
@@ -333,7 +333,7 @@ func (m *OkMessage) Marshal() ([]byte, error) {
 
 // Unmarshal TBD
 func (m *OkMessage) Unmarshal(data []byte) error {
-	args := []json.RawMessage{}
+	var args []json.RawMessage
 	if err := json.Unmarshal(data, &args); err != nil {
 		return err
 	}
@@ -379,7 +379,7 @@ func (m *RequestMessage) Marshal() ([]byte, error) {
 
 // Unmarshal TBD
 func (m *RequestMessage) Unmarshal(data []byte) error {
-	args := []json.RawMessage{}
+	var args []json.RawMessage
 	if err := json.Unmarshal(data, &args); err != nil {
 		return err
 	}
