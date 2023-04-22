@@ -1,75 +1,138 @@
 package nostr_test
 
 import (
-	"encoding/json"
 	"reflect"
 	"testing"
 
 	"github.com/go-nostr/nostr"
 )
 
-func TestMessageEvent_Marshal(t *testing.T) {
+func Test_NewAuthMessage(t *testing.T) {
+	type args struct {
+		challenge string
+		event     *nostr.Event
+	}
 	tests := []struct {
-		name     string
-		message  *nostr.EventMessage
-		expected string
+		name   string
+		args   args
+		expect *nostr.AuthMessage
 	}{
 		{
-			name: "TestMessageEvent_Marshal_Valid",
-			message: &nostr.EventMessage{
-				Type: nostr.MessageTypeEvent,
-				Event: &nostr.MetadataEvent{
-					Kind: nostr.EventKindMetadata,
+			name: "SHOULD create instance of AuthMessage",
+			args: args{
+				challenge: "abc",
+			},
+			expect: &nostr.AuthMessage{
+				Type:      nostr.MessageTypeAuth,
+				Challenge: "abc",
+			},
+		},
+		{
+			name: "SHOULD create instance of AuthMessage with event",
+			args: args{
+				event: &nostr.Event{
+					ID: "event_id",
 				},
 			},
-			expected: `["EVENT",{"kind":0}]`,
+			expect: &nostr.AuthMessage{
+				Type: nostr.MessageTypeAuth,
+				Event: &nostr.Event{
+					ID: "event_id",
+				},
+			},
 		},
 	}
-
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			result, err := tt.message.Marshal()
-			if err != nil {
-				t.Errorf("nostr.EventMessage.Marshal() error = %v", err)
+			authMessage := nostr.NewAuthMessage(tt.args.challenge, tt.args.event)
+
+			if !reflect.DeepEqual(authMessage, tt.expect) {
+				t.Errorf("expected %+v, got %+v", authMessage, tt.expect)
 			}
 
-			if string(result) != tt.expected {
-				t.Errorf("nostr.EventMessage.Marshal() = %v, expected %v", string(result), tt.expected)
-			}
+			t.Logf("got %+v", authMessage)
 		})
 	}
 }
 
-func TestMessageEvent_UnmarshalJSON(t *testing.T) {
+func TestAuthMessage_Marshal(t *testing.T) {
+	type args struct {
+		challenge string
+		event     *nostr.Event
+	}
 	tests := []struct {
-		name          string
-		input         string
-		expectedEvent *nostr.EventMessage
+		name   string
+		args   args
+		expect []byte
+		err    error
 	}{
 		{
-			name:  "TestMessageEvent_UnmarshalJSON_Valid",
-			input: `["EVENT","test-subscription-id",{"kind": 0}]`,
-			expectedEvent: &nostr.EventMessage{
-				Type: nostr.MessageTypeEvent,
-				Event: &nostr.MetadataEvent{
-					Kind: nostr.EventKindMetadata,
+			name: "SHOULD marshl AuthMessage",
+			args: args{
+				challenge: "abc",
+			},
+			expect: []byte("[\"AUTH\",\"abc\"]"),
+			err:    nil,
+		},
+		{
+			name: "SHOULD marshal AuthMessage with event",
+			args: args{
+				event: &nostr.Event{
+					ID: "event_id",
 				},
 			},
+			expect: []byte("[\"AUTH\",{\"id\":\"event_id\"}]"),
+			err:    nil,
 		},
 	}
-
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			eventMessage := &nostr.EventMessage{}
-			err := json.Unmarshal([]byte(tt.input), eventMessage)
-
-			if err != nil {
-				t.Errorf("nostr.EventMessage.UnmarshalJSON() error = %v", err)
+			authMessage := nostr.NewAuthMessage(tt.args.challenge, tt.args.event)
+			data, err := authMessage.Marshal()
+			if (err != nil && tt.err == nil) && (err == nil && tt.err != nil) && (err.Error() != tt.err.Error()) {
+				t.Fatalf("expected error: %+v, got error: %+v", tt.err, err)
 			}
-
-			if !reflect.DeepEqual(eventMessage, tt.expectedEvent) {
-				t.Errorf("nostr.EventMessage.UnmarshalJSON() = %+v, expected %+v", eventMessage, tt.expectedEvent)
+			if !reflect.DeepEqual(data, tt.expect) {
+				t.Fatalf("expected: %+v, got: %+v", tt.expect, data)
 			}
+			t.Logf("got: %+v", data)
+		})
+	}
+}
+
+func TestAuthMessage_Unmarshal(t *testing.T) {
+	type args struct {
+		data []byte
+	}
+	tests := []struct {
+		name   string
+		args   args
+		expect *nostr.AuthMessage
+		err    error
+	}{
+		{
+			name: "SHOULD unmarshal AuthMessage",
+			args: args{
+				data: []byte("[\"AUTH\",\"abc\"]"),
+			},
+			expect: &nostr.AuthMessage{
+				Type:      nostr.MessageTypeAuth,
+				Challenge: "abc",
+			},
+			err: nil,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			authMessage := &nostr.AuthMessage{}
+			err := authMessage.Unmarshal(tt.args.data)
+			if (err != nil && tt.err == nil) && (err == nil && tt.err != nil) && (err.Error() != tt.err.Error()) {
+				t.Fatalf("expected error: %+v, got: %+v", tt.err, err)
+			}
+			if !reflect.DeepEqual(authMessage, tt.expect) {
+				t.Fatalf("expected error: %+v, got: %+v", tt.expect, authMessage)
+			}
+			t.Logf("got: %+v", authMessage)
 		})
 	}
 }

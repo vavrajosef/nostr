@@ -1,5 +1,6 @@
 package nostr
 
+// Limitations TBD
 type Limitations struct {
 	MaxMessageLength uint `json:"max_message_length,omitempty"`
 	MaxSubscriptions uint `json:"max_subscriptions,omitempty"`

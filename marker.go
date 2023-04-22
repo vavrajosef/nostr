@@ -1,9 +1,10 @@
 package nostr
 
+// MarkerType
 type MarkerType string
 
 const (
-	MarkerTypeReply   MarkerType = "reply"
-	MarkerTypeRoot    MarkerType = "root"
-	MarkerTypeMention MarkerType = "mention"
+	MarkerTypeReply   MarkerType = "reply"   // MarkerTypeReply
+	MarkerTypeRoot    MarkerType = "root"    // MarkerTypeRoot
+	MarkerTypeMention MarkerType = "mention" // MarkerTypeMention
 )

@@ -2,90 +2,378 @@ package nostr
 
 import (
 	"encoding/json"
-	"errors"
 )
-
-// MessageType represents the type of a message.
-type MessageType string
 
 const (
 	// MessageTypeAuth represents an authentication message type.
-	MessageTypeAuth MessageType = "AUTH"
+	MessageTypeAuth = "AUTH"
 	// MessageTypeClose represents a Close message type.
-	MessageTypeClose MessageType = "CLOSE"
+	MessageTypeClose = "CLOSE"
 	// MessageTypeCount represents a count message type, usually for counting events.
-	MessageTypeCount MessageType = "COUNT"
+	MessageTypeCount = "COUNT"
 	// MessageTypeEndOfStoredEvents represents an End of Stored Events message type.
-	MessageTypeEOSE MessageType = "EOSE"
+	MessageTypeEOSE = "EOSE"
 	// MessageTypeEvent represents an Event message type.
-	MessageTypeEvent MessageType = "EVENT"
+	MessageTypeEvent = "EVENT"
 	// MessageTypeNotice represents a Notice message type, usually for notifications.
-	MessageTypeNotice MessageType = "NOTICE"
+	MessageTypeNotice = "NOTICE"
 	// MessageTypeOk represents a success confirmation message type.
-	MessageTypeOk MessageType = "OK"
+	MessageTypeOk = "OK"
 	// MessageTypeRequest represents a Request message type.
-	MessageTypeRequest MessageType = "REQ"
+	MessageTypeRequest = "REQ"
 )
 
 // Message is an interface for encoding and marshaling messages.
 type Message interface {
 	Marshal() ([]byte, error)
-	UnmarshalJSON(data []byte) error
+	Unmarshal(data []byte) error
 }
 
-// EventMessage represents a message containing an event.
-type EventMessage struct {
-	Type  MessageType `json:"type,omitempty"`
-	Event Event       `json:"event,omitempty"`
+// AuthMessage TBD
+type AuthMessage struct {
+	Type      string `json:"type,omitempty"`
+	Challenge string `json:"subscription_id,omitempty"`
+	Event     *Event `json:"event,omitempty"`
 }
 
-// Marshal marshals the EventMessage into a JSON byte array.
-func (m *EventMessage) Marshal() ([]byte, error) {
-	arr := make([]interface{}, 2)
-
-	arr[0] = string(m.Type)
-	arr[1] = m.Event
-
-	return json.Marshal(arr)
+// NewAuthMessage TBD
+func NewAuthMessage(challenge string, event *Event) *AuthMessage {
+	return &AuthMessage{
+		Type:      MessageTypeAuth,
+		Challenge: challenge,
+		Event:     event,
+	}
 }
 
-// UnmarshalJSON unmarshals a JSON byte array into an EventMessage.
-func (m *EventMessage) UnmarshalJSON(data []byte) error {
-	arr := make([]json.RawMessage, 3)
+// Marshal TBD
+func (m *AuthMessage) Marshal() ([]byte, error) {
+	args := []interface{}{
+		MessageTypeAuth,
+	}
+	if m.Challenge != "" {
+		args = append(args, m.Challenge)
+	} else if m.Event != nil {
+		args = append(args, m.Event)
+	}
+	return json.Marshal(args)
+}
 
-	if err := json.Unmarshal(data, &arr); err != nil {
+// Unmarshal TBD
+func (m *AuthMessage) Unmarshal(data []byte) error {
+	args := []json.RawMessage{}
+	if err := json.Unmarshal(data, &args); err != nil {
 		return err
 	}
-
-	if err := json.Unmarshal(arr[0], &m.Type); err != nil {
+	if err := json.Unmarshal(args[0], &m.Type); err != nil {
 		return err
 	}
-
-	var eventMap map[string]interface{}
-	if err := json.Unmarshal(arr[2], &eventMap); err != nil {
-		return err
-	}
-
-	// Determine the event type based on the eventMap and unmarshal it accordingly
-	if eventType, ok := eventMap["kind"].(float64); ok {
-		eventKind := EventKind(uint32(eventType))
-		var eventInstance Event
-
-		switch eventKind {
-		case EventKindMetadata:
-			eventInstance = &MetadataEvent{}
-		default:
-			return errors.New("unsupported event kind")
-		}
-
-		if err := json.Unmarshal(arr[2], eventInstance); err != nil {
+	if len(args[1]) > 0 && args[1][0] == '{' {
+		if err := json.Unmarshal(args[1], &m.Event); err != nil {
 			return err
 		}
-
-		m.Event = eventInstance
 	} else {
-		return errors.New("event kind is not a number")
+		if err := json.Unmarshal(args[1], &m.Challenge); err != nil {
+			return err
+		}
 	}
+	return nil
+}
 
+// CloseMessage TBD
+type CloseMessage struct {
+	Type           string `json:"type,omitempty"`
+	SubscriptionID string `json:"subscription_id,omitempty"`
+}
+
+// NewCloseMessage TBD
+func NewCloseMessage(sid string) *CloseMessage {
+	return &CloseMessage{
+		Type:           MessageTypeEvent,
+		SubscriptionID: sid,
+	}
+}
+
+// Marshal TBD
+func (m *CloseMessage) Marshal() ([]byte, error) {
+	return json.Marshal([]interface{}{
+		MessageTypeClose,
+		m.SubscriptionID,
+	})
+}
+
+// Unmarshal TBD
+func (m *CloseMessage) Unmarshal(data []byte) error {
+	args := []json.RawMessage{}
+	if err := json.Unmarshal(data, &args); err != nil {
+		return err
+	}
+	if err := json.Unmarshal(args[0], &m.Type); err != nil {
+		return err
+	}
+	if err := json.Unmarshal(args[1], &m.SubscriptionID); err != nil {
+		return err
+	}
+	return nil
+}
+
+// CountMessage TBD
+type CountMessage struct {
+	Type           string   `json:"type,omitempty"`
+	SubscriptionID string   `json:"subscription_id,omitempty"`
+	Count          *Count   `json:"count,omitempty"`
+	Filters        []Filter `json:"filter,omitempty"`
+}
+
+// NewCountMessage TBD
+func NewCountMessage(subscriptionID string, count *Count, filters ...Filter) *CountMessage {
+	return &CountMessage{
+		Type:           MessageTypeEvent,
+		SubscriptionID: subscriptionID,
+		Count:          count,
+		Filters:        filters,
+	}
+}
+
+// Marshal TBD
+func (m *CountMessage) Marshal() ([]byte, error) {
+	args := []interface{}{
+		MessageTypeCount,
+		m.SubscriptionID,
+	}
+	if m.Count != nil {
+		args = append(args, m.Count)
+	} else {
+		for _, f := range m.Filters {
+			args = append(args, f)
+		}
+	}
+	return json.Marshal(args)
+}
+
+// Unmarshal TBD
+func (m *CountMessage) Unmarshal(data []byte) error {
+	args := []json.RawMessage{}
+	if err := json.Unmarshal(data, &args); err != nil {
+		return err
+	}
+	if err := json.Unmarshal(args[0], &m.Type); err != nil {
+		return err
+	}
+	if err := json.Unmarshal(args[1], &m.SubscriptionID); err != nil {
+		return err
+	}
+	if err := json.Unmarshal(args[2], &m.Count); err == nil {
+		return nil
+	} else {
+		for i, v := range args[2:] {
+			if err := json.Unmarshal(v, &m.Filters[i]); err != nil {
+				return err
+			}
+		}
+	}
+	return nil
+}
+
+// EOSEMessage TBD
+type EOSEMessage struct {
+	Type           string `json:"type,omitempty"`
+	SubscriptionID string `json:"subscription_id,omitempty"`
+}
+
+// NewEOSEMessage TBD
+func NewEOSEMessage(subscriptionID string) *EOSEMessage {
+	return &EOSEMessage{
+		Type:           MessageTypeEvent,
+		SubscriptionID: subscriptionID,
+	}
+}
+
+// Marshal TBD
+func (m *EOSEMessage) Marshal() ([]byte, error) {
+	args := []interface{}{
+		MessageTypeEOSE,
+		m.SubscriptionID,
+	}
+	return json.Marshal(args)
+}
+
+// Unmarshal TBD
+func (m *EOSEMessage) Unmarshal(data []byte) error {
+	args := []json.RawMessage{}
+	if err := json.Unmarshal(data, &args); err != nil {
+		return err
+	}
+	if err := json.Unmarshal(args[0], &m.Type); err != nil {
+		return err
+	}
+	if err := json.Unmarshal(args[1], &m.SubscriptionID); err != nil {
+		return err
+	}
+	return nil
+}
+
+// EventMessage TBD
+type EventMessage struct {
+	Type  string `json:"type,omitempty"`
+	Event *Event `json:"event,omitempty"`
+}
+
+// NewEventMessage TBD
+func NewEventMessage(e *Event) *EventMessage {
+	return &EventMessage{
+		Type:  MessageTypeEvent,
+		Event: e,
+	}
+}
+
+// Marshal marshals the baseMessage into a JSON byte array.
+func (m *EventMessage) Marshal() ([]byte, error) {
+	return json.Marshal([]interface{}{
+		MessageTypeEvent,
+		m.Event,
+	})
+}
+
+// Unmarshal unmarshals a JSON byte array into an EventMessage.
+func (m *EventMessage) Unmarshal(data []byte) error {
+	args := []json.RawMessage{}
+	if err := json.Unmarshal(data, &args); err != nil {
+		return err
+	}
+	if err := json.Unmarshal(args[0], &m.Type); err != nil {
+		return err
+	}
+	if err := json.Unmarshal(args[1], &m.Event); err != nil {
+		return err
+	}
+	return nil
+}
+
+// NoticeMessage TBD
+type NoticeMessage struct {
+	Type   string `json:"type,omitempty"`
+	Notice string `json:"notice,omitempty"`
+}
+
+// NewNoticeMessage TBD
+func NewNoticeMessage(notice string) *NoticeMessage {
+	return &NoticeMessage{
+		Type:   MessageTypeNotice,
+		Notice: notice,
+	}
+}
+
+// Marshal TBD
+func (m *NoticeMessage) Marshal() ([]byte, error) {
+	return json.Marshal([]interface{}{
+		MessageTypeEvent,
+		m.Notice,
+	})
+}
+
+// Unmarshal TBD
+func (m *NoticeMessage) Unmarshal(data []byte) error {
+	args := []json.RawMessage{}
+	if err := json.Unmarshal(data, &args); err != nil {
+		return err
+	}
+	if err := json.Unmarshal(args[0], &m.Type); err != nil {
+		return err
+	}
+	if err := json.Unmarshal(args[1], &m.Notice); err != nil {
+		return err
+	}
+	return nil
+}
+
+// OkMessage TBD
+type OkMessage struct {
+	Type    string `json:"type,omitempty"`
+	EventID string `json:"event_id,omitempty"`
+	IsSaved bool   `json:"is_saved,omitempty"`
+	Message string `json:"message,omitempty"`
+}
+
+// NewOkMessage TBD
+func NewOkMessage(eventID string, isSaved bool, message string) *OkMessage {
+	return &OkMessage{
+		Type:    MessageTypeOk,
+		EventID: eventID,
+		IsSaved: isSaved,
+		Message: message,
+	}
+}
+
+// Marshal TBD
+func (m *OkMessage) Marshal() ([]byte, error) {
+	return json.Marshal([]interface{}{
+		MessageTypeEvent,
+		m.EventID,
+		m.IsSaved,
+		m.Message,
+	})
+}
+
+// Unmarshal TBD
+func (m *OkMessage) Unmarshal(data []byte) error {
+	args := []json.RawMessage{}
+	if err := json.Unmarshal(data, &args); err != nil {
+		return err
+	}
+	if err := json.Unmarshal(args[0], &m.Type); err != nil {
+		return err
+	}
+	if err := json.Unmarshal(args[1], &m.EventID); err != nil {
+		return err
+	}
+	if err := json.Unmarshal(args[2], &m.IsSaved); err != nil {
+		return err
+	}
+	if err := json.Unmarshal(args[3], &m.Message); err != nil {
+		return err
+	}
+	return nil
+}
+
+// RequestMessage TBD
+type RequestMessage struct {
+	Type           string  `json:"type,omitempty"`
+	SubscriptionID string  `json:"subscription_id,omitempty"`
+	Filter         *Filter `json:"filter,omitempty"`
+}
+
+// NewRequestMessage TBD
+func NewRequestMessage(subscriptionID string, filter *Filter) *RequestMessage {
+	return &RequestMessage{
+		Type:           MessageTypeRequest,
+		SubscriptionID: subscriptionID,
+		Filter:         filter,
+	}
+}
+
+// Marshal TBD
+func (m *RequestMessage) Marshal() ([]byte, error) {
+	return json.Marshal([]interface{}{
+		MessageTypeEvent,
+		m.SubscriptionID,
+		m.Filter,
+	})
+}
+
+// Unmarshal TBD
+func (m *RequestMessage) Unmarshal(data []byte) error {
+	args := []json.RawMessage{}
+	if err := json.Unmarshal(data, &args); err != nil {
+		return err
+	}
+	if err := json.Unmarshal(args[0], &m.Type); err != nil {
+		return err
+	}
+	if err := json.Unmarshal(args[1], &m.SubscriptionID); err != nil {
+		return err
+	}
+	if err := json.Unmarshal(args[2], &m.Filter); err != nil {
+		return err
+	}
 	return nil
 }

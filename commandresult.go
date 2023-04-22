@@ -1,5 +1,6 @@
 package nostr
 
+// CommandResult TBD
 type CommandResult struct {
 	Status  string `json:"status,omitempty"`
 	EventID string `json:"event_id,omitempty"`

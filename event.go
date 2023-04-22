@@ -1,6 +1,9 @@
 package nostr
 
-import "encoding/json"
+import (
+	"encoding/json"
+	"time"
+)
 
 // EventKind represents the different types of events available.
 type EventKind uint32
@@ -38,22 +41,21 @@ const (
 	EventKindApplicationSpecificData EventKind = 30078 // Event for managing application-specific data
 )
 
-type Event interface {
-	MarshalJSON() ([]byte, error)
+// Event represents an event with a specified kind.
+type Event struct {
+	ID        string     `json:"id,omitempty"`
+	Pubkey    string     `json:"pubkey,omitempty"`
+	CreatedAt *time.Time `json:"created_at,omitempty"`
+	Kind      int        `json:"kind,omitempty"`
+	Tags      []Tag      `json:"tags,omitempty"`
+	Content   string     `json:"content,omitempty"`
+	Sig       string     `json:"sig,omitempty"`
 }
 
-func NewMetadataEvent() Event {
-	return &MetadataEvent{
-		Kind: EventKindMetadata,
-	}
+func (e *Event) Marshal() ([]byte, error) {
+	return json.Marshal(e)
 }
 
-type MetadataEvent struct {
-	Kind EventKind `json:"kind,omitempty"`
-}
-
-func (e *MetadataEvent) MarshalJSON() ([]byte, error) {
-	return json.Marshal(map[string]interface{}{
-		"kind": e.Kind,
-	})
+func (e *Event) Unmarshal(data []byte) error {
+	return json.Unmarshal(data, e)
 }
