@@ -1,0 +1,27 @@
+name: Angular
+on:
+  push:
+jobs:
+  client:
+    name: Client
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Setup NodeJS
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - name: Install NPM dependencies
+        working-directory: internal/client/
+        run: npm ci
+      - name: Build Angular application
+        working-directory: internal/client/
+        run: npm run build
+      - name: Run Angular tests
+        working-directory: internal/client/
+        run: npm run test -- --watch=false --browsers=ChromeHeadless
+      - name: Run Angular linter
+        working-directory: internal/client/
+        run: npm run lint
+      # TODO: add upload of dist/ to GitHub

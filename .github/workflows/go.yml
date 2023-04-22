@@ -1,0 +1,28 @@
+name: Go
+on:
+  push:
+jobs:
+  go:
+    name: Go
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Setup NodeJS
+        uses: actions/setup-node@v3
+      - name: Install NPM dependencies
+        run: npm ci
+      - name: Build NPM packages
+        run: npm run build -ws
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v2
+        with:
+          hugo-version: 'latest'
+      - name: Build Hugo site
+        run: hugo -s internal/docs
+      - name: Check Go formatting
+        run: |
+          go fmt ./...
+          git diff --exit-code
+      - name: Run Go tests
+        run: go test -v ./...

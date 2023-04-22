@@ -1,0 +1,11 @@
+{
+  "name": "@go-nostr/go-nostr",
+  "version": "0.0.0",
+  "description": "TBD",
+  "author": "C. Large <contact@chantzlarge.com> (http://chantzlarge.com/)",
+  "license": "AGPL-3.0",
+  "workspaces": [
+    "internal/client",
+    "internal/docs"
+  ]
+}
