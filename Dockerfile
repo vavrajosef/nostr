@@ -11,8 +11,8 @@
 FROM node:latest as client_builder
 WORKDIR /
 COPY package.json package-lock.json ./
-RUN npm ci
-RUN npm install -g @angular/cli @angular-devkit/build-angular
+RUN npm i
+RUN npm install -g @angular/cli
 COPY . .
 RUN npm run build -w internal/client
 
@@ -42,7 +42,7 @@ RUN hugo -s internal/docs
 # - Download Golang dependencies
 # - Install Golang dependencies
 # - Build the Golang application binary
-FROM golang as cmd_builder
+FROM golang:latest as cmd_builder
 WORKDIR /go/src
 COPY --from=client_builder /internal/client/dist /go/src/internal/client/dist
 COPY --from=docs_builder /internal/docs/public /go/src/internal/docs/public
