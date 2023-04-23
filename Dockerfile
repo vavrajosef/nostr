@@ -11,6 +11,7 @@
 FROM node:alpine as client_builder
 WORKDIR /
 COPY package.json package-lock.json ./
+RUN npm i -g @angular/cli
 RUN npm ci
 COPY . .
 RUN npm run build -w internal/client --prod
