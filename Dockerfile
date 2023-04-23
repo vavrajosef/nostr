@@ -1,47 +1,24 @@
-# Dockerfile for building a NodeJS, Hugo, and Golang application
-
 # Builder step for Angular client
-# - Set the base image to node:alpine
-# - Set the working directory to the root
-# - Copy package configuration files
-# - Install NodeJS dependencies
-# - Install Angular CLI globally
-# - Copy all source files
-# - Build the internal client using Angular
-FROM --platform=$BUILDPLATFORM node:alpine as client_builder
-RUN npm install -g @angular/cli @angular/core
-COPY package.json package-lock.json ./
-RUN npm ci
+# - TBD
+FROM node:alpine as client_builder
+WORKDIR /
 COPY . .
+RUN npm i -g @angular/cli
+RUN npm ci
 RUN npm run build -w internal/client
-RUN ls ./
 
 # Builder step for Hugo documentation
-# - Set the base image to node:alpine
-# - Set the working directory to the root
-# - Install Hugo
-# - Copy package configuration files for NodeJS dependencies
-# - Install NodeJS dependencies
-# - Copy all source files
-# - Build the NPM docs package
-# - Build the Hugo documentation
+# - TBD
 FROM node:alpine as docs_builder
 WORKDIR /
 RUN apk add --no-cache hugo
-COPY package.json package-lock.json ./
-RUN npm ci
 COPY . .
+RUN npm ci
 RUN npm run build -w internal/docs
 RUN hugo -s internal/docs
 
 # Builder step for Golang application
-# - Set the base image to golang
-# - Set the working directory to /go/src
-# - Copy the built assets from previous steps (client_builder and docs_builder)
-# - Copy all source files
-# - Download Golang dependencies
-# - Install Golang dependencies
-# - Build the Golang application binary
+# - TBD
 FROM golang:latest as cmd_builder
 WORKDIR /go/src
 COPY --from=client_builder /internal/client/dist /go/src/internal/client/dist
@@ -52,9 +29,7 @@ RUN go install -v ./...
 RUN go build -v -o /go/bin/nostr ${PWD}/internal/cmd
 
 # Final step for creating a minimalist and secure runtime environment
-# - Set the base image to gcr.io/distroless/base
-# - Copy the built Golang binary from the previous step
-# - Set the command to run the application
+# - TBD
 FROM gcr.io/distroless/base
 COPY --from=cmd_builder /go/bin/nostr /nostr
 CMD ["/nostr"]

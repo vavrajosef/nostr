@@ -7,8 +7,5 @@
   "workspaces": [
     "internal/client",
     "internal/docs"
-  ],
-  "devDependencies": {
-    "@angular-devkit/build-angular": "^15.2.6"
-  }
+  ]
 }
