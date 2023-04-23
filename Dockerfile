@@ -8,7 +8,7 @@
 # - Install Angular CLI globally
 # - Copy all source files
 # - Build the internal client using Angular
-FROM --platform=$BUILDPLATFORM node:alpjine as client_builder
+FROM --platform=$BUILDPLATFORM node:alpine as client_builder
 WORKDIR /
 RUN npm install -g @angular/cli@13
 COPY package.json package-lock.json ./
