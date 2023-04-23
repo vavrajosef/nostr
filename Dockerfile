@@ -8,7 +8,7 @@
 # - Install Angular CLI globally
 # - Copy all source files
 # - Build the internal client using Angular
-FROM node:latest as client_builder
+FROM node:alpine as client_builder
 WORKDIR /
 COPY package.json package-lock.json ./
 RUN npm i
@@ -25,7 +25,7 @@ RUN npm run build -w internal/client
 # - Copy all source files
 # - Build the NPM docs package
 # - Build the Hugo documentation
-FROM node:latest as docs_builder
+FROM node:alpine as docs_builder
 WORKDIR /
 RUN apk add --no-cache hugo
 COPY package.json package-lock.json ./
