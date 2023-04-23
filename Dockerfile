@@ -11,8 +11,10 @@
 FROM node:alpine as client_builder
 WORKDIR /
 COPY package.json package-lock.json ./
-RUN npm i
+RUN npm ci
 RUN npm install -g @angular/cli
+RUN npm uninstall @angular-devkit/build-angular
+RUN npm i --save-dev @angular-devkit/build-angular
 COPY . .
 RUN npm run build -w internal/client
 
