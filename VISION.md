@@ -100,8 +100,6 @@ This document focuses on the essential requirements for go-nostr. However, as th
 
 ##### API
 
-TBD
-
 ###### GET /.well-known/nostr.json?name=local-part
 
 Returns the internet identifier for the given name query parameter.
@@ -112,273 +110,131 @@ Returns the current health status of the service.
 
 #### User Interfaces
 
-TBD
+##### Account Settings Page Component
 
-##### Client
+Allows users to manage their account information and preferences.
 
-TBD
+##### Add Relay Form Component
 
-###### Account Settings Page
+Provides a form for users to add a new relay to their account.
 
-TBD
+##### Appearance Settings Page Component
 
-###### Add Relay Form
+Enables users to customize the look and feel of the application.
 
-TBD
+##### Backup Settings Page Component
 
-###### Appearance Settings Page
+Facilitates creating and managing backups of user data.
 
-TBD
+##### Create Short Text Note Component
 
-###### Backup Settings Page
+Allows users to create a brief text note within the application.
 
-TBD
+##### Home Page Component
 
-###### Create Short Text Note
+Displays the main content and navigation options for users.
 
-TBD
+##### Landing Page Component
 
-###### Home Page
+Introduces the application and prompts users to sign up or sign in.
 
-TBD
+##### List Events Component
 
-###### Landing Page
+Displays a list of all events associated with the user's account.
 
-TBD
+##### List Notifications Component
 
-###### List Events
+Shows a list of recent notifications for the user.
 
-TBD
+##### List Relays Component
 
-###### List Notifications
+Presents a list of all relays the user has added to their account.
 
-TBD
+##### Network Settings Page Component
 
-###### List Relays
+Enables users to configure network-related settings and preferences.
 
-TBD
+##### Not Found Page Component
 
-###### Network Settings Page
+Informs users that the requested page or resource could not be found.
 
-TBD
+##### Notifications Page Component
 
-###### Not Found Page
+Displays an overview of the user's notifications and settings.
 
-TBD
+##### Profile Page Component
 
-###### Notifications Page
+Shows the user's profile information and allows them to edit it.
 
-TBD
+##### Remove Relay Form Component
 
-###### Profile Page
+Provides a form for users to remove a relay from their account.
 
-TBD
+##### Sign In Page Component
 
-###### Remove Relay Form
+Prompts users to enter their credentials to access their account.
 
-TBD
+##### Sign Out Form Component
 
-###### Sign In Page
+Provides a simple form for users to securely log out of their account and end their session.
 
-TBD
+##### Sign Up Page Component
 
-###### Sign Up Page
-
-TBD
-
-##### Docs
-
-TBD
+Allows new users to create an account for the application.
 
 ### Functions
 
+#### Add Relay
+
+Allows users to add a new relay to their list of relays, enhancing network connectivity and redundancy.
+
+#### Copy Private Key
+
+Enables users to securely copy their private key to their clipboard for backup or other purposes.
+
+#### Copy Public Key
+
+Enables users to copy their public key to their clipboard for sharing with others or for use in external applications.
+
 #### Get Health
 
-Returns the current health [status] of the service implementing the healthcheck endpoint monitoring pattern.
+Returns the current health status of the service implementing the healthcheck endpoint monitoring pattern.
 
 #### Get Internet Identifier
 
-Returns the internet identifier for given name and optionally relays, if enabled. Supports [NIP-05](https://github.com/nostr-protocol/nips/blob/master/05.md).
+Returns the internet identifier for a given name and optionally relays, if enabled. Supports NIP-05.
 
-#### Publish Metadata Event
+#### List Events
 
-(Kind 0, NIP 1)
+Displays a list of events, including their details, for the user to browse and interact with.
 
-TBD
+#### List Notifications
 
-#### Publish Short Text Note Event
+Shows a list of notifications received by the user, allowing them to stay informed about important updates or messages.
 
-(Kind 1, NIP 1)
+#### List Relays
 
-TBD
+Displays a list of relays currently being used by the user, providing an overview of network connectivity.
 
-#### Publish Recommend Relay Event
+#### Publish Message
 
-(Kind 2, NIP 1)
+Enables users to create and publish messages to the network, allowing them to share information and communicate with others.
 
-TBD
+#### Remove Relay
 
-#### Publish Contacts Event
+Allows users to remove a relay from their list of relays, providing control over network connectivity options.
 
-(Kind 3, NIP 2)
+#### Sign In
 
-TBD
+Enables users to securely log in to their account by providing their credentials.
 
-#### Publish Encrypted Direct Messages Event
+#### Sign Out
 
-(Kind 4, NIP 4)
+Allows users to securely log out of their account and end their session.
 
-TBD
+#### Sign Up
 
-#### Publish Event Deletion Event
-
-(Kind 5, NIP 9)
-
-TBD
-
-#### Publish Reposts Event
-
-(Kind 6, NIP 18)
-
-TBD
-
-#### Publish Reaction Event
-
-(Kind 7, NIP 25)
-
-TBD
-
-#### Publish Badge Award Event
-
-(Kind 8, NIP 58)
-
-TBD
-
-#### Publish Channel Creation Event
-
-(Kind 40, NIP 28)
-
-TBD
-
-#### Publish Channel Metadata Event
-
-(Kind 41, NIP 28)
-
-TBD
-
-#### Publish Channel Message Event
-
-(Kind 42, NIP 28)
-
-TBD
-
-#### Publish Channel Hide Message Event
-
-(Kind 43, NIP 28)
-
-TBD
-
-#### Publish Channel Mute User Event
-
-(Kind 44, NIP 28)
-
-TBD
-
-#### Publish Reporting Event
-
-(Kind 1984, NIP 56)
-
-TBD
-
-#### Publish Zap Request Event
-
-(Kind 9734, NIP 57)
-
-TBD
-
-#### Publish Zap Event
-
-(Kind 9735, NIP 57)
-
-TBD
-
-#### Publish Mute List Event
-
-(Kind 10000, NIP 51)
-
-TBD
-
-#### Publish Pin List Event
-
-(Kind 10001, NIP 51)
-
-TBD
-
-#### Publish Relay List Metadata Event
-
-(Kind 10002, NIP 65)
-
-TBD
-
-#### Publish Client Authentication Event
-
-(Kind 22242, NIP 42)
-
-TBD
-
-#### Publish Nostr Connect Event
-
-(Kind 24133, NIP 46)
-
-TBD
-
-#### Publish Categorized People List Event
-
-(Kind 30000, NIP 51)
-
-TBD
-
-#### Publish Categorized Bookmark List Event
-
-(Kind 30001, NIP 51)
-
-TBD
-
-#### Publish Profile Badges Event
-
-(Kind 30008, NIP 58)
-
-TBD
-
-#### Publish Badge Definition Event
-
-(Kind 30009, NIP 58)
-
-TBD
-
-#### Publish Create or update a stall Event
-
-(Kind 30017, NIP 15)
-
-TBD
-
-#### Publish Create or update a product Event
-
-(Kind 30018, NIP 15)
-
-TBD
-
-#### Publish Long-form Content Event
-
-(Kind 30023, NIP 23)
-
-TBD
-
-#### Publish Application-specific Data Event
-
-(Kind 30078, NIP 78)
-
-TBD
+Enables new users to create an account by providing the necessary information and agreeing to terms of service.
 
 ### Performance Requirements
 
