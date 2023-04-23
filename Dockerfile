@@ -8,16 +8,16 @@
 # - Install Angular CLI globally
 # - Copy all source files
 # - Build the internal client using Angular
-FROM --platform=$BUILDPLATFORM node:alpine as client_builder
+FROM node:latest as client_builder
 WORKDIR /
-RUN npm install -g @angular/cli@13
+RUN npm install -g @angular/cli
 COPY package.json package-lock.json ./
 RUN npm ci
 COPY . .
 RUN npm run build -w internal/client
 
 # Builder step for Hugo documentation
-# - Set the base image to node:alpine
+# - Set the base image to node:latest
 # - Set the working directory to the root
 # - Install Hugo
 # - Copy package configuration files for NodeJS dependencies
@@ -25,7 +25,7 @@ RUN npm run build -w internal/client
 # - Copy all source files
 # - Build the NPM docs package
 # - Build the Hugo documentation
-FROM node:alpine as docs_builder
+FROM node:latest as docs_builder
 WORKDIR /
 RUN apk add --no-cache hugo
 COPY package.json package-lock.json ./
