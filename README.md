@@ -6,7 +6,7 @@ Please be aware that the code and documentation may contain unfinished features 
 
 ## Overview
 
-An all-in-one Go/Hugo/Angular monorepo for the nostr protocol, featuring comprehensive documentation, a nostr relay executable, reusable Go packages, and an Angular web client for relay administration.
+An all-in-one Angular/Go/Hugo monorepo for the Nostr protocol, featuring comprehensive documentation, an all-in-one Go executable and reusable packages with an Angular web client.
 
 ## Getting Started
 
