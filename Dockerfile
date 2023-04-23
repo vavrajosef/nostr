@@ -13,7 +13,7 @@ WORKDIR /
 COPY package.json package-lock.json ./
 RUN npm ci
 COPY . .
-RUN npm run build -ws
+RUN npm run build -w internal/client --prod
 
 # Builder step for Hugo documentation
 # - Set the base image to node:alpine
