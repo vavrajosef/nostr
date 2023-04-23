@@ -1,30 +1,58 @@
-# NodeJS dependency installer step for workspace
-FROM node:latest as node_builder
+# Dockerfile for building a NodeJS, Hugo, and Golang application
+
+# Builder step for Angular client
+# - Set the base image to node:latest
+# - Set the working directory to the root
+# - Copy package configuration files
+# - Install NodeJS dependencies
+# - Copy all source files
+# - Build the internal client using NodeJS
+FROM node:latest as client_builder
 WORKDIR /
 COPY package.json package-lock.json ./
 RUN npm ci
-
-# NodeJS builder step for workspace
 COPY . .
-RUN npm run build -ws
+RUN npm run build -w internal/client
 
-# Hugo builder step for docs/
-FROM klakegg/hugo:latest as hugo_builder
-WORKDIR /internal/docs
-COPY internal/docs/ .
-RUN hugo
+# Builder step for Hugo documentation
+# - Set the base image to node:alpine
+# - Set the working directory to the root
+# - Install Hugo
+# - Copy package configuration files for NodeJS dependencies
+# - Install NodeJS dependencies
+# - Copy all source files
+# - Build the NPM docs package
+# - Build the Hugo documentation
+FROM node:alpine as docs_builder
+WORKDIR /
+RUN apk add --no-cache hugo
+COPY package.json package-lock.json ./
+RUN npm ci
+COPY . .
+RUN npm run build -w internal/docs
+RUN hugo -s internal/docs
 
-# Golang builder step
-FROM golang as go_builder
+# Builder step for Golang application
+# - Set the base image to golang
+# - Set the working directory to /go/src
+# - Copy the built assets from previous steps (NodeJS and Hugo)
+# - Copy all source files
+# - Download Golang dependencies
+# - Install Golang dependencies
+# - Build the Golang application binary
+FROM golang as cmd_builder
 WORKDIR /go/src
-COPY --from=node_builder /internal/client/dist /internal/client/dist
-COPY --from=hugo_builder /internal/docs/public /internal/docs/public
+COPY --from=client_builder /internal/client/dist /go/src/internal/client/dist
+COPY --from=docs_builder /internal/docs/public /go/src/internal/docs/public
 COPY . .
 RUN go get -d -v ./...
 RUN go install -v ./...
 RUN go build -v -o /go/bin/nostr ${PWD}/internal/cmd
 
-# Minimalist, secure Go run step
+# Final step for creating a minimalist and secure runtime environment
+# - Set the base image to gcr.io/distroless/base
+# - Copy the built Golang binary from the previous step
+# - Set the command to run the application
 FROM gcr.io/distroless/base
-COPY --from=go_builder /go/bin/nostr /nostr
+COPY --from=cmd_builder /go/bin/nostr /nostr
 CMD ["/nostr"]
