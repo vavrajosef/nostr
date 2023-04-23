@@ -31,6 +31,7 @@ func (h *getHealthHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		Timestamp: time.Now().Unix(),
 	})
 
+	w.Header().Add("Access-Control-Allow-Origin", "*")
 	w.Header().Add("Content-Type", "application/json")
 	w.Write(data)
 }
@@ -47,6 +48,7 @@ func (h *getInternetIdentifierHandler) ServeHTTP(w http.ResponseWriter, r *http.
 		Relays: []string{},
 	})
 
+	w.Header().Add("Access-Control-Allow-Origin", "*")
 	w.Header().Add("Content-Type", "application/json")
 	w.Write(data)
 }

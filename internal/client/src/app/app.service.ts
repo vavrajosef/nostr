@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 const defaultHostname = '0.0.0.0'
-const defaultPort = '4318'
+const defaultPort = '4317'
 
 export interface GetHealthResponse {
   status: string
