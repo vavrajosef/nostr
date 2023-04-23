@@ -14,7 +14,7 @@ COPY package.json package-lock.json ./
 RUN npm i -g @angular/cli
 RUN npm ci
 COPY . .
-RUN npm run build -w internal/client --prod
+RUN npm run build -w internal/client --omit dev
 
 # Builder step for Hugo documentation
 # - Set the base image to node:alpine
@@ -29,7 +29,6 @@ FROM node:alpine as docs_builder
 WORKDIR /
 RUN apk add --no-cache hugo
 COPY package.json package-lock.json ./
-RUN npm update
 RUN npm ci
 COPY . .
 RUN npm run build -ws
