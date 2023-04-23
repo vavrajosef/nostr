@@ -12,9 +12,10 @@ FROM node:alpine as client_builder
 WORKDIR /
 COPY package.json package-lock.json ./
 RUN npm i -g @angular/cli
+RUN npm i -s @angular-devkit/build-angular --force
 RUN npm ci
 COPY . .
-RUN npm run build -w internal/client --omit dev
+RUN npm run build -w internal/client --omit=dev
 
 # Builder step for Hugo documentation
 # - Set the base image to node:alpine
