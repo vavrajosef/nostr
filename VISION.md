@@ -118,47 +118,71 @@ TBD
 
 TBD
 
-###### AccountSettingsPageComponent
+###### Account Settings Page
 
 TBD
 
-###### AppearanceSettingsPageComponent
+###### Add Relay Form
 
 TBD
 
-###### BackupSettingsPageComponent
+###### Appearance Settings Page
 
 TBD
 
-###### CreateShortTextNoteComponent
+###### Backup Settings Page
 
 TBD
 
-###### HomePageComponent
+###### Create Short Text Note
 
 TBD
 
-###### LandingPageComponent
+###### Home Page
 
 TBD
 
-###### ListNotificationsPageComponent
+###### Landing Page
 
 TBD
 
-###### NetworkSettingsPageComponent
+###### List Events
 
 TBD
 
-###### ProfilePageComponent
+###### List Notifications
 
 TBD
 
-###### SignInPageComponent
+###### List Relays
 
 TBD
 
-###### SignUpPageComponent
+###### Network Settings Page
+
+TBD
+
+###### Not Found Page
+
+TBD
+
+###### Notifications Page
+
+TBD
+
+###### Profile Page
+
+TBD
+
+###### Remove Relay Form
+
+TBD
+
+###### Sign In Page
+
+TBD
+
+###### Sign Up Page
 
 TBD
 

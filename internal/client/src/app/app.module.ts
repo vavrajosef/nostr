@@ -9,7 +9,7 @@ import { AppearanceSettingsPageComponent } from './appearance-settings-page/appe
 import { AccountSettingsPageComponent } from './account-settings-page/account-settings-page.component';
 import { BackupSettingsPageComponent } from './backup-settings-page/backup-settings-page.component';
 import { CreateShortTextNoteFormComponent } from './create-short-text-note-form/create-short-text-note-form.component';
-import { ListNotificationsPageComponent } from './list-notifications-page/list-notifications-page.component';
+import { NotificationsPageComponent } from './notifications-page/notifications-page.component';
 import { NetworkSettingsPageComponent } from './network-settings-page/network-settings-page.component';
 import { SignInPageComponent } from './sign-in-page/sign-in-page.component';
 import { SignUpPageComponent } from './sign-up-page/sign-up-page.component';
@@ -30,7 +30,7 @@ import { ListNotificationsComponent } from './list-notifications/list-notificati
     AccountSettingsPageComponent,
     BackupSettingsPageComponent,
     CreateShortTextNoteFormComponent,
-    ListNotificationsPageComponent,
+    NotificationsPageComponent,
     NetworkSettingsPageComponent,
     SignInPageComponent,
     SignUpPageComponent,

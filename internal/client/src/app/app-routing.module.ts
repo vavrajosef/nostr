@@ -5,7 +5,7 @@ import { ProfilePageComponent } from './profile-page/profile-page.component';
 import { NotFoundPageComponent } from './not-found-page/not-found-page.component';
 import { AccountSettingsPageComponent } from './account-settings-page/account-settings-page.component';
 import { NetworkSettingsPageComponent } from './network-settings-page/network-settings-page.component';
-import { ListNotificationsPageComponent } from './list-notifications-page/list-notifications-page.component';
+import { NotificationsPageComponent } from './notifications-page/notifications-page.component';
 
 const routes: Routes = [
   {
@@ -19,7 +19,7 @@ const routes: Routes = [
   },
   {
     path: 'notifications',
-    component: ListNotificationsPageComponent
+    component: NotificationsPageComponent
   },
   {
     path: 'settings/account',
