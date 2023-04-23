@@ -13,7 +13,7 @@ RUN npm install -g @angular/cli@13
 COPY package.json package-lock.json ./
 RUN npm ci
 COPY . .
-RUN npm run build -v
+RUN npm run build -w internal/client
 RUN ls ./
 
 # Builder step for Hugo documentation
