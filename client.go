@@ -18,8 +18,8 @@ func NewClient() *Client {
 
 type Client struct {
 	msg    chan []byte
-	relays map[*relay]struct{}
 	mu     sync.Mutex
+	relays map[*relay]struct{}
 }
 
 type relay struct {
@@ -65,6 +65,13 @@ func (cl *Client) Subscribe(u string) error {
 	return nil
 }
 
+func (cl *Client) addRelay(r *relay) {
+	cl.mu.Lock()
+	defer cl.mu.Unlock()
+
+	cl.relays[r] = struct{}{}
+}
+
 func (cl *Client) listenRelay(r *relay) {
 	defer cl.removeRelay(r)
 
@@ -77,13 +84,6 @@ func (cl *Client) listenRelay(r *relay) {
 
 		cl.msg <- msg
 	}
-}
-
-func (cl *Client) addRelay(r *relay) {
-	cl.mu.Lock()
-	defer cl.mu.Unlock()
-
-	cl.relays[r] = struct{}{}
 }
 
 func (cl *Client) removeRelay(r *relay) {

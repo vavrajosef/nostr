@@ -8,6 +8,7 @@ import (
 	"log"
 	"net"
 	"net/http"
+	"sync"
 	"time"
 
 	"github.com/go-nostr/nostr"
@@ -100,7 +101,8 @@ func NewServer() *Server {
 	}
 
 	return &Server{
-		server: httpServer,
+		clients: make(map[*client]struct{}),
+		server:  httpServer,
 	}
 }
 
@@ -114,7 +116,14 @@ type Server struct {
 	Version       string             `json:"version,omitempty"`
 	Limitations   *nostr.Limitations `json:"limitations,omitempty"`
 
-	server *http.Server
+	server  *http.Server
+	clients map[*client]struct{}
+	mess    chan []byte
+	mu      sync.Mutex
+}
+
+type client struct {
+	conn *websocket.Conn
 }
 
 func (r *Server) ListenAndServe() error {
@@ -123,4 +132,70 @@ func (r *Server) ListenAndServe() error {
 
 func (r *Server) Serve(l net.Listener) error {
 	return r.server.Serve(l)
+}
+
+func (r *Server) Publish(mess nostr.Message) error {
+	ctx, cancel := context.WithTimeout(context.Background(), time.Minute)
+	defer cancel()
+
+	byt, err := mess.Marshal()
+	if err != nil {
+		return err
+	}
+
+	r.mu.Lock()
+	defer r.mu.Unlock()
+	for cl := range r.clients {
+		cl.conn.Write(ctx, websocket.MessageText, byt)
+	}
+
+	return nil
+}
+
+func (r *Server) Subscribe(u string) error {
+	ctx, cancel := context.WithTimeout(context.Background(), time.Minute)
+	defer cancel()
+
+	conn, _, err := websocket.Dial(ctx, u, &websocket.DialOptions{
+		CompressionMode: websocket.CompressionDisabled,
+	})
+	if err != nil {
+		return err
+	}
+
+	cl := &client{conn: conn}
+	r.addClient(cl)
+
+	go r.listenClient(cl)
+
+	return nil
+}
+
+func (r *Server) addClient(cl *client) {
+	r.mu.Lock()
+	defer r.mu.Unlock()
+
+	r.clients[cl] = struct{}{}
+}
+
+func (r *Server) listenClient(cl *client) {
+	defer r.removeClient(cl)
+
+	for {
+		_, mess, err := cl.conn.Read(context.Background())
+		if err != nil {
+			fmt.Printf("Error reading from client: %v\n", err)
+			return
+		}
+
+		r.mess <- mess
+	}
+}
+
+func (r *Server) removeClient(cl *client) {
+	r.mu.Lock()
+	defer r.mu.Unlock()
+
+	delete(r.clients, cl)
+	cl.conn.Close(websocket.StatusNormalClosure, "closing connection")
 }
