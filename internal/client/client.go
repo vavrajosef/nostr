@@ -2,23 +2,34 @@ package client
 
 import (
 	"context"
+	"fmt"
+	"sync"
 	"time"
 
 	"github.com/go-nostr/nostr"
 	"nhooyr.io/websocket"
 )
 
-func NewClient(conn *websocket.Conn) *Client {
+func NewClient() *Client {
 	return &Client{
-		conn: conn,
+		msg:    make(chan []byte),
+		relays: make(map[*relay]struct{}),
 	}
 }
 
 type Client struct {
+	msg    chan []byte
+	relays map[*relay]struct{}
+	mu     sync.Mutex
+}
+
+type relay struct {
 	conn *websocket.Conn
 }
 
-func (cl *Client) PublishMessage(mess nostr.Message) error {
+// TODO: add event handlers
+
+func (cl *Client) Publish(mess nostr.Message) error {
 	ctx, cancel := context.WithTimeout(context.Background(), time.Minute)
 	defer cancel()
 
@@ -27,5 +38,59 @@ func (cl *Client) PublishMessage(mess nostr.Message) error {
 		return err
 	}
 
-	return cl.conn.Write(ctx, websocket.MessageText, byt)
+	cl.mu.Lock()
+	defer cl.mu.Unlock()
+	for r := range cl.relays {
+		r.conn.Write(ctx, websocket.MessageText, byt)
+	}
+
+	return nil
+}
+
+func (cl *Client) Subscribe(u string) error {
+	ctx, cancel := context.WithTimeout(context.Background(), time.Minute)
+	defer cancel()
+
+	conn, _, err := websocket.Dial(ctx, u, &websocket.DialOptions{
+		CompressionMode: websocket.CompressionDisabled,
+	})
+	if err != nil {
+		return err
+	}
+
+	r := &relay{conn: conn}
+	cl.addRelay(r)
+
+	go cl.listenRelay(r)
+
+	return nil
+}
+
+func (cl *Client) listenRelay(r *relay) {
+	defer cl.removeRelay(r)
+
+	for {
+		_, msg, err := r.conn.Read(context.Background())
+		if err != nil {
+			fmt.Printf("Error reading from relay: %v\n", err)
+			return
+		}
+
+		cl.msg <- msg
+	}
+}
+
+func (cl *Client) addRelay(r *relay) {
+	cl.mu.Lock()
+	defer cl.mu.Unlock()
+
+	cl.relays[r] = struct{}{}
+}
+
+func (cl *Client) removeRelay(r *relay) {
+	cl.mu.Lock()
+	defer cl.mu.Unlock()
+
+	delete(cl.relays, r)
+	r.conn.Close(websocket.StatusNormalClosure, "closing connection")
 }
