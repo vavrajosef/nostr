@@ -13,8 +13,8 @@ WORKDIR /
 COPY package.json package-lock.json ./
 RUN npm ci
 RUN npm i -g @angular/cli
-RUN cd internal/client && ng update @angular/cli @angular/core --allow-dirty --force && cd /
 COPY . .
+RUN cd /internal/client && ng update @angular/cli @angular/core --allow-dirty --force && cd /
 RUN npm run build -w internal/client
 
 # Builder step for Hugo documentation
