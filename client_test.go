@@ -1,4 +1,4 @@
-package client_test
+package nostr_test
 
 import (
 	"fmt"
@@ -8,7 +8,6 @@ import (
 	"time"
 
 	"github.com/go-nostr/nostr"
-	"github.com/go-nostr/nostr/internal/client"
 	"nhooyr.io/websocket"
 )
 
@@ -23,7 +22,7 @@ func TestNewClient(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			cl := client.NewClient()
+			cl := nostr.NewClient()
 
 			if cl == nil {
 				t.Fatalf("expected %+v, to be not nil", cl)
@@ -59,7 +58,7 @@ func TestClient_Publish(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			cl := client.NewClient()
+			cl := nostr.NewClient()
 
 			go cl.Subscribe(tt.fields.u)
 
@@ -114,7 +113,7 @@ func TestClient_Subscribe(t *testing.T) {
 
 			u := "ws" + server.URL[4:]
 
-			cl := client.NewClient()
+			cl := nostr.NewClient()
 			err := cl.Subscribe(u)
 			if err != nil {
 				t.Fatal(err)

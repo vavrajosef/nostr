@@ -1,4 +1,4 @@
-package client
+package nostr
 
 import (
 	"context"
@@ -6,7 +6,6 @@ import (
 	"sync"
 	"time"
 
-	"github.com/go-nostr/nostr"
 	"nhooyr.io/websocket"
 )
 
@@ -29,7 +28,7 @@ type relay struct {
 
 // TODO: add event handlers
 
-func (cl *Client) Publish(mess nostr.Message) error {
+func (cl *Client) Publish(mess Message) error {
 	ctx, cancel := context.WithTimeout(context.Background(), time.Minute)
 	defer cancel()
 
