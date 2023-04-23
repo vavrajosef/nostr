@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
-import { HomepageComponent } from './home-page/home-page.component';
+import { HomePageComponent } from './home-page/home-page.component';
 import { ProfilePageComponent } from './profile-page/profile-page.component';
 import { AppearanceSettingsPageComponent } from './appearance-settings-page/appearance-settings-page.component';
 import { AccountSettingsPageComponent } from './account-settings-page/account-settings-page.component';
@@ -19,7 +19,7 @@ import { NotFoundPageComponent } from './not-found-page/not-found-page.component
 @NgModule({
   declarations: [
     AppComponent,
-    HomepageComponent,
+    HomePageComponent,
     ProfilePageComponent,
     AppearanceSettingsPageComponent,
     AccountSettingsPageComponent,
