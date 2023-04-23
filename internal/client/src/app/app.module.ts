@@ -15,6 +15,11 @@ import { SignInPageComponent } from './sign-in-page/sign-in-page.component';
 import { SignUpPageComponent } from './sign-up-page/sign-up-page.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { NotFoundPageComponent } from './not-found-page/not-found-page.component';
+import { AddRelayFormComponent } from './add-relay-form/add-relay-form.component';
+import { ListRelaysComponent } from './list-relays/list-relays.component';
+import { RemoveRelayFormComponent } from './remove-relay-form/remove-relay-form.component';
+import { ListEventsComponent } from './list-events/list-events.component';
+import { ListNotificationsComponent } from './list-notifications/list-notifications.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +35,12 @@ import { NotFoundPageComponent } from './not-found-page/not-found-page.component
     SignInPageComponent,
     SignUpPageComponent,
     LandingPageComponent,
-    NotFoundPageComponent
+    NotFoundPageComponent,
+    AddRelayFormComponent,
+    ListRelaysComponent,
+    RemoveRelayFormComponent,
+    ListEventsComponent,
+    ListNotificationsComponent
   ],
   imports: [
     BrowserModule,
