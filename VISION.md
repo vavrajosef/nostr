@@ -126,7 +126,7 @@ Enables users to customize the look and feel of the application.
 
 Facilitates creating and managing backups of user data.
 
-##### Create Short Text Note Component
+##### Create Short Text Note Event Component
 
 Allows users to create a brief text note within the application.
 
@@ -216,9 +216,9 @@ Shows a list of notifications received by the user, allowing them to stay inform
 
 Displays a list of relays currently being used by the user, providing an overview of network connectivity.
 
-#### Publish Message
+#### Publish Event
 
-Enables users to create and publish messages to the network, allowing them to share information and communicate with others.
+Enables users to create and publish events to the network, allowing them to share information and communicate with others.
 
 #### Remove Relay
 
