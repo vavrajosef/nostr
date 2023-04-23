@@ -5,12 +5,14 @@
 # - Set the working directory to the root
 # - Copy package configuration files
 # - Install NodeJS dependencies
+# - Install Angular CLI globally
 # - Copy all source files
-# - Build the internal client using NodeJS
+# - Build the internal client using Angular
 FROM node:latest as client_builder
 WORKDIR /
 COPY package.json package-lock.json ./
 RUN npm ci
+RUN npm install -g @angular/cli
 COPY . .
 RUN npm run build -w internal/client
 
