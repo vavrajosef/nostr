@@ -11,10 +11,9 @@
 FROM node:alpine as client_builder
 WORKDIR /
 COPY package.json package-lock.json ./
+RUN npm update
 RUN npm ci
 RUN npm install -g @angular/cli
-RUN npm uninstall @angular-devkit/build-angular
-RUN npm i --save-dev @angular-devkit/build-angular
 COPY . .
 RUN npm run build -w internal/client
 
@@ -31,6 +30,7 @@ FROM node:alpine as docs_builder
 WORKDIR /
 RUN apk add --no-cache hugo
 COPY package.json package-lock.json ./
+RUN npm update
 RUN npm ci
 COPY . .
 RUN npm run build -w internal/docs
