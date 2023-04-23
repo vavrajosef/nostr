@@ -15,7 +15,7 @@ RUN npm install -g npm@9.6.5
 RUN npm install -g @angular/cli
 RUN npm ci
 COPY . .
-RUN npm run build -w internal/client
+RUN npm run build -ws
 
 # Builder step for Hugo documentation
 # - Set the base image to node:alpine
@@ -33,7 +33,7 @@ COPY package.json package-lock.json ./
 RUN npm update
 RUN npm ci
 COPY . .
-RUN npm run build -w internal/docs
+RUN npm run build -ws
 RUN hugo -s internal/docs
 
 # Builder step for Golang application
