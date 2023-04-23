@@ -28,9 +28,9 @@ func main() {
 	group, _ := errgroup.WithContext(ctx)
 
 	// NOTE: Add service server Serve functions to the error group
-	group.Go(serviceCollection.clientServer.Serve)
-	group.Go(serviceCollection.docsServer.Serve)
-	group.Go(serviceCollection.relayServer.Serve)
+	group.Go(serviceCollection.clientServer.ListenAndServe)
+	group.Go(serviceCollection.docsServer.ListenAndServe)
+	group.Go(serviceCollection.relayServer.ListenAndServe)
 
 	// NOTE: Wait for all service servers to complete or return an error
 	if err := group.Wait(); err != nil {

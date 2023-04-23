@@ -36,6 +36,7 @@ func NewServer() *Server {
 
 	// NOTE: TBD
 	server := &http.Server{
+		Addr:         fmt.Sprintf("%+v:%+v", defaultHostname, defaultPort),
 		Handler:      serveMux,
 		ReadTimeout:  time.Second * 10,
 		WriteTimeout: time.Second * 10,
@@ -46,12 +47,12 @@ func NewServer() *Server {
 	}
 }
 
-// Serve TBD
-func (s *Server) Serve() error {
-	listener, err := net.Listen("tcp", fmt.Sprintf("%v:%v", defaultHostname, defaultPort))
-	if err != nil {
-		panic(err)
-	}
+// ListenAndServe TBD
+func (r *Server) ListenAndServe() error {
+	return r.server.ListenAndServe()
+}
 
-	return s.server.Serve(listener)
+// Serve TBD
+func (r *Server) Serve(l net.Listener) error {
+	return r.server.Serve(l)
 }
