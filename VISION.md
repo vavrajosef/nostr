@@ -98,11 +98,7 @@ This document focuses on the essential requirements for go-nostr. However, as th
 
 #### Software Interfaces
 
-##### gRPC API
-
-TBD
-
-##### HTTP API
+##### API
 
 TBD
 
@@ -114,23 +110,51 @@ Returns the internet identifier for the given name query parameter.
 
 Returns the current health status of the service.
 
-##### Websocket API
-
-TBD
-
 #### User Interfaces
 
 TBD
 
+##### Client
+
+TBD
+
+###### AccountSettingsPageComponent
+
+TBD
+
+###### AppearanceSettingsPageComponent
+
+TBD
+
+###### BackupSettingsPageComponent
+
+TBD
+
+###### CreateShortTextNoteComponent
+
+TBD
+
+###### HomePageComponent
+
+TBD
+
+###### ListNotificationsPageComponent
+
+TBD
+
+###### NetworkSettingsPageComponent
+
+TBD
+
+###### SignInPageComponent
+
+TBD
+
+###### SignUpPageComponent
+
+TBD
+
 ##### Docs
-
-TBD
-
-##### Web
-
-TBD
-
-###### HomepageComponent
 
 TBD
 

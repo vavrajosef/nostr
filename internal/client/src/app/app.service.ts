@@ -10,6 +10,11 @@ export interface GetHealthResponse {
   timestamp: number
 }
 
+export interface GetInternetIdentifier {
+  names: string[]
+  relays: string[]
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -21,5 +26,9 @@ export class AppService {
 
   GetHealth(): Observable<GetHealthResponse> {
     return this.httpClient.get<GetHealthResponse>(`http://${defaultHostname}:${defaultPort}/health`)
+  }
+
+  GetInternetIdentifier(): Observable<GetHealthResponse> {
+    return this.httpClient.get<GetHealthResponse>(`http://${defaultHostname}:${defaultPort}/.well-known/nostr.json`)
   }
 }
