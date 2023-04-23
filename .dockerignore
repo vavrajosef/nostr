@@ -1,2 +1,5 @@
 # TODO: Add node_modules and other output directories to .dockerignore #20
-node_modules
+node_modules/
+internal/client/dist/
+internal/docs/public/
+internal/docs/reference/
