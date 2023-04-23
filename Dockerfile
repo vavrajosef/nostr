@@ -11,8 +11,6 @@
 FROM node:alpine as client_builder
 WORKDIR /
 COPY package.json package-lock.json ./
-RUN npm install -g npm@9.6.5
-RUN npm install -g @angular/cli
 RUN npm ci
 COPY . .
 RUN npm run build -ws
