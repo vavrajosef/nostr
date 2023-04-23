@@ -10,9 +10,10 @@
 # - Build the internal client using Angular
 FROM node:alpine as client_builder
 WORKDIR /
-COPY package.json ./
+COPY package.json package-lock.json ./
+RUN npm ci
 RUN npm i -g @angular/cli
-RUN npm i
+RUN ng update @angular/cli @angular/core --allow-dirty --force
 COPY . .
 RUN npm run build -w internal/client
 
