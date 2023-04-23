@@ -12,7 +12,7 @@ FROM node:latest as client_builder
 WORKDIR /
 COPY package.json package-lock.json ./
 RUN npm ci
-RUN npm install -g @angular/cli
+RUN npm install -g @angular/cli @angular-devkit/build-angular
 COPY . .
 RUN npm run build -w internal/client
 
@@ -37,7 +37,7 @@ RUN hugo -s internal/docs
 # Builder step for Golang application
 # - Set the base image to golang
 # - Set the working directory to /go/src
-# - Copy the built assets from previous steps (NodeJS and Hugo)
+# - Copy the built assets from previous steps (client_builder and docs_builder)
 # - Copy all source files
 # - Download Golang dependencies
 # - Install Golang dependencies
