@@ -13,7 +13,7 @@ WORKDIR /
 COPY package.json package-lock.json ./
 RUN npm ci
 RUN npm i -g @angular/cli
-RUN ng update @angular/cli @angular/core --allow-dirty --force
+RUN cd internal/client && ng update @angular/cli @angular/core --allow-dirty --force && cd /
 COPY . .
 RUN npm run build -w internal/client
 
