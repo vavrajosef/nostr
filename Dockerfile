@@ -8,13 +8,13 @@
 # - Install Angular CLI globally
 # - Copy all source files
 # - Build the internal client using Angular
-FROM node:alpine as client_builder
-WORKDIR /
-RUN npm install -g @angular/cli
+FROM --platform=$BUILDPLATFORM node:17.0.1-bullseye-slim as client_builder
+RUN npm install -g @angular/cli@13
 COPY package.json package-lock.json ./
 RUN npm ci
 COPY . .
-RUN npm run build -w internal/client
+RUN npm run build -v
+RUN ls ./
 
 # Builder step for Hugo documentation
 # - Set the base image to node:alpine
@@ -31,7 +31,7 @@ RUN apk add --no-cache hugo
 COPY package.json package-lock.json ./
 RUN npm ci
 COPY . .
-RUN npm run build -ws
+RUN npm run build -w internal/docs
 RUN hugo -s internal/docs
 
 # Builder step for Golang application
