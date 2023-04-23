@@ -8,8 +8,8 @@
 # - Install Angular CLI globally
 # - Copy all source files
 # - Build the internal client using Angular
-FROM --platform=$BUILDPLATFORM node:17.0.1-bullseye-slim as client_builder
-RUN npm install -g @angular/cli@13
+FROM --platform=$BUILDPLATFORM node:alpine as client_builder
+RUN npm install -g @angular/cli @angular/core
 COPY package.json package-lock.json ./
 RUN npm ci
 COPY . .
