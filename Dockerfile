@@ -13,7 +13,7 @@ WORKDIR /
 COPY package.json ./
 RUN npm i
 COPY . .
-RUN npm run build -w internal/client --omit=dev
+RUN npm run build -w internal/client
 
 # Builder step for Hugo documentation
 # - Set the base image to node:alpine
