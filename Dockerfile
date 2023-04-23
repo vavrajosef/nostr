@@ -8,13 +8,12 @@
 # - Install Angular CLI globally
 # - Copy all source files
 # - Build the internal client using Angular
-FROM node:alpine as client_builder
+FROM --platform=$BUILDPLATFORM node:alpine as client_builder
 WORKDIR /
+RUN npm install -g @angular/cli@13
 COPY package.json package-lock.json ./
 RUN npm ci
-RUN npm i -g @angular/cli
 COPY . .
-RUN cd /internal/client && ng update @angular/cli @angular/core --allow-dirty --force && cd /
 RUN npm run build -w internal/client
 
 # Builder step for Hugo documentation
