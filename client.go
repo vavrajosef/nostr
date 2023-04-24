@@ -12,14 +12,13 @@ import (
 	"nhooyr.io/websocket"
 )
 
-//go:generate npm run build -w web
-
-//go:embed internal/web/dist
-var web embed.FS
+//go:generate npm run build -w internal/client
+//go:embed internal/client/dist
+var client embed.FS
 
 // NewClient TBD
 func NewClient() *Client {
-	dist, err := fs.Sub(web, "internal/web/dist")
+	dist, err := fs.Sub(client, "internal/client/dist")
 	if err != nil {
 		fmt.Printf("Error reading from fs: %+v", err)
 		return nil

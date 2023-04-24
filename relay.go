@@ -76,8 +76,8 @@ func NewRelay() *Relay {
 	}
 
 	return &Relay{
-		clients: make(map[*client]struct{}),
-		server:  httpServer,
+		conns:  make(map[*websocket.Conn]struct{}),
+		server: httpServer,
 	}
 }
 
@@ -91,14 +91,10 @@ type Relay struct {
 	Version       string       `json:"version,omitempty"`
 	Limitations   *Limitations `json:"limitations,omitempty"`
 
-	server  *http.Server
-	clients map[*client]struct{}
-	mess    chan []byte
-	mu      sync.Mutex
-}
-
-type client struct {
-	conn *websocket.Conn
+	server *http.Server
+	conns  map[*websocket.Conn]struct{}
+	mess   chan []byte
+	mu     sync.Mutex
 }
 
 func (r *Relay) ListenAndServe() error {
@@ -120,8 +116,8 @@ func (r *Relay) Publish(mess Message) error {
 
 	r.mu.Lock()
 	defer r.mu.Unlock()
-	for cl := range r.clients {
-		cl.conn.Write(ctx, websocket.MessageText, byt)
+	for conn := range r.conns {
+		conn.Write(ctx, websocket.MessageText, byt)
 	}
 
 	return nil
@@ -138,39 +134,35 @@ func (r *Relay) Subscribe(u string) error {
 		return err
 	}
 
-	cl := &client{conn: conn}
-	r.addClient(cl)
+	r.addConn(conn)
 
-	go r.listenClient(cl)
+	go r.listenConn(conn)
 
 	return nil
 }
 
-func (r *Relay) addClient(cl *client) {
+func (r *Relay) addConn(cl *websocket.Conn) {
 	r.mu.Lock()
 	defer r.mu.Unlock()
 
-	r.clients[cl] = struct{}{}
+	r.conns[cl] = struct{}{}
 }
 
-func (r *Relay) listenClient(cl *client) {
-	defer r.removeClient(cl)
-
+func (r *Relay) listenConn(conn *websocket.Conn) {
+	defer r.removeConn(conn)
 	for {
-		_, mess, err := cl.conn.Read(context.Background())
+		_, mess, err := conn.Read(context.Background())
 		if err != nil {
-			fmt.Printf("Error reading from client: %v\n", err)
+			fmt.Printf("Error reading from connection: %v\n", err)
 			return
 		}
-
 		r.mess <- mess
 	}
 }
 
-func (r *Relay) removeClient(cl *client) {
+func (r *Relay) removeConn(conn *websocket.Conn) {
 	r.mu.Lock()
 	defer r.mu.Unlock()
-
-	delete(r.clients, cl)
-	cl.conn.Close(websocket.StatusNormalClosure, "closing connection")
+	delete(r.conns, conn)
+	conn.Close(websocket.StatusNormalClosure, "closing connection")
 }
