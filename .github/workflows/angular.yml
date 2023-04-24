@@ -20,7 +20,7 @@ jobs:
         run: npm run lint -w internal/client
       # TODO: change name of artifact
       - name: Tar files
-        run: tar -cvf dist.tar /internal/client/disdt
+        run: tar -cvf dist.tar internal/client/dist
       - name: Upload Angular build artifacts
         uses: actions/upload-artifact@v3
         with:
