@@ -113,7 +113,7 @@ On pushes to the main branch, the Docker workflow builds and pushes a Docker ima
 |----------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------|
 | [![Angular](https://github.com/go-nostr/nostr/actions/workflows/angular.yml/badge.svg)](https://github.com/go-nostr/nostr/actions/workflows/angular.yml) | Builds, tests, and lints the Angular application, and uploads the build artifacts. |
 | [![Docker](https://github.com/go-nostr/nostr/actions/workflows/docker.yml/badge.svg)](https://github.com/go-nostr/nostr/actions/workflows/docker.yml)    | Builds and pushes Docker images to the GitHub Container Registry.                  |
-| [![Go](https://github.com/go-nostr/nostr/actions/workflows/go.yml/badge.svg)](https://github.com/go-nostr/nostr/actions/workflows/go.yml)                | Checks Go code formatting, builds NPM packages, and runs Go tests.                 |
+| [![Go](https://github.com/go-nostr/nostr/actions/workflows/go.yml/badge.svg)](https://github.com/go-nostr/nostr/actions/workflows/go.yml)                | Checks Go code formatting, generated Go dependencies, and runs Go tests.                 |
 | [![Hugo](https://github.com/go-nostr/nostr/actions/workflows/hugo.yml/badge.svg)](https://github.com/go-nostr/nostr/actions/workflows/hugo.yml)          | Builds NPM packages, generates the Hugo site, and deploys to GitHub Pages.         |
 
 ## Built-with
