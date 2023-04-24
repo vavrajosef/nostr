@@ -109,7 +109,9 @@ For information on contributing to this project, please see the [CODE_OF_CONDUCT
 
 ## Deployment
 
-Deployment information will be added as the project matures.
+The deployment process is handled by GitHub Actions, with separate workflows for Angular, Docker, Go, and Hugo. When a push is made, the Angular workflow runs, building the application, running tests, and linting the code. The built Angular application is then archived into a dist.tar file, which is uploaded as a build artifact.
+
+On pushes to the main branch, the Docker workflow builds and pushes a Docker image to the GitHub Container Registry (GHCR), supporting both amd64 and arm64 platforms. The Go workflow runs in parallel, checking Go code formatting, building NPM packages, and running Go tests. The Hugo workflow, also triggered on pushes to the main branch, builds NPM packages and generates the Hugo site, uploading the artifacts and deploying them to GitHub Pages. This process ensures the codebase remains up-to-date and deployable, making it easy for current and future contributors to understand the project's deployment process.
 
 ## Built-with
 
