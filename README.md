@@ -105,7 +105,9 @@ npm test -ws
 
 ## Contributing
 
-For information on contributing to this project, please see the [CODE_OF_CONDUCT](./CODE_OF_CONDUCT.md).
+If you're an Angular or Go developer looking to help advance the Nostr protocol, we'd love your help! To get started, make sure you're familiar with the Nostr protocol and comfortable [creating pull requests](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request) and [issues](https://docs.github.com/en/issues/tracking-your-work-with-issues/creating-an-issue).
+
+Before contributing, please take a moment to familiarize yourself with our project's vision by reading our [VISION](./VISION.md) document. We also suggest contributors follow our [CODE_OF_CONDUCT](./CODE_OF_CONDUCT.md) to maintain good vibes.
 
 ## Deployment
 
