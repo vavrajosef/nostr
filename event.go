@@ -40,21 +40,26 @@ const (
 	EventKindApplicationSpecificData EventKind = 30078 // Event for managing application-specific data
 )
 
+// TODO: Add Event constructor
+
 // Event represents an event with a specified kind.
 type Event struct {
 	ID        string  `json:"id,omitempty"`
 	Pubkey    string  `json:"pubkey,omitempty"`
 	CreatedAt float64 `json:"created_at,omitempty"`
+	// TODO: Replace type float64 with EventKind
 	Kind      float64 `json:"kind,omitempty"`
 	Tags      []Tag   `json:"tags,omitempty"`
 	Content   string  `json:"content,omitempty"`
 	Signature string  `json:"sig,omitempty"`
 }
 
+// Marshal TBD
 func (e *Event) Marshal() ([]byte, error) {
 	return json.Marshal(e)
 }
 
+// Unmarshal TBD
 func (e *Event) Unmarshal(data []byte) error {
 	return json.Unmarshal(data, e)
 }

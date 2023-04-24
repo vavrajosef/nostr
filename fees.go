@@ -1,6 +1,6 @@
 package nostr
 
-// Fees ...
+// Fees TBD
 type Fees struct {
 	Admission *Admission `json:"admission,omitempty"`
 }

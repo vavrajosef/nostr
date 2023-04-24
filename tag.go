@@ -78,3 +78,5 @@ func (t *AmountTag) Unmarshal(data []byte) error {
 	}
 	return nil
 }
+
+// TODO: Add other tags or take different approach
