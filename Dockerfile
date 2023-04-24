@@ -2,7 +2,7 @@
 # - Use the official Node.js Alpine image as the base image
 # - Set the working directory to the root directory
 # - Copy package.json and package-lock.json to the container root
-# - Copy internal/client/package.json to the container /internal/client directory
+# - Copy internal/client/package.json to the container internal/client directory
 # - Install Angular CLI globally
 # - Install dependencies defined in package.json using npm ci
 # - Copy the rest of the application code to the container
@@ -16,26 +16,6 @@ RUN npm ci
 COPY . .
 RUN npm run build -w internal/client
 
-# Builder step for Hugo documentation
-# - Use the official Node.js Alpine image as the base image
-# - Set the working directory to the root directory
-# - Install Hugo via apk package manager
-# - Copy package.json and package-lock.json to the container root
-# - Copy internal/docs/package.json to the container /internal/docs directory
-# - Install dependencies defined in package.json using npm ci
-# - Copy the rest of the application code to the container
-# - Build the documentation using the "build" script in package.json
-# - Run Hugo to generate the static site for the documentation
-FROM node:alpine as docs_builder
-WORKDIR /
-RUN apk add --no-cache hugo
-COPY package.json package-lock.json ./
-COPY internal/docs/package.json /internal/docs/
-RUN npm ci
-COPY . .
-RUN npm run build -w internal/docs
-RUN hugo -s internal/docs
-
 # Builder step for Golang application
 # - Use the latest official Golang image as the base image
 # - Set the working directory to /go/src
@@ -47,7 +27,6 @@ RUN hugo -s internal/docs
 FROM golang:latest as cmd_builder
 WORKDIR /go/src
 COPY --from=client_builder /internal/client/dist /go/src/internal/client/dist
-COPY --from=docs_builder /internal/docs/public /go/src/internal/docs/public
 COPY . .
 RUN go get -d -v ./...
 RUN go install -v ./...

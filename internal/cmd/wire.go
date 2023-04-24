@@ -10,23 +10,23 @@ import (
 	"github.com/google/wire"
 )
 
-func buildClientServer() *client.Server {
-	wire.Build(
-		client.NewServer,
-	)
-	return &client.Server{}
-}
+// func buildClientServer() *client.Server {
+// 	wire.Build(
+// 		client.NewServer,
+// 	)
+// 	return &client.Server{}
+// }
 
-func buildDocsServer() *docs.Server {
-	wire.Build(
-		docs.NewServer,
-	)
-	return &docs.Server{}
-}
+// func buildDocsServer() *docs.Server {
+// 	wire.Build(
+// 		docs.NewServer,
+// 	)
+// 	return &docs.Server{}
+// }
 
-func buildRelay() *nostr.Relay {
-	wire.Build(
-		nostr.NewRelay,
-	)
-	return &nostr.Relay{}
-}
+// func buildRelay() *nostr.Relay {
+// 	wire.Build(
+// 		nostr.NewRelay,
+// 	)
+// 	return &nostr.Relay{}
+// }

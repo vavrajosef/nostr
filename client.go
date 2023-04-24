@@ -2,31 +2,47 @@ package nostr
 
 import (
 	"context"
+	"embed"
 	"fmt"
+	"io/fs"
+	"net/http"
 	"sync"
 	"time"
 
 	"nhooyr.io/websocket"
 )
 
+//go:generate npm run build -w web
+
+//go:embed internal/web/dist
+var web embed.FS
+
+// NewClient TBD
 func NewClient() *Client {
+	dist, err := fs.Sub(web, "internal/web/dist")
+	if err != nil {
+		fmt.Printf("Error reading from fs: %+v", err)
+		return nil
+	}
 	return &Client{
-		msg:    make(chan []byte),
-		relays: make(map[*relay]struct{}),
+		fs:    dist,
+		mess:  make(chan []byte),
+		conns: make(map[*websocket.Conn]struct{}),
 	}
 }
 
+// Client TBD
 type Client struct {
-	msg    chan []byte
-	mu     sync.Mutex
-	relays map[*relay]struct{}
-}
-
-type relay struct {
-	conn *websocket.Conn
+	conns map[*websocket.Conn]struct{}
+	fs    fs.FS
+	mess  chan []byte
+	mu    sync.Mutex
 }
 
 // TODO: add event handlers
+func (cl *Client) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	http.FileServer(http.FS(cl.fs)).ServeHTTP(w, r)
+}
 
 func (cl *Client) Publish(mess Message) error {
 	ctx, cancel := context.WithTimeout(context.Background(), time.Minute)
@@ -39,10 +55,10 @@ func (cl *Client) Publish(mess Message) error {
 
 	cl.mu.Lock()
 	defer cl.mu.Unlock()
-	for r := range cl.relays {
-		r.conn.Write(ctx, websocket.MessageText, byt)
-	}
 
+	for conn := range cl.conns {
+		conn.Write(ctx, websocket.MessageText, byt)
+	}
 	return nil
 }
 
@@ -57,39 +73,38 @@ func (cl *Client) Subscribe(u string) error {
 		return err
 	}
 
-	r := &relay{conn: conn}
-	cl.addRelay(r)
+	cl.addConn(conn)
 
-	go cl.listenRelay(r)
+	go cl.listenConn(conn)
 
 	return nil
 }
 
-func (cl *Client) addRelay(r *relay) {
+func (cl *Client) addConn(conn *websocket.Conn) {
 	cl.mu.Lock()
 	defer cl.mu.Unlock()
 
-	cl.relays[r] = struct{}{}
+	cl.conns[conn] = struct{}{}
 }
 
-func (cl *Client) listenRelay(r *relay) {
-	defer cl.removeRelay(r)
+func (cl *Client) listenConn(conn *websocket.Conn) {
+	defer cl.removeConn(conn)
 
 	for {
-		_, msg, err := r.conn.Read(context.Background())
+		_, mess, err := conn.Read(context.Background())
 		if err != nil {
 			fmt.Printf("Error reading from relay: %v\n", err)
 			return
 		}
 
-		cl.msg <- msg
+		cl.mess <- mess
 	}
 }
 
-func (cl *Client) removeRelay(r *relay) {
+func (cl *Client) removeConn(conn *websocket.Conn) {
 	cl.mu.Lock()
 	defer cl.mu.Unlock()
 
-	delete(cl.relays, r)
-	r.conn.Close(websocket.StatusNormalClosure, "closing connection")
+	delete(cl.conns, conn)
+	conn.Close(websocket.StatusNormalClosure, "closing connection")
 }
