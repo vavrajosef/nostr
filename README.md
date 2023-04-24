@@ -31,89 +31,81 @@ TBD
 
 > Usage _should_ include sections related to running and testing the application.
 
-### API
+### Build Docker image
 
-Multiple protocols are used to support communication between clients and relays.
-
-#### gRPC
-
-TBD
-
-#### HTTP
-
-TBD
-
-#### Websocket
-
-TBD
-
-### Docs
-
-TBD
-
-### Web
-
-TBD
-
-## Contributing
-
-For information on contributing to this project, please see the [CODE_OF_CONDUCT](./CODE_OF_CONDUCT.md).
-
-### Snippets
-
-#### Build Docker image
+Create a Docker image for the application by using the Dockerfile in the repository. This command will build the image and tag it with the name 'nostr'.
 
 ```shell
 docker build -t nostr .
 ```
 
-#### Build Docker services
+### Build Docker services
+
+Build all the services defined in the docker-compose.yml file. This command will create Docker images for each service and store them locally.
 
 ```shell
 docker-compose build
 ```
 
-#### Build NPM packages
+### Build NPM packages
+
+Compile and build all NPM packages in the monorepo, considering their interdependencies. The -ws flag ensures that the build is performed across all workspaces.
 
 ```shell
 npm run build -ws
 ```
 
-#### Format Go files
+### Format Go files
+
+Format all Go source files in the repository by running the Go formatter. This ensures consistent coding style across the project.
 
 ```shell
 go fmt ./...
 ```
 
-#### Generate Go dependencies
+### Generate Go dependencies
+
+Automatically generate code for Go dependencies, such as mocks, based on the source files. This command should be executed whenever there are changes to the Go source files.
 
 ```shell
 go generate ./...
 ```
 
-#### Install NPM dependencies
+### Install NPM dependencies
+
+Install all NPM dependencies for the monorepo workspaces. The -ws flag ensures that the installation is performed across all workspaces.
 
 ```shell
 npm i -ws
 ```
 
-#### Run Docker services
+### Run Docker services
+
+Start all the Docker services defined in the docker-compose.yml file. This command will run the containers and display the logs in the console.
 
 ```shell
 docker-compose up
 ```
 
-#### Run Go tests
+### Run Go tests
+
+Execute all Go tests in the repository, including unit and integration tests. This command will also display a summary of the test results.
 
 ```shell
 go test ./...
 ```
 
-#### Run NPM tests
+### Run NPM tests
+
+Run all NPM tests in the monorepo, considering their interdependencies. The -ws flag ensures that the tests are executed across all workspaces.
 
 ```shell
 npm test -ws
 ```
+
+## Contributing
+
+For information on contributing to this project, please see the [CODE_OF_CONDUCT](./CODE_OF_CONDUCT.md).
 
 ## Deployment
 
