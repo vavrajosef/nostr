@@ -7,9 +7,9 @@
 package main
 
 import (
+	"github.com/go-nostr/nostr"
 	"github.com/go-nostr/nostr/internal/client"
 	"github.com/go-nostr/nostr/internal/docs"
-	"github.com/go-nostr/nostr/internal/relay"
 )
 
 // Injectors from wire.go:
@@ -24,7 +24,7 @@ func buildDocsServer() *docs.Server {
 	return server
 }
 
-func buildRelayServer() *relay.Server {
-	server := relay.NewServer()
-	return server
+func buildRelay() *nostr.Relay {
+	relay := nostr.NewRelay()
+	return relay
 }

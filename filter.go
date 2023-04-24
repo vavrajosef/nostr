@@ -9,6 +9,6 @@ type Filter struct {
 	PublicKeys []string    `json:"#p,omitempty"`      // The public keys to filter by
 	Since      int64       `json:"since,omitempty"`   // The starting timestamp for filtering events
 	Until      int64       `json:"until,omitempty"`   // The ending timestamp for filtering events
-	Limit      uint        `json:"limit,omitempty"`   // The maximum number of events to return
+	Limit      int64       `json:"limit,omitempty"`   // The maximum number of events to return
 	Search     string      `json:"search,omitempty"`  // TBD
 }

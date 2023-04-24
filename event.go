@@ -5,7 +5,7 @@ import (
 )
 
 // EventKind represents the different types of events available.
-type EventKind float64
+type EventKind int64
 
 const (
 	EventKindMetadata                EventKind = 0     // Event for setting metadata
@@ -48,7 +48,7 @@ type Event struct {
 	Kind      float64 `json:"kind,omitempty"`
 	Tags      []Tag   `json:"tags,omitempty"`
 	Content   string  `json:"content,omitempty"`
-	Sig       string  `json:"sig,omitempty"`
+	Signature string  `json:"sig,omitempty"`
 }
 
 func (e *Event) Marshal() ([]byte, error) {

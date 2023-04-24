@@ -4,9 +4,9 @@
 package main
 
 import (
+	"github.com/go-nostr/nostr"
 	"github.com/go-nostr/nostr/internal/client"
 	"github.com/go-nostr/nostr/internal/docs"
-	"github.com/go-nostr/nostr/internal/relay"
 	"github.com/google/wire"
 )
 
@@ -24,9 +24,9 @@ func buildDocsServer() *docs.Server {
 	return &docs.Server{}
 }
 
-func buildRelayServer() *relay.Server {
+func buildRelay() *nostr.Relay {
 	wire.Build(
-		relay.NewServer,
+		nostr.NewRelay,
 	)
-	return &relay.Server{}
+	return &nostr.Relay{}
 }

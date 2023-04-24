@@ -86,10 +86,10 @@ type CloseMessage struct {
 }
 
 // NewCloseMessage TBD
-func NewCloseMessage(sid string) *CloseMessage {
+func NewCloseMessage(subscriptionID string) *CloseMessage {
 	return &CloseMessage{
 		Type:           MessageTypeEvent,
-		SubscriptionID: sid,
+		SubscriptionID: subscriptionID,
 	}
 }
 
@@ -164,11 +164,10 @@ func (m *CountMessage) Unmarshal(data []byte) error {
 	}
 	if err := json.Unmarshal(args[2], &m.Count); err == nil {
 		return nil
-	} else {
-		for i, v := range args[2:] {
-			if err := json.Unmarshal(v, &m.Filters[i]); err != nil {
-				return err
-			}
+	}
+	for i, v := range args[2:] {
+		if err := json.Unmarshal(v, &m.Filters[i]); err != nil {
+			return err
 		}
 	}
 	return nil
@@ -220,11 +219,11 @@ type EventMessage struct {
 }
 
 // NewEventMessage TBD
-func NewEventMessage(subscriptionID string, e *Event) Message {
+func NewEventMessage(subscriptionID string, event *Event) Message {
 	return &EventMessage{
 		Type:           MessageTypeEvent,
 		SubscriptionID: subscriptionID,
-		Event:          e,
+		Event:          event,
 	}
 }
 

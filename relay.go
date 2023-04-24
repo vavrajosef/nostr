@@ -1,4 +1,4 @@
-package relay
+package nostr
 
 import (
 	"context"
@@ -11,7 +11,6 @@ import (
 	"sync"
 	"time"
 
-	"github.com/go-nostr/nostr"
 	"nhooyr.io/websocket"
 )
 
@@ -19,23 +18,6 @@ const (
 	defaultHostname = "0.0.0.0"
 	defaultPort     = 4317
 )
-
-type getHealthHandler struct {
-}
-
-func (h *getHealthHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	data, _ := json.Marshal(struct {
-		Status    string `json:"status"`
-		Timestamp int64  `json:"timestamp"`
-	}{
-		Status:    "OK",
-		Timestamp: time.Now().Unix(),
-	})
-
-	w.Header().Add("Access-Control-Allow-Origin", "*")
-	w.Header().Add("Content-Type", "application/json")
-	w.Write(data)
-}
 
 type getInternetIdentifierHandler struct {
 }
@@ -80,41 +62,34 @@ func (h *websocketHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func NewServer() *Server {
-	// NOTE: handlers
-	getHealthHandler := &getHealthHandler{}
+func NewRelay() *Relay {
 	getInternetIdentifierHandler := &getInternetIdentifierHandler{}
 	websocketHandler := &websocketHandler{}
-
-	// NOTE: mux
 	serveMux := &http.ServeMux{}
 
-	// NOTE: routes
-	serveMux.Handle("/health", getHealthHandler)
 	serveMux.Handle("/.well-known/nostr.json", getInternetIdentifierHandler)
-	serveMux.Handle("/nostr", websocketHandler)
+	serveMux.Handle("/", websocketHandler)
 
-	// NOTE: http server
 	httpServer := &http.Server{
 		Addr:    fmt.Sprintf("%+v:%+v", defaultHostname, defaultPort),
 		Handler: serveMux,
 	}
 
-	return &Server{
+	return &Relay{
 		clients: make(map[*client]struct{}),
 		server:  httpServer,
 	}
 }
 
-type Server struct {
-	Name          string             `json:"name,omitempty"`
-	Description   string             `json:"description,omitempty"`
-	PubKey        string             `json:"pub_key,omitempty"`
-	Contact       string             `json:"contact,omitempty"`
-	SupportedNIPs []string           `json:"supported_nips,omitempty"`
-	Software      string             `json:"software,omitempty"`
-	Version       string             `json:"version,omitempty"`
-	Limitations   *nostr.Limitations `json:"limitations,omitempty"`
+type Relay struct {
+	Name          string       `json:"name,omitempty"`
+	Description   string       `json:"description,omitempty"`
+	PubKey        string       `json:"pub_key,omitempty"`
+	Contact       string       `json:"contact,omitempty"`
+	SupportedNIPs []string     `json:"supported_nips,omitempty"`
+	Software      string       `json:"software,omitempty"`
+	Version       string       `json:"version,omitempty"`
+	Limitations   *Limitations `json:"limitations,omitempty"`
 
 	server  *http.Server
 	clients map[*client]struct{}
@@ -126,15 +101,15 @@ type client struct {
 	conn *websocket.Conn
 }
 
-func (r *Server) ListenAndServe() error {
+func (r *Relay) ListenAndServe() error {
 	return r.server.ListenAndServe()
 }
 
-func (r *Server) Serve(l net.Listener) error {
+func (r *Relay) Serve(l net.Listener) error {
 	return r.server.Serve(l)
 }
 
-func (r *Server) Publish(mess nostr.Message) error {
+func (r *Relay) Publish(mess Message) error {
 	ctx, cancel := context.WithTimeout(context.Background(), time.Minute)
 	defer cancel()
 
@@ -152,7 +127,7 @@ func (r *Server) Publish(mess nostr.Message) error {
 	return nil
 }
 
-func (r *Server) Subscribe(u string) error {
+func (r *Relay) Subscribe(u string) error {
 	ctx, cancel := context.WithTimeout(context.Background(), time.Minute)
 	defer cancel()
 
@@ -171,14 +146,14 @@ func (r *Server) Subscribe(u string) error {
 	return nil
 }
 
-func (r *Server) addClient(cl *client) {
+func (r *Relay) addClient(cl *client) {
 	r.mu.Lock()
 	defer r.mu.Unlock()
 
 	r.clients[cl] = struct{}{}
 }
 
-func (r *Server) listenClient(cl *client) {
+func (r *Relay) listenClient(cl *client) {
 	defer r.removeClient(cl)
 
 	for {
@@ -192,7 +167,7 @@ func (r *Server) listenClient(cl *client) {
 	}
 }
 
-func (r *Server) removeClient(cl *client) {
+func (r *Relay) removeClient(cl *client) {
 	r.mu.Lock()
 	defer r.mu.Unlock()
 

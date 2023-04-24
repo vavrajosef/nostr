@@ -3,9 +3,9 @@ package main
 import (
 	"context"
 
+	"github.com/go-nostr/nostr"
 	"github.com/go-nostr/nostr/internal/client"
 	"github.com/go-nostr/nostr/internal/docs"
-	"github.com/go-nostr/nostr/internal/relay"
 	"golang.org/x/sync/errgroup"
 )
 
@@ -17,11 +17,11 @@ func main() {
 	serviceCollection := struct {
 		clientServer *client.Server
 		docsServer   *docs.Server
-		relayServer  *relay.Server
+		relay        *nostr.Relay
 	}{
 		clientServer: buildClientServer(),
 		docsServer:   buildDocsServer(),
-		relayServer:  buildRelayServer(),
+		relay:        buildRelay(),
 	}
 
 	// NOTE: Create an error group to manage the concurrent execution of service servers
@@ -30,7 +30,7 @@ func main() {
 	// NOTE: Add service server Serve functions to the error group
 	group.Go(serviceCollection.clientServer.ListenAndServe)
 	group.Go(serviceCollection.docsServer.ListenAndServe)
-	group.Go(serviceCollection.relayServer.ListenAndServe)
+	group.Go(serviceCollection.relay.ListenAndServe)
 
 	// NOTE: Wait for all service servers to complete or return an error
 	if err := group.Wait(); err != nil {
