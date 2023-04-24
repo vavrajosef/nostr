@@ -37,7 +37,7 @@ type AuthMessage struct {
 }
 
 // NewAuthMessage TBD
-func NewAuthMessage(challenge string, event *Event) *AuthMessage {
+func NewAuthMessage(challenge string, event *Event) Message {
 	return &AuthMessage{
 		Type:      MessageTypeAuth,
 		Challenge: challenge,
@@ -125,7 +125,7 @@ type CountMessage struct {
 }
 
 // NewCountMessage TBD
-func NewCountMessage(subscriptionID string, count *Count, filters ...Filter) *CountMessage {
+func NewCountMessage(subscriptionID string, count *Count, filters ...Filter) Message {
 	return &CountMessage{
 		Type:           MessageTypeEvent,
 		SubscriptionID: subscriptionID,
@@ -181,7 +181,7 @@ type EOSEMessage struct {
 }
 
 // NewEOSEMessage TBD
-func NewEOSEMessage(subscriptionID string) *EOSEMessage {
+func NewEOSEMessage(subscriptionID string) Message {
 	return &EOSEMessage{
 		Type:           MessageTypeEvent,
 		SubscriptionID: subscriptionID,
@@ -220,7 +220,7 @@ type EventMessage struct {
 }
 
 // NewEventMessage TBD
-func NewEventMessage(subscriptionID string, e *Event) *EventMessage {
+func NewEventMessage(subscriptionID string, e *Event) Message {
 	return &EventMessage{
 		Type:           MessageTypeEvent,
 		SubscriptionID: subscriptionID,
@@ -273,7 +273,7 @@ type NoticeMessage struct {
 }
 
 // NewNoticeMessage TBD
-func NewNoticeMessage(notice string) *NoticeMessage {
+func NewNoticeMessage(notice string) Message {
 	return &NoticeMessage{
 		Type:   MessageTypeNotice,
 		Notice: notice,
@@ -312,7 +312,7 @@ type OkMessage struct {
 }
 
 // NewOkMessage TBD
-func NewOkMessage(eventID string, isSaved bool, message string) *OkMessage {
+func NewOkMessage(eventID string, isSaved bool, message string) Message {
 	return &OkMessage{
 		Type:    MessageTypeOk,
 		EventID: eventID,
@@ -360,7 +360,7 @@ type RequestMessage struct {
 }
 
 // NewRequestMessage TBD
-func NewRequestMessage(subscriptionID string, filter *Filter) *RequestMessage {
+func NewRequestMessage(subscriptionID string, filter *Filter) Message {
 	return &RequestMessage{
 		Type:           MessageTypeRequest,
 		SubscriptionID: subscriptionID,

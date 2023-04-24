@@ -41,7 +41,7 @@ type Tag interface {
 }
 
 // NewAmountTag creates a new AmountTag with the provided amount.
-func NewAmountTag(amount uint32) *AmountTag {
+func NewAmountTag(amount uint32) Tag {
 	return &AmountTag{
 		TagTypeAmount,
 		amount,
