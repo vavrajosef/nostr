@@ -6,7 +6,7 @@ Please be aware that the code and documentation may contain unfinished features 
 
 ## Overview
 
-An all-in-one Angular/Go/Hugo monorepo for the Nostr protocol, featuring comprehensive documentation, an all-in-one Go executable and reusable packages with an Angular web client.
+An all-in-one Angular/Go/Hugo monorepo for the Nostr protocol, featuring comprehensive documentation, an all-in-one Go executable with an Angular web client and reusable packages.
 
 ## Getting Started
 
@@ -141,7 +141,7 @@ This project is built with the following core technologies:
 
 ## Versioning
 
-Versioning information will be added as the project matures.
+This project uses [semantic versioning](https://semver.org) and [GitHub](https://docs.github.com/en/repositories/releasing-projects-on-github/managing-releases-in-a-repository) to publish new versions and manage releases.
 
 ## License
 
