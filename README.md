@@ -126,8 +126,7 @@ This project is built with the following core technologies:
 
 ## Acknowledgements
 
-- [@klakegg](https://github.com/klakegg)
-- [@peaceiris](https://github.com/peaceiris)
+- [@peaceiris](https://github.com/peaceiris) for the [Hugo GitHub Action](https://github.com/peaceiris/actions-hugo)
 
 ## Authors
 
