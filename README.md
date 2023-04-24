@@ -23,13 +23,15 @@ Before starting development, make sure to install the following dependencies:
 
 ### Installation
 
-> Installation _should_ include a list of step-by-step instructions for installing the application.
+#### Install NPM dependencies
 
-TBD
+Install all NPM dependencies for the monorepo workspaces. The -ws flag ensures that the installation is performed across all workspaces.
+
+```shell
+npm i -ws
+```
 
 ## Usage
-
-> Usage _should_ include sections related to running and testing the application.
 
 ### Build Docker image
 
@@ -69,14 +71,6 @@ Automatically generate code for Go dependencies, such as mocks, based on the sou
 
 ```shell
 go generate ./...
-```
-
-### Install NPM dependencies
-
-Install all NPM dependencies for the monorepo workspaces. The -ws flag ensures that the installation is performed across all workspaces.
-
-```shell
-npm i -ws
 ```
 
 ### Run Docker services
