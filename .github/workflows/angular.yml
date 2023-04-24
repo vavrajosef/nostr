@@ -13,15 +13,17 @@ jobs:
         with:
           node-version: 16
       - name: Install NPM dependencies
-        working-directory: internal/client/
         run: npm ci
       - name: Build Angular application
-        working-directory: internal/client/
-        run: npm run build
+        run: npm run build -w internal/client
       - name: Run Angular tests
-        working-directory: internal/client/
-        run: npm run test -- --watch=false --browsers=ChromeHeadless
+        run: npm run test -w internal/client --watch=false --browsers=ChromeHeadless
       - name: Run Angular linter
-        working-directory: internal/client/
-        run: npm run lint
-      # TODO: add upload of dist/ to GitHub
+        run: npm run lint -w internal/client
+      # TODO: change name of artifact
+      - name: Tar files
+        run: tar -cvf dist.tar /internal/client/disdt
+      - name: Upload Angular build artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          path: dist.tar
