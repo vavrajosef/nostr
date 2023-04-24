@@ -4,29 +4,16 @@
 package main
 
 import (
+	"net/http"
+
 	"github.com/go-nostr/nostr"
-	"github.com/go-nostr/nostr/internal/client"
-	"github.com/go-nostr/nostr/internal/docs"
 	"github.com/google/wire"
 )
 
-// func buildClientServer() *client.Server {
-// 	wire.Build(
-// 		client.NewServer,
-// 	)
-// 	return &client.Server{}
-// }
-
-// func buildDocsServer() *docs.Server {
-// 	wire.Build(
-// 		docs.NewServer,
-// 	)
-// 	return &docs.Server{}
-// }
-
-// func buildRelay() *nostr.Relay {
-// 	wire.Build(
-// 		nostr.NewRelay,
-// 	)
-// 	return &nostr.Relay{}
-// }
+func buildClientServer() *http.Server {
+	wire.Build(wire.NewSet(
+		nostr.NewClient,
+		wire.Struct(new(http.Server), "Handler"),
+	))
+	return &http.Server{}
+}

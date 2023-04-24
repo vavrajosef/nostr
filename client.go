@@ -17,7 +17,7 @@ import (
 var client embed.FS
 
 // NewClient TBD
-func NewClient() *Client {
+func NewClient() http.Handler {
 	dist, err := fs.Sub(client, "internal/client/dist")
 	if err != nil {
 		fmt.Printf("Error reading from fs: %+v", err)
