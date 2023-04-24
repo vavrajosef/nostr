@@ -27,10 +27,10 @@ jobs:
         with:
           hugo-version: 'latest'
       - name: Build Hugo site
-        run: hugo -s docs
+        run: hugo -s internal/docs
       - name: Upload GitHub Pages artifacts
         uses: actions/upload-pages-artifact@v1
         with:
-          path: docs/public
+          path: internal/docs/public
       - name: Deploy to GitHub Pages
         uses: actions/deploy-pages@v1
